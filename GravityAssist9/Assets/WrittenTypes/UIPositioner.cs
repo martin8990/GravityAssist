@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-public class UIPositioner<Input> : Machine<Input> where Input : MonoBehaviour, IUIPosition
+public class UIPositioner<myType> : Machine<myType,myType> where myType : MonoBehaviour, IUIPosition
 {
-    public List<Input> output;
-    public Machine<Input> nextSlave;
-
-    public override void Operate()
+    public override List<myType> Operate(List<myType> input)
     {
-        int count = myData.Count;
-        float ds = 1f / (count+1);
+        int count = input.Count;
+        float ds = 1f / (count + 1);
         for (int i = 0; i < count; i++)
         {
 
@@ -16,15 +13,10 @@ public class UIPositioner<Input> : Machine<Input> where Input : MonoBehaviour, I
             float maxX = i + 1 * ds;
             float minY = 0;
             float maxY = 1;
-            myData[i].rt.anchorMin = new Vector2(minX, minY);
-            myData[i].rt.anchorMax = new Vector2(maxX, maxY);
+            input[i].rt.anchorMin = new Vector2(minX, minY);
+            input[i].rt.anchorMax = new Vector2(maxX, maxY);
         }
-        output = myData;
-    }
-
-    public override void TriggerNextSlaves()
-    {
-        nextSlave.Trigger(output);
+        return input;
     }
 }
 

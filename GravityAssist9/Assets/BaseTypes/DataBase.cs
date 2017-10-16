@@ -1,8 +1,11 @@
-﻿using UnityEngine;
-public class DataBase<myType> : Machine<myType>
+﻿using System.Collections.Generic;
+using UnityEngine;
+public class DataBase<myType> : Slave<myType>
 {
     public bool debug;
-    public override void Operate()
+    public List<myType> myData;
+
+    public override void Recieve(List<myType> input)
     {
         if (debug && myData.Count > 0)
         {
@@ -13,12 +16,6 @@ public class DataBase<myType> : Machine<myType>
             Debug.Log(name + " Recieved empty data");
         }
     }
-
-    public override void TriggerNextSlaves()
-    {
-        // I dont automatically trigger other slaves
-    }
-
 }
 
 

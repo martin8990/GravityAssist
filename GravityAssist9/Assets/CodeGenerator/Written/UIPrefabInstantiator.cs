@@ -2,26 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIPrefabInstantiator<Input,Output> : Machine<Input> where Input : IPrefab where Output : MonoBehaviour,IUIPosition
+public class UIPrefabInstantiator<Input,Output> : Machine<Input,Output> where Input : IPrefab where Output : MonoBehaviour,IUIPosition
 {
-    public Machine<Output> nextSlave;
     public List<Output> output;
-    
-    public override void Operate()
+  
+    public override List<Output> Operate(List<Input> input)
     {
         output = new List<Output>();
-        for (int i = 0; i < myData.Count; i++)
+        for (int i = 0; i < input.Count; i++)
         {
-            var newUiGameObject = GameObject.Instantiate(myData[i].Prefab);
-            newUiGameObject.transform.SetParent(myData[i].Parent, false);
+            var newUiGameObject = GameObject.Instantiate(input[i].Prefab);
+            newUiGameObject.transform.SetParent(input[i].Parent, false);
 
             var SomeComponent = newUiGameObject.GetComponent<Output>();
             output.Add(SomeComponent);
-        }        
-    }
-
-    public override void TriggerNextSlaves()
-    {
-        nextSlave.Trigger(output);
+        }
+        return output;
     }
 }
