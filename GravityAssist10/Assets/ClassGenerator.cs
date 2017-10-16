@@ -20,6 +20,7 @@ public class ClassGenerator : MonoBehaviour {
 
 
 }
+
 [System.Serializable]
 public class ComponentPrefab
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+[CreateAssetMenu]
 public class FileFromDirMachine : ScriptableObject,Machine<List<string>,List<string>> {
 
 
