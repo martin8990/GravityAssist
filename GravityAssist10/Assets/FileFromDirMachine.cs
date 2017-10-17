@@ -24,8 +24,12 @@ public class FileFromDirMachine : ScriptableObject,Machine<List<string>,List<str
         // Process the list of files found in the directory.
         string[] fileEntries = Directory.GetFiles(targetDirectory);
         foreach (string fileName in fileEntries)
-            output.Add(fileName);
-
+        {
+            if (Path.GetExtension(fileName) != ".meta")
+            {
+                output.Add(fileName);
+            }
+        }
         // Recurse into subdirectories of this directory.
         string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
         foreach (string subdirectory in subdirectoryEntries)

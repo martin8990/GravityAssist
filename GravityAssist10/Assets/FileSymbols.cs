@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 [System.Serializable]
-public class FileSymbols
+public class SymbolsPerFile
 {
     public List<string> Symbols = new List<string>();
 
-    public FileSymbols(List<string> Symbols)
+    public SymbolsPerFile(List<string> Symbols)
     {
         this.Symbols = Symbols;
     }

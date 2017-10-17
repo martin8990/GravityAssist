@@ -5,12 +5,16 @@ public class StartDirListInput : MonoBehaviour
     public List<string> directories = new List<string>();
     public FileFromDirMachine fileFromDirMachine;
     public LinesFromFileMachine linesFromFile;
-    public FileSymbolsFromFileLinesMachine symbolsFromFileLinesMachine;
+    public LinesToWords wordsFromLinesMachine;
+    public WordsToSymbols symbolsFromFileLinesMachine;
+    
+
     void Start()
     {
       var files = fileFromDirMachine.Operate(directories);
       var lines = linesFromFile.Operate(files);
-      var symbols =  symbolsFromFileLinesMachine.Operate(lines);
+        var words = wordsFromLinesMachine.Operate(lines);
+      var symbols =  symbolsFromFileLinesMachine.Operate(words);
 
     }
 
