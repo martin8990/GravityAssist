@@ -4,14 +4,13 @@ public class Compiler : MonoBehaviour
 {
     public List<string> directories = new List<string>();
     public List<char> Seperators;
-    public BodyTypeDatabase bodyTypesDB;
+
 
     List<string> files;
     List<FileLines> fileLines;
     List<SymbolsPerFile> WordsPerFile;
     List<SymbolsPerFile> symsPerFile;
-    public List<Body> FileBodies;
-    public List<Body> KeywordBodies;
+    public List<FileBody> FileBodies;
 
     public void Compile()
     {
@@ -19,8 +18,11 @@ public class Compiler : MonoBehaviour
         fileLines = FileToLines.Operate(files);
         WordsPerFile = LinesToWords.Operate(fileLines);
         symsPerFile = WordsToSymbols.Operate(WordsPerFile, Seperators);
-        FileBodies = FileBodyFromSymbols.Operate(symsPerFile,bodyTypesDB.bodyTypes[0]);
-        KeywordBodies = FileBodiesToKeyWordBodies.Operate(FileBodies, bodyTypesDB);
+        FileBodies = FileBodyFromSymbols.Operate(symsPerFile);
+        foreach (var filebody in FileBodies)
+        {
+            filebody.structBodies = StructExtracter.Operate(filebody.UnidentifiedSymbols);
+        }
     }
 
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -156,20 +156,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -216,178 +202,65 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directories:
   - C:\Users\marti\Documents\Unity\GravityAssist\GravityAssist10\Assets\SampleComponent
-  Seperators: 3b005b005d007b007d00280029002e002c003a00
-  bodyTypesDB: {fileID: 11400000, guid: dd3db5b0db5c77a4cb8ac46ca46b7505, type: 2}
+  Seperators: 3b005b005d007b007d00280029002e002c003a003c003e00
+  bodyTypesDB: {fileID: 11400000, guid: dc02f021bbb2e51429150e5182847376, type: 2}
   FileBodies:
-  - subBodies:
-    - subBodies: []
-      bodyType:
-        name: Class
-        keyWord: class
-        modifiers:
-        - abstract
-        - partial
-        - internal
-        - public
-        - private
-        - static
-        hasArguments: 0
-      symbols: []
-      modifiers: []
-    bodyType:
-      name: File
-      keyWord: 
-      modifiers: []
-      hasArguments: 0
-    symbols:
+  - UnidentifiedSymbols:
     - using
-    - System.Collections;
+    - System
+    - .
+    - Collections
+    - ;
     - using
-    - System.Collections.Generic;
+    - System
+    - .
+    - Collections
+    - .
+    - Generic
+    - ;
     - using
-    - UnityEngine;
+    - UnityEngine
+    - ;
     - public
     - class
     - Health
     - ':'
     - MonoBehaviour
     - '{'
-    - '}'
-    modifiers:
     - public
-  - subBodies:
-    - subBodies: []
-      bodyType:
-        name: Class
-        keyWord: class
-        modifiers:
-        - abstract
-        - partial
-        - internal
-        - public
-        - private
-        - static
-        hasArguments: 0
-      symbols:
-      - public
-      - float
-      - x;
-      - public
-      - float
-      - y;
-      modifiers: []
-    bodyType:
-      name: File
-      keyWord: 
-      modifiers: []
-      hasArguments: 0
-    symbols:
-    - using
-    - System.Collections;
-    - using
-    - System.Collections.Generic;
-    - using
-    - UnityEngine;
-    - public
-    - class
-    - Position2D
-    - ':'
-    - IComponent
+    - void
+    - someMethod
+    - (
+    - )
     - '{'
-    - public
-    - float
-    - x;
-    - public
-    - float
-    - y;
+    - if
+    - (
+    - true
+    - )
+    - '{'
+    - Debug
+    - .
+    - Log
+    - (
+    - '"Yow"'
+    - )
+    - ;
     - '}'
-    modifiers:
+    - '}'
+    - '}'
     - public
-  KeywordBodies:
-  - subBodies:
-    - subBodies: []
-      bodyType:
-        name: Class
-        keyWord: class
-        modifiers:
-        - abstract
-        - partial
-        - internal
-        - public
-        - private
-        - static
-        hasArguments: 0
-      symbols: []
-      modifiers: []
-    bodyType:
-      name: File
-      keyWord: 
-      modifiers: []
-      hasArguments: 0
-    symbols:
-    - using
-    - System.Collections;
-    - using
-    - System.Collections.Generic;
-    - using
-    - UnityEngine;
-    - public
-    - class
-    - Health
-    - ':'
-    - MonoBehaviour
+    - SampleGenericStruct<T>
     - '{'
     - '}'
-    modifiers:
-    - public
-  - subBodies:
-    - subBodies: []
-      bodyType:
-        name: Class
-        keyWord: class
-        modifiers:
-        - abstract
-        - partial
-        - internal
-        - public
-        - private
-        - static
-        hasArguments: 0
-      symbols:
-      - public
-      - float
-      - x;
-      - public
-      - float
-      - y;
-      modifiers: []
-    bodyType:
-      name: File
-      keyWord: 
-      modifiers: []
-      hasArguments: 0
-    symbols:
-    - using
-    - System.Collections;
-    - using
-    - System.Collections.Generic;
-    - using
-    - UnityEngine;
-    - public
-    - class
-    - Position2D
-    - ':'
-    - IComponent
-    - '{'
-    - public
-    - float
-    - x;
-    - public
-    - float
-    - y;
-    - '}'
-    modifiers:
-    - public
+    classBodies: []
+    structBodies:
+    - Generics: []
+      Intefaces: []
+      Symbols: []
+      name: SampleGenericStruct<T>
+    interfaceBodies: []
+    enumBodies: []
+    usingStatements: []
 --- !u!4 &1637501046
 Transform:
   m_ObjectHideFlags: 0
