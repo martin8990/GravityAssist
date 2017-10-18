@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -156,6 +156,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -197,17 +211,183 @@ MonoBehaviour:
   m_GameObject: {fileID: 1637501044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5617114f85ff96f439c57e363f6a240e, type: 3}
+  m_Script: {fileID: 11500000, guid: bb0319182d06aea47a42a9600810aea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   directories:
   - C:\Users\marti\Documents\Unity\GravityAssist\GravityAssist10\Assets\SampleComponent
-  fileFromDirMachine: {fileID: 11400000, guid: 561cf9dd09cbdab4880df112b6c8aafa, type: 2}
-  linesFromFile: {fileID: 11400000, guid: 404a57010ba82c445b2a0cf7d8ca3d74, type: 2}
-  symbolsFromFileLinesMachine: {fileID: 11400000, guid: b30ffce238db8ef45a0d5e88f1a1a63b,
-    type: 2}
-  wordsFromLinesMachine: {fileID: 11400000, guid: 140383410cca20e499c30998a733297a,
-    type: 2}
+  Seperators: 3b005b005d007b007d00280029002e002c003a00
+  bodyTypesDB: {fileID: 11400000, guid: dd3db5b0db5c77a4cb8ac46ca46b7505, type: 2}
+  FileBodies:
+  - subBodies:
+    - subBodies: []
+      bodyType:
+        name: Class
+        keyWord: class
+        modifiers:
+        - abstract
+        - partial
+        - internal
+        - public
+        - private
+        - static
+        hasArguments: 0
+      symbols: []
+      modifiers: []
+    bodyType:
+      name: File
+      keyWord: 
+      modifiers: []
+      hasArguments: 0
+    symbols:
+    - using
+    - System.Collections;
+    - using
+    - System.Collections.Generic;
+    - using
+    - UnityEngine;
+    - public
+    - class
+    - Health
+    - ':'
+    - MonoBehaviour
+    - '{'
+    - '}'
+    modifiers:
+    - public
+  - subBodies:
+    - subBodies: []
+      bodyType:
+        name: Class
+        keyWord: class
+        modifiers:
+        - abstract
+        - partial
+        - internal
+        - public
+        - private
+        - static
+        hasArguments: 0
+      symbols:
+      - public
+      - float
+      - x;
+      - public
+      - float
+      - y;
+      modifiers: []
+    bodyType:
+      name: File
+      keyWord: 
+      modifiers: []
+      hasArguments: 0
+    symbols:
+    - using
+    - System.Collections;
+    - using
+    - System.Collections.Generic;
+    - using
+    - UnityEngine;
+    - public
+    - class
+    - Position2D
+    - ':'
+    - IComponent
+    - '{'
+    - public
+    - float
+    - x;
+    - public
+    - float
+    - y;
+    - '}'
+    modifiers:
+    - public
+  KeywordBodies:
+  - subBodies:
+    - subBodies: []
+      bodyType:
+        name: Class
+        keyWord: class
+        modifiers:
+        - abstract
+        - partial
+        - internal
+        - public
+        - private
+        - static
+        hasArguments: 0
+      symbols: []
+      modifiers: []
+    bodyType:
+      name: File
+      keyWord: 
+      modifiers: []
+      hasArguments: 0
+    symbols:
+    - using
+    - System.Collections;
+    - using
+    - System.Collections.Generic;
+    - using
+    - UnityEngine;
+    - public
+    - class
+    - Health
+    - ':'
+    - MonoBehaviour
+    - '{'
+    - '}'
+    modifiers:
+    - public
+  - subBodies:
+    - subBodies: []
+      bodyType:
+        name: Class
+        keyWord: class
+        modifiers:
+        - abstract
+        - partial
+        - internal
+        - public
+        - private
+        - static
+        hasArguments: 0
+      symbols:
+      - public
+      - float
+      - x;
+      - public
+      - float
+      - y;
+      modifiers: []
+    bodyType:
+      name: File
+      keyWord: 
+      modifiers: []
+      hasArguments: 0
+    symbols:
+    - using
+    - System.Collections;
+    - using
+    - System.Collections.Generic;
+    - using
+    - UnityEngine;
+    - public
+    - class
+    - Position2D
+    - ':'
+    - IComponent
+    - '{'
+    - public
+    - float
+    - x;
+    - public
+    - float
+    - y;
+    - '}'
+    modifiers:
+    - public
 --- !u!4 &1637501046
 Transform:
   m_ObjectHideFlags: 0
