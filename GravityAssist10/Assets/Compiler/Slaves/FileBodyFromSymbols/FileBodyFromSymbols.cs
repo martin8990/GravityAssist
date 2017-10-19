@@ -23,27 +23,14 @@ public class FileBody
     public List<StructBody> structBodies = new List<StructBody>();
     public List<InterfaceBodies> interfaceBodies = new List<InterfaceBodies>();
     public List<EnumBodies> enumBodies = new List<EnumBodies>();
-    public List<UsingStatements> usingStatements = new List<UsingStatements>();
+    public List<UsingStatement> usingStatements = new List<UsingStatement>();
 
 }
 
 [System.Serializable]
-public class UsingStatements
+public class UsingStatement
 {
-}
-[System.Serializable]
-public class ClassBody
-{
-    public List<string> Modifiers;
-    public List<string> Generics;
-}
-[System.Serializable]
-public class StructBody
-{
-    public List<string> Generics;
-    public List<InterfaceToken> Interfaces;
-    public List<string> Symbols;
-    public string name;
+    public List<string> Addres;
 }
 [System.Serializable]
 public class InterfaceBodies
@@ -55,4 +42,3 @@ public class EnumBodies
 {
 
 }
-

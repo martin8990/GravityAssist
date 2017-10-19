@@ -22,6 +22,8 @@ public class Compiler : MonoBehaviour
         foreach (var filebody in FileBodies)
         {
             filebody.structBodies = StructExtracter.Operate(filebody.UnidentifiedSymbols);
+            filebody.classBodies = ClassExtracter.Operate(filebody.UnidentifiedSymbols);
+            filebody.usingStatements = UsingStatementExtracter.Operate(filebody.UnidentifiedSymbols);
         }
     }
 
