@@ -4,8 +4,11 @@ public class ClassBody
 {
     public string name;
     public List<string> Generics;
-    public List<InterfaceToken> Interfaces;
+    public List<AnsestorToken> Ancestors;
     public List<string> Symbols;
     public List<string> Modifiers;
-}
+    public List<ClassBody> classBodies;
+    public List<StructBody> stuctBodies;
+    public List<MethodBody> methodBodies;
 
+}

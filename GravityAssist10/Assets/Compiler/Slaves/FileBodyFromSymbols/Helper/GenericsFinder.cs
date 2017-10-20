@@ -5,6 +5,7 @@ public static class GenericsFinder
     {
         if (Symbols[KeyWordIndex + 2] == "<")
         {
+            Symbols[KeyWordIndex + 2] = null;
             var Generics = new List<string>();
             int GenIndex = KeyWordIndex + 3;
             while (Symbols[GenIndex] != ">")
@@ -13,8 +14,10 @@ public static class GenericsFinder
                 {
                     Generics.Add(Symbols[GenIndex]);
                 }
+                Symbols[GenIndex] = null;
                 GenIndex++;
             }
+            Symbols[GenIndex] = null;
             return Generics;
         }
         else return null;

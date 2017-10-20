@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Health : MonoBehaviour {
 
-    public void someMethod()
+    public void someMethod<T>()
     {
         if (true)
         {
@@ -22,5 +22,8 @@ public interface SampleInterface<T>
 {
 
 }
-
+public enum SomeEnum
+{
+    EAST,WEST,NORTH,SOUTH
+}
 

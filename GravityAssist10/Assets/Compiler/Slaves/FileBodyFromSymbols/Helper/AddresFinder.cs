@@ -13,6 +13,10 @@ public static class AddresFinder
             symbols[index] = null;
             index++;
         }
+        if (symbols[index] == ";")
+        {
+            symbols[index] = null;
+        }
         return Adress;
     }
 }

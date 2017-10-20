@@ -21,24 +21,16 @@ public class FileBody
     public List<string> UnidentifiedSymbols = new List<string>();
     public List<ClassBody> classBodies = new List<ClassBody>();
     public List<StructBody> structBodies = new List<StructBody>();
-    public List<InterfaceBodies> interfaceBodies = new List<InterfaceBodies>();
-    public List<EnumBodies> enumBodies = new List<EnumBodies>();
+    public List<InterfaceBody> interfaceBodies = new List<InterfaceBody>();
+    public List<EnumBody> enumBodies = new List<EnumBody>();
     public List<UsingStatement> usingStatements = new List<UsingStatement>();
 
 }
 
 [System.Serializable]
-public class UsingStatement
+public class EnumBody
 {
-    public List<string> Addres;
-}
-[System.Serializable]
-public class InterfaceBodies
-{
-
-}
-[System.Serializable]
-public class EnumBodies
-{
-
+    public string name;
+    public List<string> Modifiers;
+    public List<string> Symbols;
 }

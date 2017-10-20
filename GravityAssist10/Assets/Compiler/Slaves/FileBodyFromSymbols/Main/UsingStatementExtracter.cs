@@ -14,5 +14,4 @@ public static class UsingStatementExtracter
         SymbolCleaner.Operate(Symbols);
         return UsingStatments;
     }
-
 }

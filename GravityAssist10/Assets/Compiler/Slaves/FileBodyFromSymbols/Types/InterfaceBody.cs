@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 [System.Serializable]
-public class StructBody
+public class InterfaceBody
 {
     public string name;
     public List<string> Generics;
-    public List<InterfaceToken> Interfaces;
+    public List<AnsestorToken> Ancestors;
     public List<string> Symbols;
-   
+    public List<string> Modifiers;
 }
-

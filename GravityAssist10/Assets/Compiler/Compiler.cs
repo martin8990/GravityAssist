@@ -24,6 +24,9 @@ public class Compiler : MonoBehaviour
             filebody.structBodies = StructExtracter.Operate(filebody.UnidentifiedSymbols);
             filebody.classBodies = ClassExtracter.Operate(filebody.UnidentifiedSymbols);
             filebody.usingStatements = UsingStatementExtracter.Operate(filebody.UnidentifiedSymbols);
+            filebody.interfaceBodies = InterfaceExtracter.Operate(filebody.UnidentifiedSymbols);
+            filebody.enumBodies = EnumExtracter.Operate(filebody.UnidentifiedSymbols);
+
         }
     }
 
