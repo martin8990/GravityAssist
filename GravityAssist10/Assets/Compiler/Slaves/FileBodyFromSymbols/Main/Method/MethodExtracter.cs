@@ -9,11 +9,15 @@ public static class MethodExtracter
         foreach (var id in ids)
         {
             var newMethodBody = new MethodBody();
-            newMethodBody.Generics = GenericsFinder.Operate(id-7, symbols);
             newMethodBody.modifiers = ModifierFinder.Operate(mods, symbols, id);
+            newMethodBody.Generics = GenericsFinder.Operate(id - 7, symbols);
+            newMethodBody.name = MethodNameFinder.Operate(symbols,id);
+            newMethodBody.returnType = MethodNameFinder.Operate(symbols, id);
             newMethodBody.symbols = BodyExtractor.Operate(id, symbols);
+            
             mBodies.Add(newMethodBody);
         }
+        SymbolCleaner.Operate(symbols);
         return mBodies;
     }
 }

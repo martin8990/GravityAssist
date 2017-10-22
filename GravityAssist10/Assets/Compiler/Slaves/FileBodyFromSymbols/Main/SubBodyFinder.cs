@@ -42,7 +42,7 @@ public static class SubBodyFinder
                 BodyLevel--;
                 if (BodyLevel == 0)
                 {
-                    Debug.Log("Adding subbody");
+
                     subBodies.Add(currentSubBody);
                 }                
             }
