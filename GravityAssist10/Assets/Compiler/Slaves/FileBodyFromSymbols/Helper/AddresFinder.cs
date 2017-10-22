@@ -20,3 +20,16 @@ public static class AddresFinder
         return Adress;
     }
 }
+
+
+
+
+[System.Serializable]
+public class PropertyBody
+{
+    public string name;
+    public string type;
+    public List<string> modifiers;
+    public bool generic;
+    public List<string> symbols;
+}

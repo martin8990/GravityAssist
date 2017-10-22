@@ -10,5 +10,5 @@ public class ClassBody
     public List<ClassBody> classBodies;
     public List<StructBody> stuctBodies;
     public List<MethodBody> methodBodies;
-
+    public List<PropertyBody> propertyBodies;
 }

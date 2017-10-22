@@ -24,6 +24,8 @@ public static class ClassExtracter
 
             var subBodies = SubBodyFinder.ExtractSubBodies(classBody.Symbols);
             classBody.methodBodies = MethodExtracter.Operate(classBody.Symbols, subBodies);
+            classBody.propertyBodies = PropertyExtractor.Operate(subBodies, classBody.Symbols);
+
             classBodies.Add(classBody);
 
         }
@@ -51,15 +53,12 @@ public class MethodBody
 {
     public string name;
     public List<string> modifiers;
-    public List<string> arguments;
+    public List<Argument> arguments;
     public List<string> symbols;
     public List<string> Generics;
     public string returnType;
 }
-public class PropertyBody
-{
 
-}
 public class VariableBody
 {
 
