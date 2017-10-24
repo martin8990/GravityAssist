@@ -48,17 +48,32 @@ public class SubBody
         StartingIndex = startingIndex;
     }
 }
-[System.Serializable]
-public class MethodBody
+
+public static class AtributeExtractor
 {
-    public string name;
-    public List<string> modifiers;
-    public List<Argument> arguments;
-    public List<string> symbols;
-    public List<string> Generics;
-    public string returnType;
+    public static List<string> Operate(List<string> symbols, int index)
+    {
+        var atributes = new List<string>();
+        bool inAtribute = false;
+        while (index >= 0 && symbols[index] != "}" && symbols[index] != "{" && symbols[index] != ";")
+        {
+                
+        }
+        
+    }
+
 }
 
+[System.Serializable]
+public class AtrinuteBody
+{
+    public List<string> Addres;
+    public List<string> Arguments;
+    public List<string> symbols;
+}
+
+
+[System.Serializable]
 public class VariableBody
 {
 

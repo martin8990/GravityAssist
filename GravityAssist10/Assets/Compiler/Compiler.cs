@@ -19,15 +19,7 @@ public class Compiler : MonoBehaviour
         WordsPerFile = LinesToWords.Operate(fileLines);
         symsPerFile = WordsToSymbols.Operate(WordsPerFile, Seperators);
         FileBodies = FileBodyFromSymbols.Operate(symsPerFile);
-        foreach (var filebody in FileBodies)
-        {
-            filebody.structBodies = StructExtracter.Operate(filebody.UnidentifiedSymbols);
-            filebody.classBodies = ClassExtracter.Operate(filebody.UnidentifiedSymbols);
-            filebody.usingStatements = UsingStatementExtracter.Operate(filebody.UnidentifiedSymbols);
-            filebody.interfaceBodies = InterfaceExtracter.Operate(filebody.UnidentifiedSymbols);
-            filebody.enumBodies = EnumExtracter.Operate(filebody.UnidentifiedSymbols);
-
-        }
+    
     }
 
 }
