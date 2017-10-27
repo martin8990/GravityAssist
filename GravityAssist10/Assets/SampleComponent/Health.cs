@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[Worker("Enemy")]
 public class Enemy
 {
     int hitpoints;

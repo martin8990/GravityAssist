@@ -202,65 +202,169 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directories:
   - C:\Users\marti\Documents\Unity\GravityAssist\GravityAssist10\Assets\SampleComponent
-  Seperators: 3b005b005d007b007d00280029002e002c003a003c003e00
-  bodyTypesDB: {fileID: 11400000, guid: dc02f021bbb2e51429150e5182847376, type: 2}
+  Seperators: 3b005b005d007b007d00280029002e002c003a003c003e0022002700
   FileBodies:
   - UnidentifiedSymbols:
-    - using
-    - System
-    - .
-    - Collections
-    - ;
-    - using
-    - System
-    - .
-    - Collections
-    - .
-    - Generic
-    - ;
-    - using
-    - UnityEngine
-    - ;
-    - public
-    - class
-    - Health
-    - ':'
-    - MonoBehaviour
-    - '{'
-    - public
-    - void
-    - someMethod
-    - (
-    - )
-    - '{'
-    - if
-    - (
-    - true
-    - )
-    - '{'
-    - Debug
-    - .
-    - Log
-    - (
-    - '"Yow"'
-    - )
-    - ;
-    - '}'
-    - '}'
-    - '}'
-    - public
-    - SampleGenericStruct<T>
-    - '{'
-    - '}'
-    classBodies: []
+    - ']'
+    classBodies:
+    - name: Enemy
+      Generics: []
+      Ancestors: []
+      Symbols:
+      - int
+      - hitpoints
+      - ;
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - (
+      - )
+      Modifiers:
+      - public
+      classBodies: []
+      stuctBodies: []
+      methodBodies:
+      - name: Hit
+        modifiers:
+        - public
+        arguments:
+        - name: int
+          type: damage
+          generic: 0
+        symbols:
+        - hitpoints
+        - -=
+        - damage
+        - ;
+        Generics: []
+        returnType: void
+      propertyBodies:
+      - name: Hitpoints
+        type: int
+        modifiers:
+        - public
+        generic: 0
+        symbols:
+        - get
+        - '{'
+        - return
+        - hitpoints
+        - ;
+        - '}'
+        - set
+        - '{'
+        - hitpoints
+        - =
+        - value
+        - ;
+        - '}'
+      atributeBodies:
+      - Addres:
+        - Worker
+        Arguments:
+        - arguments:
+          - '"'
+          - Enemy
+          - '"'
+    - name: Health
+      Generics: []
+      Ancestors:
+      - name: MonoBehaviour
+        Generics: []
+      Symbols:
+      - (
+      - )
+      Modifiers:
+      - abstract
+      - public
+      classBodies: []
+      stuctBodies: []
+      methodBodies:
+      - name: someMethod
+        modifiers:
+        - public
+        arguments: []
+        symbols:
+        - if
+        - (
+        - true
+        - )
+        - '{'
+        - Debug
+        - .
+        - Log
+        - (
+        - '"'
+        - Yow
+        - '"'
+        - )
+        - ;
+        - '}'
+        Generics:
+        - T
+        returnType: void
+      propertyBodies: []
+      atributeBodies: []
     structBodies:
-    - Generics: []
-      Intefaces: []
+    - name: SampleGenericStruct
+      Generics:
+      - T
+      Interfaces:
+      - name: SampleInterface
+        Generics:
+        - T
+      Symbols:
+      - public
+      - float
+      - SampleFloat
+      - ;
+      Modifiers:
+      - public
+    interfaceBodies:
+    - name: SampleInterface
+      Generics:
+      - T
+      Ancestors: []
       Symbols: []
-      name: SampleGenericStruct<T>
-    interfaceBodies: []
-    enumBodies: []
-    usingStatements: []
+      Modifiers:
+      - public
+    enumBodies:
+    - name: SomeEnum
+      Modifiers:
+      - public
+      Symbols:
+      - EAST
+      - ','
+      - WEST
+      - ','
+      - NORTH
+      - ','
+      - SOUTH
+    usingStatements:
+    - Addres:
+      - System
+      - Collections
+    - Addres:
+      - System
+      - Collections
+      - Generic
+    - Addres:
+      - UnityEngine
 --- !u!4 &1637501046
 Transform:
   m_ObjectHideFlags: 0
