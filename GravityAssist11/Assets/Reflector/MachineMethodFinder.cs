@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using System.Linq;
-public static class MachineMethodFinder
+public static class MReflector
 {
-    [Machine(machineCategory = MachineCategory.MachineCollecter,name = "GetMethods")]
+
     public static MethodInfo[] GetMethods()
     {
         var assembly = Assembly.GetExecutingAssembly();
@@ -12,4 +12,9 @@ public static class MachineMethodFinder
                       .ToArray();
         return methods;
     }
+
+  
 }
+
+
+

@@ -12,7 +12,7 @@ public class TestDriverEditor : Editor {
         var TD = target as TestDriver;
         if (GUILayout.Button("Execute"))
         {
-            TD.MTrigger();
+            TD.Reload();
         }
     }
 }

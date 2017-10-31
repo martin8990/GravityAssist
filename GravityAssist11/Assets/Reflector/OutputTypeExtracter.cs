@@ -18,11 +18,7 @@ public static class OutputTypeExtracter {
 
             }
         }
-
-        
         return type;       
-        
-
     }
     public static void GetSubType(List<SubType> list, FieldInfo field, int curDepth, int maxDepth)
     {
