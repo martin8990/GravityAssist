@@ -9,7 +9,7 @@ public static class UIGenerator
     public static List<GameObject> GenerateUI(GameObject prefab, Transform parent, int amount,UILayout layout)
     {
         var GOS = GOMassInstantiator.MassInstantiate(prefab, parent, amount);
-        var rectTFs = ComponentsGetter<RectTransform>.GetFromGOS(GOS);
+        var rectTFs = ComponentsGetter.GetFromGOS<RectTransform>(GOS);
         Debug.Log(GOS.Count);
         if (layout == UILayout.Vertical)
         {
@@ -23,10 +23,15 @@ public static class UIGenerator
     }
 }
 
-public static class ComponentsGetter<T>
+public static class ComponentsGetter
 {
-    public static List<T> GetFromGOS(List<GameObject> GOS)
+    public static List<T> GetFromGOS<T>(List<GameObject> GOS)
     {
         return GOS.Select(t => t.GetComponent<T>()).ToList();
     }
+    public static List<T> GetFromGOSKids<T>(List<GameObject> GOS)
+    {
+        return GOS.Select(t => t.GetComponentInChildren<T>()).ToList();
+    }
+
 }

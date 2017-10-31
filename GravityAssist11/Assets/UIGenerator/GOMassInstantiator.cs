@@ -13,5 +13,15 @@ public static class GOMassInstantiator
         }
         return GOS;
     }
+    public static void MassRemover(List<GameObject> GOS)
+    {
+        for (int i = 0; i < GOS.Count; i++)
+        {
+
+        }
+    }
+    
+
+
 }
 

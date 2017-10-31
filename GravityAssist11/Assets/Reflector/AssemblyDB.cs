@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu]
 public class AssemblyDB : ScriptableObject {
-    public List<AssemblyBoi> AssemblyBoi = new List<AssemblyBoi>();
+    public List<AssemblyBoi> AssemblyBois = new List<AssemblyBoi>();
     
 }
 [System.Serializable]

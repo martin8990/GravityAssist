@@ -18,14 +18,14 @@ public class TestDriver : MonoBehaviour {
 
     public void Reload()
     {
-        typeDatabase.AssemblyBoi.Clear();
+        typeDatabase.AssemblyBois.Clear();
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         foreach (var assembly in assemblies)
         {
             var aBoi = new AssemblyBoi();
             aBoi.typeBois = TypeCollecter.GetTypes(assembly);
             aBoi.name = assembly.GetName().Name;
-            typeDatabase.AssemblyBoi.Add(aBoi);            
+            typeDatabase.AssemblyBois.Add(aBoi);            
         }
         
     }
