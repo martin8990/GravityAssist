@@ -1,10 +1,16 @@
 fileFormatVersion: 2
 guid: 162264a399396564481b7c21488d6742
-timeCreated: 1509469723
+timeCreated: 1509524273
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - inputField: {instanceID: 0}
+  - assemblyDB: {fileID: 11400000, guid: 19c7b7ed29f52a6469c0315e9c9f6963, type: 2}
+  - SuggestPF: {fileID: 1212286850588278, guid: 67e775d5496c85947bb882861833ec55,
+      type: 2}
+  - SuggestTF: {instanceID: 0}
+  - poolParent: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

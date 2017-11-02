@@ -4,12 +4,6 @@ using UnityEngine;
 
 [CreateAssetMenu]
 public class AssemblyDB : ScriptableObject {
-    public List<AssemblyBoi> AssemblyBois = new List<AssemblyBoi>();
+    public List<AssemblyBoi> AssemblyBois;
     
-}
-[System.Serializable]
-public class AssemblyBoi
-{
-    public string name;
-    public List<TypeBoi> typeBois;
 }

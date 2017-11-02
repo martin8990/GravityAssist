@@ -18,15 +18,7 @@ public class TestDriver : MonoBehaviour {
 
     public void Reload()
     {
-        typeDatabase.AssemblyBois.Clear();
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-        foreach (var assembly in assemblies)
-        {
-            var aBoi = new AssemblyBoi();
-            aBoi.typeBois = TypeCollecter.GetTypes(assembly);
-            aBoi.name = assembly.GetName().Name;
-            typeDatabase.AssemblyBois.Add(aBoi);            
-        }
+        Reflector.getAssemblies(typeDatabase.AssemblyBois);
         
     }
     public void Start()
@@ -35,4 +27,5 @@ public class TestDriver : MonoBehaviour {
     }
 
 }
+
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
 public static class Intellisense
 {
 
@@ -10,14 +11,14 @@ public static class Intellisense
     {
         List<string> uniqueSrc = new List<string>(new HashSet<string>(words)); // remove duplicate
         int srcCnt = uniqueSrc.Count;
-        var m_CacheCheckList = new List<string>(System.Math.Min(maxShownCount, srcCnt)); // optimize memory alloc
+        var Results = new List<string>(System.Math.Min(maxShownCount, srcCnt)); // optimize memory alloc
 
         // Start with - slow
-        for (int i = 0; i < srcCnt && m_CacheCheckList.Count < maxShownCount; i++)
+        for (int i = 0; i < srcCnt && Results.Count < maxShownCount; i++)
         {
             if (uniqueSrc[i].ToLower().StartsWith(input.ToLower()))
             {
-                m_CacheCheckList.Add(uniqueSrc[i]);
+                Results.Add(uniqueSrc[i]);
                 uniqueSrc.RemoveAt(i);
                 srcCnt--;
                 i--;
@@ -25,23 +26,25 @@ public static class Intellisense
         }
 
         // Contains - very slow
-        if (m_CacheCheckList.Count == 0)
+        if (Results.Count == 0)
         {
-            for (int i = 0; i < srcCnt && m_CacheCheckList.Count < maxShownCount; i++)
+            for (int i = 0; i < srcCnt && Results.Count < maxShownCount; i++)
             {
                 if (uniqueSrc[i].ToLower().Contains(input.ToLower()))
                 {
-                    m_CacheCheckList.Add(uniqueSrc[i]);
+                    Results.Add(uniqueSrc[i]);
                     uniqueSrc.RemoveAt(i);
                     srcCnt--;
                     i--;
                 }
             }
         }
-
-        m_CacheCheckList.OrderBy(aux => aux.Length);
-        return m_CacheCheckList;
+        Debug.Log(Results[0]);
+        Results = Results.OrderBy(aux => aux.Length).ToList();
+        Debug.Log(Results[0]);
+        return Results;
     }
+    
 
     // Draw recommend keyward(s)
 
