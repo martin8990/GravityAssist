@@ -10,11 +10,18 @@ public class TypingInput : MonoBehaviour
     public Transform SuggestTF;
     
     public int maxSuggestions;
-    public Transform poolParent;
+    public Color Selected;
+    public Color Unselected;
+
+    public List<KeyCode> UpKeys;
+    public List<KeyCode> DownKeys;
+    public float KeyWaitTime;
+
 
     List<string> AssemblyNames = new List<string>();
     List<GameObject> SuggestObjects;
     List<Text> names;
+    List<Image> images;
 
     public void Start()
     {
@@ -23,26 +30,14 @@ public class TypingInput : MonoBehaviour
         SuggestObjects = GOMassInstantiator.MassInstantiate(SuggestPF, SuggestTF, maxSuggestions);
         UIPositioner.PositionVertically(SuggestTF, ComponentsGetter.GetFromGOS<RectTransform>(SuggestObjects));
         names = ComponentsGetter.GetFromGOSKids<Text>(SuggestObjects);
+        images = ComponentsGetter.GetFromGOSKids<Image>(SuggestObjects);
+        StartCoroutine(Intellisense.UpdateIndex(UpKeys, DownKeys, KeyWaitTime, Selected, Unselected, images));
     }
+ 
+    
     public void OnInputChanged()
     {
-        if (inputField.text.Length>0)
-        {
-            var similarWords = Intellisense.GetSimilarWords(inputField.text, AssemblyNames,maxSuggestions,0.5f);
-            int maxWords = Mathf.Min(maxSuggestions, similarWords.Count);
-            for (int i = 0; i < maxWords; i++)
-            {
-                names[i].text = similarWords[i];
-            }
-            for (int i = maxWords; i < maxSuggestions; i++)
-            {
-                names[i].text = "";
-            }
-        }        
+        Intellisense.AutofillTextboxes(inputField, maxSuggestions, AssemblyNames, names);
+        Intellisense.HighLightSelected(Selected, Unselected, images);
     }
-    public void OnEnter()
-    {
-        Debug.Log("Enter");
-        inputField.ActivateInputField();
-    }
-}
+ }

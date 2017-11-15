@@ -10,7 +10,7 @@ public class Compiler : MonoBehaviour
     List<FileLines> fileLines;
     List<SymbolsPerFile> WordsPerFile;
     List<SymbolsPerFile> symsPerFile;
-    public List<FileBody> FileBodies;
+    public List<ScriptBody> FileBodies;
 
     public void Compile()
     {
@@ -23,5 +23,16 @@ public class Compiler : MonoBehaviour
     }
 
 }
+
+public class ScriptBody
+{
+    internal List<string> UnidentifiedSymbols;
+    internal List<StructBody> structBodies;
+    internal List<ClassBody> classBodies;
+    internal List<UsingStatement> usingStatements;
+    internal List<InterfaceBody> interfaceBodies;
+    internal List<EnumBody> enumBodies;
+}
+
 public interface IComponent
 { }

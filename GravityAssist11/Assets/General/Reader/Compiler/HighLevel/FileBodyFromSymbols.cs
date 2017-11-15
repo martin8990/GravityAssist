@@ -3,12 +3,12 @@ using UnityEngine;
 
 public static class FileBodyFromSymbols
 {
-    public static List<FileBody> Operate(List<SymbolsPerFile> input)
+    public static List<ScriptBody> Operate(List<SymbolsPerFile> input)
     {
-        List<FileBody> fileBodies = new List<FileBody>();
+        List<ScriptBody> fileBodies = new List<ScriptBody>();
         foreach (var file in input)
         {
-            var body = new FileBody();
+            var body = new ScriptBody();
             body.UnidentifiedSymbols = file.Symbols;
             body.structBodies = StructExtracter.Operate(body.UnidentifiedSymbols);
             body.classBodies = ClassExtracter.Operate(body.UnidentifiedSymbols);
