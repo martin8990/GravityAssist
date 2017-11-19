@@ -74,106 +74,11 @@ public static class OperationSorter
             }
         }
         
-        PrioOne.ClaimChildren(operations);
-        Debug.Log("Result = " + operations[0].Calculate());
+        Operators.ClaimChildren(operations,2);
+        Debug.Log("Result = " + operations[0].Calculate(operations[0]));
         Debug.Log(operations.Count);
 
 
-    }
-}
-
-public abstract class Operation
-{
-    public List<Operation> Children = new List<Operation>();
-    public Operation parent;
-    public int prio;
-    public abstract float Calculate();
-    
-}
-
-
-public class Numerics:Operation
-{
-
-    float value;
-
-    public Numerics(float value)
-    {
-        this.value = value;
-        this.prio = 0;
-    }
-
-    public static Operation Find(string token)
-    {
-        float n;
-        bool isNumeric = float.TryParse(token, out n);
-        if (isNumeric)
-        {
-            
-            var Operation = new Numerics(n);
-            return Operation;
-        }
-        else
-        {
-            return PrioOne.Find(token);
-        }
-
-    }
-
-    public override float Calculate()
-    {
-        return value;
-    }
-}
-
-public class PrioOne : Operation
-{
-    public PrioOne()
-    {
-        this.prio = 1;
-    }
-
-    public static Operation Find(string Token)
-    {
-        if (Token == "+")
-        {
-            var operation = new PrioOne();
-            return operation;
-        }
-        else
-        {
-            return null;
-        }
-    }
-    public static void ClaimChildren(List<Operation> ops)
-    {
-     
-        if (ops.Count>2)
-        {
-            for (int i = 1; i < ops.Count - 1; i++)
-            {
-                if (ops[i].prio == 1)
-                {
-                    ops[i].Children.Add(ops[i - 1]);
-                    ops[i].Children.Add(ops[i + 1]);
-                    ops.RemoveAt(i-1);
-                    ops.RemoveAt(i);
-                    i--;
-                }
-            }
-
-        }
-    }
-   
-
-    public override float Calculate()
-    {
-        float result = 0;
-        for (int i = 0; i < Children.Count; i++)
-        {
-            result += Children[i].Calculate();
-        }
-        return result;
     }
 }
 

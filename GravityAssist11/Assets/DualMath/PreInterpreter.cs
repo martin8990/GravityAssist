@@ -2,7 +2,7 @@
 using UnityEngine;
 public static class PreInterpreter
 {
-    static List<char> Separators = new List<char> { ';', ':', '+', '-', '^','(',')' };
+    static List<char> Separators = new List<char> { ';', ':', '+', '-', '^','(',')','*','/' };
 
     public static List<string> InterpretLine(string line, int LineNumber)
     {
