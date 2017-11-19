@@ -3,30 +3,14 @@ using UnityEngine;
 
 public static class Operators
 {
-     public static Operation Find(string Token)
+    public static Operation Find(string Token,int prioBoost)
     {
         if (Token == "+")
         {
-            var operation = new Operation(1,Add);
+            var operation = new Operation(1+prioBoost, Add);
             return operation;
         }
-        else if(Token == "-")
-        {
-            var operation = new Operation(1, Subtract);
-            return operation;
-        }
-        else if(Token == "*")
-        {
-            var operation = new Operation(2, Mult);
-            return operation;
-
-        }
-        else if (Token == "/")
-        {
-            var operation = new Operation(2, div);
-            return operation;
-
-        }
+        
         else
         {
             return null;
@@ -34,65 +18,61 @@ public static class Operators
     }
     public static void ClaimChildren(List<Operation> ops, int prio)
     {
-        for (int j = prio+1; j >= 1; j--)
+        if (ops.Count > 2)
         {
-            if (ops.Count > 2)
+           
+            for (int i = 1; i < ops.Count - 1; i++)
             {
-                for (int i = 1; i < ops.Count - 1; i++)
+                if (ops[i].arg1!=null)
                 {
-                    
-                        ops[i].Children.Add(ops[i - 1]);
-                        ops[i].Children.Add(ops[i + 1]);
-                        ops.RemoveAt(i - 1);
-                        ops.RemoveAt(i);
-                        i--;
+                    ClaimChildren(new List<Operation> { ops[i].arg1, ops[i].arg2 }, prio);
                 }
+                if (ops[i].prio == prio)
+                {
+                    ops[i].arg1 = ops[i - 1];
+                    ops[i].arg2 = (ops[i + 1]);
+                    ops.RemoveAt(i - 1);
+                    ops.RemoveAt(i);
+                    i--;
+                }
+               
             }
         }
-        
     }
-    public static float Add(Operation op)
+    
+    public static dType Add(Operation op)
     {
-        var kids = op.Children;
-        float result = 0;
-        for (int i = 0; i < kids.Count; i++)
+        if (op.arg1!=null && op.arg2!=null)
         {
-            result += kids[i].Calculate(kids[i]);
-        }
-        return result;
-    }
-    public static float Subtract(Operation operation)
-    {
-        var kids = operation.Children;
-        float result = kids[0].Calculate(kids[0]);
-        for (int i = 1; i < kids.Count; i++)
-        {
-           result -= kids[i].Calculate(kids[i]);
-        }
-        return result;
-    }
-    public static float Mult(Operation op)
-    {
-        var kids = op.Children;
-        float result = kids[0].Calculate(kids[0]);
-        for (int i = 1; i < kids.Count; i++)
-        {
-            result *= kids[i].Calculate(kids[i]);
-        }
-        return result;
+            var val1 = op.arg1.Calculate(op.arg1);
+            var val2 = op.arg1.Calculate(op.arg2);
+            if (val1 != null && val2 != null)
+            {
+                var t1 = val1.type;
+                var t2 = val1.type;
 
-    }
-    public static float div(Operation op)
-    {
-        var kids = op.Children;
-        float result = kids[0].Calculate(kids[0]);
-        for (int i = 1; i < kids.Count; i++)
-        {
-            result = result / kids[i].Calculate(kids[i]);
-        }
-        return result;
+                if (t1 == _dType.FLOAT32 && t1 == _dType.FLOAT32)
+                {
+                    var Float1 = val1 as FLOAT32;
+                    var Float2 = val1 as FLOAT32;
+                    if (Float1 != null && Float2 != null)
+                    {
+                        var f1 = Float1.value;
+                        var f2 = Float2.value;
+                        var res = f1 + f2;
+                        return new FLOAT32(res);
+                    }
+                }
+                return null;
 
+            }
+
+            return null;
+        }
+        return null;
+       
     }
+
 }
 
 

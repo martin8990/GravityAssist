@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class InputDriver : MonoBehaviour {
     public InputField inputField;
-
+    public Text resulttxt;
     public void Start()
     {
         inputField.ActivateInputField();
@@ -27,10 +27,13 @@ public class InputDriver : MonoBehaviour {
             }
             
         }
-        if (LineNumber<result.Length)
+        if (LineNumber < result.Length)
         {
-            MathCommander.ProcessLine(result[LineNumber], LineNumber);
+            var output = MathCommander.ProcessLine(result[LineNumber], LineNumber);
+            resulttxt.text = output.ToString();
         }
+        
+                
     }
 
 

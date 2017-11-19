@@ -6,7 +6,7 @@ public static class Interpreter
     public static Dictionary<string, Operation> SymbolDict = new Dictionary<string, Operation>();
     static bool error = false;
 
-    public static void InterpretTokens(List<string> tokens)
+    public static float InterpretTokens(List<string> tokens)
     {
         error = false;
         string assignment = Assignment(tokens);
@@ -16,8 +16,8 @@ public static class Interpreter
         {
             isAssignment = true;
         }
-        OperationSorter.GetOperations(tokens);
-
+        var result =  Calculator.Calculate(tokens);
+        return result;
     }
 
     public static string Assignment(List<string> tokens)
@@ -54,31 +54,6 @@ public static class Interpreter
     {
         Debug.Log(Error);
         error = true;
-    }
-}
-
-public static class OperationSorter
-{
-
-    public static void GetOperations(List<string> OperationTokens)
-    {
-
-        List<Operation> operations = new List<Operation>();
-    
-        for (int i = 0; i < OperationTokens.Count; i++)
-        {
-            var op = Numerics.Find(OperationTokens[i]);
-            if (op!=null)
-            {
-                operations.Add(op);
-            }
-        }
-        
-        Operators.ClaimChildren(operations,2);
-        Debug.Log("Result = " + operations[0].Calculate(operations[0]));
-        Debug.Log(operations.Count);
-
-
     }
 }
 
