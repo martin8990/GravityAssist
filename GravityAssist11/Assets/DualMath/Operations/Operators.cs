@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public static class Operators
 {
-    public static Operation Find(string Token,int prioBoost)
+    public static token Find(string Token,int prioBoost)
     {
         if (Token == "+")
         {
-            var operation = new Operation(1+prioBoost, Add);
+            var operation = new AddOperator(prioBoost);
             return operation;
         }
         
@@ -16,67 +18,44 @@ public static class Operators
             return null;
         }
     }
-    public static void ClaimChildren(List<Operation> ops, int prio)
+    public static void ClaimChildren(List<token> ops, int prio)
     {
         if (ops.Count > 2)
         {
-           
             for (int i = 1; i < ops.Count - 1; i++)
             {
-                if (ops[i].arg1!=null)
+                if (ops[i].kids.Count>0)
                 {
-                    ClaimChildren(new List<Operation> { ops[i].arg1, ops[i].arg2 }, prio);
+                    ClaimChildren(ops[i].kids, prio);
                 }
                 if (ops[i].prio == prio)
                 {
-                    ops[i].arg1 = ops[i - 1];
-                    ops[i].arg2 = (ops[i + 1]);
+                    
+                    ops[i].kids.Add(ops[i - 1]);
+                    ops[i].kids.Add(ops[i + 1]);
+                    ops[i].type = ops[i].kids[0].type;
+                    if (ops[i].kids[0].type < ops[i].kids[1].type)
+                    {
+                        ops[i].type = ops[i].kids[1].type;
+                    }
                     ops.RemoveAt(i - 1);
                     ops.RemoveAt(i);
                     i--;
-                }
-               
+                    
+                }               
             }
         }
     }
-    
-    public static dType Add(Operation op)
-    {
-        if (op.arg1!=null && op.arg2!=null)
-        {
-            var val1 = op.arg1.Calculate(op.arg1);
-            var val2 = op.arg1.Calculate(op.arg2);
-            if (val1 != null && val2 != null)
-            {
-                var t1 = val1.type;
-                var t2 = val1.type;
-
-                if (t1 == _dType.FLOAT32 && t1 == _dType.FLOAT32)
-                {
-                    var Float1 = val1 as FLOAT32;
-                    var Float2 = val1 as FLOAT32;
-                    if (Float1 != null && Float2 != null)
-                    {
-                        var f1 = Float1.value;
-                        var f2 = Float2.value;
-                        var res = f1 + f2;
-                        return new FLOAT32(res);
-                    }
-                }
-                return null;
-
-            }
-
-            return null;
-        }
-        return null;
-       
-    }
-
 }
 
 
+public static class Functions
+{
+    public static token Find(string Token, int prioBoost)
+    {
 
+    }
+}
 
 
 

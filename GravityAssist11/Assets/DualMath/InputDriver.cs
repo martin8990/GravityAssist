@@ -29,8 +29,8 @@ public class InputDriver : MonoBehaviour {
         }
         if (LineNumber < result.Length)
         {
-            var output = MathCommander.ProcessLine(result[LineNumber], LineNumber);
-            resulttxt.text = output.ToString();
+           MathCommander.ProcessLine(result[LineNumber], LineNumber);
+           
         }
         
                 

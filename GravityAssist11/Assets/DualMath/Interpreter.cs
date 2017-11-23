@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 public static class Interpreter
 {
-    public static Dictionary<string, Operation> SymbolDict = new Dictionary<string, Operation>();
+    public static Dictionary<string, token> SymbolDict = new Dictionary<string, token>();
     static bool error = false;
 
-    public static float InterpretTokens(List<string> tokens)
+    public static void InterpretTokens(List<string> tokens)
     {
         error = false;
         string assignment = Assignment(tokens);
@@ -16,8 +16,11 @@ public static class Interpreter
         {
             isAssignment = true;
         }
-        var result =  Calculator.Calculate(tokens);
-        return result;
+        var operation =  OperationPlanner.Plan(tokens);
+        if (operation!=null)
+        {
+            OperationCalculator.Calc(operation);
+        }
     }
 
     public static string Assignment(List<string> tokens)
@@ -39,7 +42,7 @@ public static class Interpreter
             return "";
         }
     }
-    public static Operation KnownSymbol(int i, List<string> tokens)
+    public static token KnownSymbol(int i, List<string> tokens)
     {
         if (SymbolDict.ContainsKey(tokens[i]))
         {

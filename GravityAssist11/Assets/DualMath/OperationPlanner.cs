@@ -1,32 +1,26 @@
 ﻿using System.Collections.Generic;
-public static class Calculator
+public static class OperationPlanner
 {
 
-    public static float Calculate(List<string> OperationTokens)
+    public static token Plan(List<string> OperationTokens)
     {
         int numPrios = 2;
-        List<Operation> operations = new List<Operation>();
+        List<token> operations = new List<token>();
         int PrioBoost = 0;
         int MaxPrio = 2;
         SetPriorities(OperationTokens, numPrios, operations, ref PrioBoost, ref MaxPrio);
-        if (operations.Count > 0)
+
+        if (operations.Count>0)
         {
-            var result = operations[0].Calculate(operations[0]) as FLOAT32;
-            if (result!=null)
-            {
-                return result.value;
-            }
-            else
-            {
-                return 0;
-            }
+            return operations[0];
         }
-        else return 0;
+
+        return null;
 
 
     }
 
-    private static void SetPriorities(List<string> OperationTokens, int numPrios, List<Operation> operations, ref int PrioBoost, ref int MaxPrio)
+    private static void SetPriorities(List<string> OperationTokens, int numPrios, List<token> operations, ref int PrioBoost, ref int MaxPrio)
     {
         for (int i = 0; i < OperationTokens.Count; i++)
         {
@@ -43,7 +37,7 @@ public static class Calculator
                 PrioBoost -= numPrios;
             }
 
-            var op = Numerics.Find(OperationTokens[i], PrioBoost);
+            var op = NumericsFinder.Find(OperationTokens[i], PrioBoost);
             if (op != null)
             {
                 operations.Add(op);
