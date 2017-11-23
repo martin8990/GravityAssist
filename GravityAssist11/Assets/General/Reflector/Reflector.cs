@@ -32,7 +32,7 @@ public static class Reflector
                 }
                 if (i == Addres.Count - 1)
                 {
-                    CurBoi.typeBois = Reflector.GetTypes(assembly);
+                   // CurBoi.typeBois = Reflector.GetTypes(assembly);
                 }
                 else
                 {
@@ -50,20 +50,42 @@ public static class Reflector
         var types = assembly.GetTypes();
 
         var typeBois = new List<TypeBoi>();
-        foreach (var boi in types)
+        foreach (var type in types)
         {
             var typeBoi = new TypeBoi();
-            typeBoi.name = boi.FullName;
-            //typeBoi.Class = boi.DeclaringType.Name;
-            //typeBoi.parameters = GetParametersFromMachine(boi);
-            //typeBoi.returnType = OutputTypeExtracter.GetOutputType(boi.ReturnType, 3);
+            typeBoi.name = type.FullName;
+            GetMethods(type, typeBoi);
             typeBois.Add(typeBoi);
         }
         Debug.Log("Found " + typeBois.Count + " types in " + assembly.GetName().Name);
         return typeBois;
     }
+    public static void GetMethods(Type type,TypeBoi typeBoi)
+    {
+        var methods = type.GetMethods();
+        foreach (var method in methods)
+        {
+            if (method.IsStatic)
+            {
+                var methodBoi = new MethodBoi();
+                methodBoi.name = method.Name;
+                methodBoi.parameters = GetParametersForMehtod(method);
+                if (method.ReturnType == typeof(void))
+                {
+                    typeBoi.ActionMethods.Add(methodBoi);
+                }
+                else
+                {
+                    
+                    methodBoi.returnType = OutputTypeExtracter.GetOutputType(method.ReturnType, 3);
+                    typeBoi.FuncMethods.Add(methodBoi);
+                }
+            }
+        }
 
-    public static List<Parameter> GetParametersFromMachine(MethodInfo info)
+    }
+
+    public static List<Parameter> GetParametersForMehtod(MethodInfo info)
     {
         var parameters = new List<Parameter>();
         foreach (var parameter in info.GetParameters())

@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu]
 public class AssemblyDB : ScriptableObject {
     public List<AssemblyBoi> AssemblyBois;
-    
+    public List<AssemblyBoi> InUse;
 }

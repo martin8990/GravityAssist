@@ -2,42 +2,54 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
+
 public class TypingInput : MonoBehaviour
 {
     public InputField inputField;
     public AssemblyDB assemblyDB;
-    public GameObject SuggestPF;
-    public Transform SuggestTF;
+    public SuggestText suggestText;
+    public int maxSuggest; 
     
-    public int maxSuggestions;
-    public Color Selected;
-    public Color Unselected;
-
-    public List<KeyCode> UpKeys;
-    public List<KeyCode> DownKeys;
-    public float KeyWaitTime;
-
-
     List<string> AssemblyNames = new List<string>();
-    List<GameObject> SuggestObjects;
-    List<Text> names;
-    List<Image> images;
 
     public void Start()
     {
         inputField.ActivateInputField();
         AssemblyNames = assemblyDB.AssemblyBois.Select(t => t.name).ToList();
-        SuggestObjects = GOMassInstantiator.MassInstantiate(SuggestPF, SuggestTF, maxSuggestions);
-        UIPositioner.PositionVertically(SuggestTF, ComponentsGetter.GetFromGOS<RectTransform>(SuggestObjects));
-        names = ComponentsGetter.GetFromGOSKids<Text>(SuggestObjects);
-        images = ComponentsGetter.GetFromGOSKids<Image>(SuggestObjects);
-        StartCoroutine(Intellisense.UpdateIndex(UpKeys, DownKeys, KeyWaitTime, Selected, Unselected, images));
+        suggestText.Init();    
     }
  
     
     public void OnInputChanged()
     {
-        Intellisense.AutofillTextboxes(inputField, maxSuggestions, AssemblyNames, names);
-        Intellisense.HighLightSelected(Selected, Unselected, images);
+        var Suggestions = SuggestionFinder.GetSuggestions(inputField.text,maxSuggest)
     }
+
+
  }
+
+public class ModeSwitcher : MonoBehaviour
+{
+
+}
+
+public class AddresSwitcher
+{
+    public static List<Address> Curadresses;
+    public static List<string> CurrentOptions;
+    public static void ResetAddreses(List<Address> Adresses)
+    {
+        Curadresses = Adresses;
+        CurrentOptions = Adresses.Select(t => t.name).ToList();
+    }
+    public static void GotoSubAdresses(string name)
+    {
+        Curadresses = Curadresses.Where(t => t.name == name).Single().GetSubAdresses();
+        CurrentOptions = Curadresses.Select(t => t.name).ToList();
+    }
+    public static void AddOptions(string input,int maxSuggestions,SuggestText suggestText)
+    {
+        SuggestionFinder.GetSuggestions(input, maxSuggestions, CurrentOptions,suggestText);
+    }
+}
