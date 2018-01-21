@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Utility;
+using UnityEngine.AI;
 public class WorldCreator : MonoBehaviour {
 
 
     public CInt MapSize;
     public GameObject planePF;
-
+    GameObject[,] planes;
     [Button]
     public void CreateWorld()
     {
@@ -15,8 +16,14 @@ public class WorldCreator : MonoBehaviour {
         {
             DestroyImmediate(transform.GetChild(i).gameObject);
         }
-        var planes =  WorldFactory.BuildPlanes(0,planePF,transform,MapSize);
+        planes =  WorldFactory.BuildPlanes(0,planePF,transform,MapSize);
+    }
+    [Button]
+    public void AddNavmesh()
+    {
+        var navMeshSurfaces = planes.Map2D1D((x) => x.AddComponent<NavMeshSurface>());
+        navMeshSurfaces.Iter((x) => x.BuildNavMesh());
     }
 
-    
+
 }

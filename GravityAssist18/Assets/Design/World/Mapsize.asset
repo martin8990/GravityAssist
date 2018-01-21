@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d24bb9c3695eac7408820176f8842353, type: 3}
   m_Name: Mapsize
   m_EditorClassIdentifier: 
-  val: 0
+  val: 30

@@ -17,6 +17,9 @@ public static class WorldFactory
 
         ArrayIter.Iter2D(planes, (x) => x.transform.localScale =
             x.transform.localScale * size );
+        ArrayIter.Iter2D(planes, (x) => x.transform.localScale = 
+            new Vector3(x.transform.localScale.x, 0.01f, x.transform.localScale.z));
+
         ArrayIter.Iter2D(planes, (x) =>
             x.transform.SetParent(parent, false));
 

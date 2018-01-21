@@ -10,9 +10,61 @@ using UnityEngine.UI;
 
 namespace Infrastructure
 {
-    
+    public class CubeMaker : MonoBehaviour
+    {
 
-       
+        public GameObject cubePF;
+        GameObject curGO;
+        Camera cam;
+        public bool InCubemaker;
+        Vector2Int p1;
+        Vector2Int p2;
+        float height;
+        bool Dragging;
+
+
+        public void Start()
+        {
+            cam = Camera.main;
+        }
+        public void OnEnable()
+        {
+            curGO = GameObject.Instantiate(cubePF);
+            curGO.transform.SetParent(transform, false);
+        }
+
+        public void Update()
+        {
+            var pos = Snap.GetSnappedPos(cam, Vector3.one);
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!Dragging)
+                {
+
+                    p1 = new Vector2Int(p1.x, p1.y);
+                    Dragging = true;
+                }
+                if (Dragging)
+                {
+                    p2 = new Vector2Int(p1.x, p1.y);
+                    Dragging = true;
+                }
+            }
+            else
+            {
+                if (Dragging)
+                {
+                    Dragging = false;
+                }
+                else
+                {
+
+                }
+            }
+        }
+
+    }
+
     public class Placer : MonoBehaviour
     {
         public Vector3Int GridResolution;
@@ -29,7 +81,7 @@ namespace Infrastructure
 
         private void Start()
         {
-            var UI = UIGenerator.GenerateUI(categoryButtonPF, CategoryPanel.transform, Catalogue.Count,UILayout.Horizontal);
+            var UI = UIGenerator.GenerateUI(categoryButtonPF, CategoryPanel.transform, Catalogue.Count, UILayout.Horizontal);
             UI.Iteri((k, x) => x.GetComponentInChildren<Text>().text = Catalogue[k].name);
             UI.Iteri((k, x) => x.GetComponent<Button>().onClick.AddListener(() => DisplayUI(k)));
 
@@ -42,7 +94,7 @@ namespace Infrastructure
             subUI.Iter((x) => Destroy(x));
             subUI = UIGenerator.GenerateUI(ObjButton, ObjectPanel.transform, Catalogue[catId].gameObjects.Count, UILayout.Horizontal);
             subUI.Iteri((k, x) => x.GetComponentInChildren<Text>().text = Catalogue[catId].gameObjects[k].name);
-            subUI.Iteri((k, x) => x.GetComponent<Button>().onClick.AddListener(() => Place(catId,k)));
+            subUI.Iteri((k, x) => x.GetComponent<Button>().onClick.AddListener(() => Place(catId, k)));
 
         }
 
@@ -63,9 +115,9 @@ namespace Infrastructure
             {
                 var pos = MousePositioning.MouseToWorldPos(cam);
                 var posRound = new Vector3(
-                    Mathf.Round(pos.x-curPlaceAble.scale.x/2f) + curPlaceAble.scale.x/2f,
-                    Mathf.Round(pos.y) + curPlaceAble.scale.y/2f,
-                    Mathf.Round(pos.z - curPlaceAble.scale.z / 2f)+ curPlaceAble.scale.z / 2f);
+                    Mathf.Round(pos.x - curPlaceAble.scale.x / 2f) + curPlaceAble.scale.x / 2f,
+                    Mathf.Round(pos.y) + curPlaceAble.scale.y / 2f,
+                    Mathf.Round(pos.z - curPlaceAble.scale.z / 2f) + curPlaceAble.scale.z / 2f);
                 curPlaceAble.transform.position = posRound;
 
                 if (Input.GetMouseButtonDown(0))
