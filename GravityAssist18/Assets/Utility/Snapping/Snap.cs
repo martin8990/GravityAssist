@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 using UnityEngine;
 
 namespace Utility
@@ -14,7 +14,7 @@ namespace Utility
             var pos = MousePositioning.MouseToWorldPos(cam);
             var posRound = new Vector3(
                 Mathf.Round(pos.x - scale.x / 2f) + scale.x / 2f,
-                Mathf.Round(pos.y) + scale.y / 2f,
+                Mathf.Round(pos.y),
                 Mathf.Round(pos.z - scale.z / 2f) +scale.z / 2f);
             return posRound;
         }

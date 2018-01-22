@@ -18,12 +18,7 @@ public class WorldCreator : MonoBehaviour {
         }
         planes =  WorldFactory.BuildPlanes(0,planePF,transform,MapSize);
     }
-    [Button]
-    public void AddNavmesh()
-    {
-        var navMeshSurfaces = planes.Map2D1D((x) => x.AddComponent<NavMeshSurface>());
-        navMeshSurfaces.Iter((x) => x.BuildNavMesh());
-    }
+
 
 
 }

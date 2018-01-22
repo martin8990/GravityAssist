@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 using UnityEngine;
 using Domain;
 using Utility;
@@ -10,60 +10,6 @@ using UnityEngine.UI;
 
 namespace Infrastructure
 {
-    public class CubeMaker : MonoBehaviour
-    {
-
-        public GameObject cubePF;
-        GameObject curGO;
-        Camera cam;
-        public bool InCubemaker;
-        Vector2Int p1;
-        Vector2Int p2;
-        float height;
-        bool Dragging;
-
-
-        public void Start()
-        {
-            cam = Camera.main;
-        }
-        public void OnEnable()
-        {
-            curGO = GameObject.Instantiate(cubePF);
-            curGO.transform.SetParent(transform, false);
-        }
-
-        public void Update()
-        {
-            var pos = Snap.GetSnappedPos(cam, Vector3.one);
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (!Dragging)
-                {
-
-                    p1 = new Vector2Int(p1.x, p1.y);
-                    Dragging = true;
-                }
-                if (Dragging)
-                {
-                    p2 = new Vector2Int(p1.x, p1.y);
-                    Dragging = true;
-                }
-            }
-            else
-            {
-                if (Dragging)
-                {
-                    Dragging = false;
-                }
-                else
-                {
-
-                }
-            }
-        }
-
-    }
 
     public class Placer : MonoBehaviour
     {

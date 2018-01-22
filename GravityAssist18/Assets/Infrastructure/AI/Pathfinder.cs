@@ -10,17 +10,30 @@ namespace Infrastructure
     {
         public Transform destination;
         public NavMeshAgent nvAgent;
+        bool hasPath;
 
         private void Start()
         {
             nvAgent = this.GetComponent<NavMeshAgent>();
-            FindPath();
+           
         }
+        private void Update()
+        {
+            if (destination!=null && !hasPath)
+            {
 
+                FindPath();
+            }
+        }
         [Button]
         public void FindPath()
         {
-            nvAgent.SetDestination(destination.position);   
+            if (destination!=null)
+            {
+                nvAgent.SetDestination(destination.position);
+                hasPath = true;
+            }
+
         }
     }
 }

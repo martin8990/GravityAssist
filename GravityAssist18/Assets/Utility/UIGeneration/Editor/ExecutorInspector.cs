@@ -3,6 +3,8 @@ using UnityEditor;
 using System.Reflection;
 using System.Collections.Generic;
 
+
+
 namespace Utility
 {
     [CustomEditor(typeof(MonoBehaviour), true)]
@@ -21,7 +23,7 @@ namespace Utility
                 var methds = target.GetType().GetMethods();
                 foreach (var method in methds)
                 {
-                    var GoodMethod = method.GetCustomAttribute(typeof(ButtonAttribute));
+                    var GoodMethod = method.GetCustomAttribute<ButtonAttribute>();
                     if (GoodMethod!=null)
                     {
                         methods.Add(method);
