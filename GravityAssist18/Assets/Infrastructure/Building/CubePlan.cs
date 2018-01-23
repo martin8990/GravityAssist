@@ -3,10 +3,28 @@ namespace Infrastructure
 {
     public class CubePlan : MonoBehaviour
     {
-        public void Select()
+        public float WorkLeft = 10;
+        public int Invalid;
+        public int CubeLayer = 8;
+        private void OnTriggerEnter(Collider other)
         {
-            /// make UI Appear for scaling and stuf
+            if (other.gameObject.layer == CubeLayer)
+            {
+                Invalid++;
+            }
+
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.layer == CubeLayer)
+            {
+                Invalid--;
+            }
         }
 
     }
+
+    
+    
+
 }
