@@ -664,7 +664,7 @@ Transform:
   - {fileID: 1220342802}
   - {fileID: 925224436}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &385353961
 GameObject:
@@ -698,7 +698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b89c75447693cd4e9d0818a99d4c726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 963037920}
+  destination: {fileID: 0}
   nvAgent: {fileID: 385353964}
 --- !u!54 &385353963
 Rigidbody:
@@ -803,48 +803,6 @@ Transform:
   m_Father: {fileID: 359431702}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &591422677
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4691407393235544, guid: ffdbc9b809b8506469edbc54a865ca4a, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -5.52
-      objectReference: {fileID: 0}
-    - target: {fileID: 4691407393235544, guid: ffdbc9b809b8506469edbc54a865ca4a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 11.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 4691407393235544, guid: ffdbc9b809b8506469edbc54a865ca4a, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 4.289809
-      objectReference: {fileID: 0}
-    - target: {fileID: 4691407393235544, guid: ffdbc9b809b8506469edbc54a865ca4a, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4691407393235544, guid: ffdbc9b809b8506469edbc54a865ca4a, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4691407393235544, guid: ffdbc9b809b8506469edbc54a865ca4a, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4691407393235544, guid: ffdbc9b809b8506469edbc54a865ca4a, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4691407393235544, guid: ffdbc9b809b8506469edbc54a865ca4a, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: ffdbc9b809b8506469edbc54a865ca4a, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &657969689
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,7 +1028,7 @@ RectTransform:
   - {fileID: 1616157031}
   - {fileID: 1607421771}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1214,95 +1172,6 @@ Transform:
   m_Father: {fileID: 359431702}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &928731055
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 928731059}
-  - component: {fileID: 928731058}
-  - component: {fileID: 928731057}
-  - component: {fileID: 928731056}
-  m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!23 &928731056
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 928731055}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!65 &928731057
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 928731055}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &928731058
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 928731055}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &928731059
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 928731055}
-  m_LocalRotation: {x: 0, y: 0.06888588, z: 0, w: 0.9976246}
-  m_LocalPosition: {x: -5.5, y: 4.0000153, z: 4.53}
-  m_LocalScale: {x: 10, y: 10, z: 10}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 7.9, z: 0}
---- !u!4 &963037920 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4691407393235544, guid: ffdbc9b809b8506469edbc54a865ca4a,
-    type: 2}
-  m_PrefabInternal: {fileID: 591422677}
 --- !u!1 &1026566230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,7 +1629,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1414838212
 GameObject:
@@ -1771,8 +1640,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1414838214}
   - component: {fileID: 1414838213}
+  - component: {fileID: 1414838215}
   m_Layer: 0
-  m_Name: Cubemaker
+  m_Name: Architect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1786,18 +1656,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 1414838212}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f764d17ad3e15e64dac30d54d31f8273, type: 3}
+  m_Script: {fileID: 11500000, guid: f335de66fc82edf45a0823b741819129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cubePF: {fileID: 1862106838535890, guid: ffdbc9b809b8506469edbc54a865ca4a, type: 2}
-  linkPF: {fileID: 1380790346276916, guid: 2a237d6b18221434ca443d73d8bdbe95, type: 2}
-  height: 3
-  nvlinkOffset: 1
+  height: 4
+  nvlinkOffset: 0.2
   navMeshSurface: {fileID: 1427958693}
   finderManager: {fileID: 359431701}
-  done:
+  cubeMask:
+    serializedVersion: 2
+    m_Bits: 256
+  cubeColors: {fileID: 11400000, guid: a5c17331d17034d4db6121cc01de9cd2, type: 2}
+  constructionLibrary: {fileID: 1414838215}
+  ToBuildController:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1414838213}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1616157032}
         m_MethodName: set_enabled
         m_Mode: 6
@@ -1811,10 +1696,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  cubeMask:
-    serializedVersion: 2
-    m_Bits: 256
-  cubeColors: {fileID: 11400000, guid: a5c17331d17034d4db6121cc01de9cd2, type: 2}
 --- !u!4 &1414838214
 Transform:
   m_ObjectHideFlags: 0
@@ -1828,6 +1709,18 @@ Transform:
   m_Father: {fileID: 1708196478}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1414838215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1414838212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6e3d24b6c9a44f4798b91a20e795304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constructionPlans: []
 --- !u!1 &1427958690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1870,7 +1763,7 @@ Transform:
   m_Children:
   - {fileID: 165561150}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1427958693
 MonoBehaviour:
@@ -1897,9 +1790,9 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0
+  m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 7caf679f0277e294faa6c901d523c805, type: 2}
 --- !u!1 &1501743739
 GameObject:
   m_ObjectHideFlags: 0
@@ -1960,7 +1853,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1607421770
 GameObject:
@@ -2092,7 +1985,7 @@ GameObject:
   - component: {fileID: 1708196480}
   - component: {fileID: 1708196479}
   m_Layer: 5
-  m_Name: BuildCube
+  m_Name: ToArchitectBTN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2245,7 +2138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ef8c68bade09b41aca258d42a632f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lastTab: 1
+  lastTab: 2
   movementSettingsFoldout: 1
   zoomingSettingsFoldout: 0
   rotationSettingsFoldout: 1
@@ -2265,7 +2158,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   maxHeight: 100
-  minHeight: 10
+  minHeight: 40
   heightDampening: 5
   keyboardZoomingSensitivity: 5
   scrollWheelZoomingSensitivity: 40
@@ -2274,21 +2167,21 @@ MonoBehaviour:
   limitY: 100000
   targetFollow: {fileID: 0}
   targetOffset: {x: 0, y: 0, z: 0}
-  useScreenEdgeInput: 1
+  useScreenEdgeInput: 0
   screenEdgeBorder: 25
   useKeyboardInput: 1
   horizontalAxis: Horizontal
   verticalAxis: Vertical
   usePanning: 1
   panningKey: 325
-  useKeyboardZooming: 1
+  useKeyboardZooming: 0
   zoomInKey: 101
   zoomOutKey: 113
   useScrollwheelZooming: 1
   zoomingAxis: Mouse ScrollWheel
   useKeyboardRotation: 1
-  rotateRightKey: 120
-  rotateLeftKey: 122
+  rotateRightKey: 101
+  rotateLeftKey: 113
   useMouseRotation: 1
   mouseRotationKey: 324
 --- !u!81 &1813810529
@@ -2355,7 +2248,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 71.65, y: 0, z: 0}
 --- !u!1 &2000952844
 GameObject:

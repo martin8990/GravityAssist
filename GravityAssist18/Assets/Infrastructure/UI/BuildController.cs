@@ -26,7 +26,7 @@ namespace Infrastructure
 
                 if (MousePositioning.VerticalRayCast(pos, 5f, out hit, CubeMask))
                 {
-                    cubeEditor.currentCubePlan = hit.collider.gameObject.GetComponent<CubePlan>();
+                    cubeEditor.currentCubePlan = hit.collider.gameObject.GetComponent<ConstructionPlan>();
                     toCubeEditor.Invoke();
                 }
 

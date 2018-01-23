@@ -3,36 +3,7 @@ using Utility;
 using UnityEngine.AI;
 namespace Infrastructure
 {
-    public class GOInstantiator : MonoBehaviour
-    {
-        public GameObject prefab;
-        public Vector3 size;
-        public Vector2 CubePos;
-        public Pathfinder[] Pathfinders;
-        public NavMeshSurface nms;
-        public float offset = 1;
-        [Button]
-        public void go()
-        {
-            var go = GameObject.Instantiate(prefab,transform);
-            go.transform.localScale = size;
-            go.transform.position = new Vector3(CubePos.x,size.y/2f,CubePos.y);
-
-
-            nms.UpdateNavMesh(nms.navMeshData);
-
-
-            var target = go.GetComponentInChildren<Transform>();
-            Pathfinders.Iter((x) => x.destination = target);
-            Pathfinders.Iter((x) => x.FindPath());
-            NavmeshLinkAdder.AddLinks(go, size, offset);
-         
-         
-
-        }
-    }
-}
-
+ 
 public static class NavmeshLinkAdder
 {
     public static void AddLinks(GameObject go, Vector3 size,float offset)

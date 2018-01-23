@@ -5,7 +5,7 @@ namespace Infrastructure
 {
     public class CubeEditor : MonoBehaviour
     {
-        public CubePlan currentCubePlan;
+        public ConstructionPlan currentCubePlan;
         public UnityEvent ToBuildController;
         public CubeColors cubeColors;
 

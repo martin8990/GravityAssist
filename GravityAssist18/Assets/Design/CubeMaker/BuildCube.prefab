@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 33150253490754864}
   - component: {fileID: 65274942801134046}
   - component: {fileID: 23668339952463466}
-  - component: {fileID: 114887236367600558}
   - component: {fileID: 54454702900637738}
+  - component: {fileID: 114772977072951602}
   m_Layer: 8
   m_Name: BuildCube
   m_TagString: Untagged
@@ -112,7 +112,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 0.9, z: 0.9}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114887236367600558
+--- !u!114 &114772977072951602
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -120,8 +120,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1862106838535890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d6437281cc19ec43a33bb4a97065aeb, type: 3}
+  m_Script: {fileID: 11500000, guid: c2c50a4d207dcc64bbc7a86467b03faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   WorkLeft: 10
   Invalid: 0
+  CubeLayer: 8
+  constructionStatus: 3

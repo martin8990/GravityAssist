@@ -2,31 +2,33 @@
 using Utility;
 using UnityEngine.AI;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.Events;
 
 namespace Infrastructure
 {
 
-    public class CubeMaker : MonoBehaviour
+
+    public class Architect : MonoBehaviour
     {
 
         public GameObject cubePF;
-        GameObject curGO;
-        public GameObject linkPF;
-        Camera cam;
-        Vector3 p1;
-        Vector3 p2;
         public float height = 1f;
-        bool Dragging;
-        bool validPos;
         public float nvlinkOffset = 1f;
         public NavMeshSurface navMeshSurface;
         public PathFinderManager finderManager;
-        public UnityEvent done;
+        
         public LayerMask cubeMask;
         public CubeColors cubeColors;
+        public ConstructionLibrary constructionLibrary;
 
+        public UnityEvent ToBuildController;
+
+        GameObject curGO;
+        Camera cam;
+        Vector3 p1;
+        Vector3 p2;
+        bool Dragging;
+        bool validPos;
 
         public void Start()
         {
@@ -42,7 +44,7 @@ namespace Infrastructure
         public void Update()
         {
             var pos = Snap.GetSnappedPos(cam, Vector3.one,~cubeMask);
-            if (curGO.GetComponent<CubePlan>().Invalid>0)
+            if (curGO.GetComponent<ConstructionPlan>().Invalid>0)
             {
                 validPos = false;
                 cubeColors.SetInvalid(curGO);
@@ -65,7 +67,7 @@ namespace Infrastructure
                     var scale = new Vector3(Mathf.Abs(p2.x - p1.x) + 1, height, Mathf.Abs(p2.z - p1.z) + 1);
                     curGO.transform.localScale = scale;
                     curGO.transform.position = new Vector3(p1.x + (p2.x - p1.x) /2f , height/2f + pos.y, p1.z + (p2.z - p1.z)/2f);
-                    curGO.GetComponent<CubePlan>().WorkLeft = scale.x * scale.y * scale.z; 
+                    curGO.GetComponent<ConstructionPlan>().WorkLeft = scale.x * scale.y * scale.z; 
                 }
             }
             else
@@ -77,7 +79,7 @@ namespace Infrastructure
                     {
                         NavmeshLinkAdder.AddLinks(curGO, curGO.transform.localScale, nvlinkOffset);
                         navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
-                        
+                        constructionLibrary.constructionPlans.Add(curGO.GetComponent<ConstructionPlan>());
                     }
                     else
                     {
@@ -96,7 +98,7 @@ namespace Infrastructure
             {
                 Destroy(curGO);
                 this.enabled = false;
-                done.Invoke();
+                ToBuildController.Invoke();
             }
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
@@ -105,6 +107,27 @@ namespace Infrastructure
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 height++;
+            }
+            if (Input.GetKeyDown(KeyCode.Z) && Input.GetKey(KeyCode.LeftControl))
+            {
+                bool deleted = false;
+                int i = constructionLibrary.constructionPlans.Count-1;
+                
+                while (!deleted && i>=0)
+                {
+                    if (!(constructionLibrary.constructionPlans[i].constructionStatus == ConstructionStatus.DAMAGED))
+                    {
+                        deleted = true;
+                        var plan = constructionLibrary.constructionPlans[i]; 
+                        constructionLibrary.constructionPlans.RemoveAt(i);
+                        Destroy(plan.gameObject);
+                    }
+                    else
+                    {
+                        i--;
+                    }
+                }
+
             }
         }
               

@@ -3,6 +3,7 @@
 
 namespace Utility
 {
+
     public struct Polar2
     {
         public float r;
