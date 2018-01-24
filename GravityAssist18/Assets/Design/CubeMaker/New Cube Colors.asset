@@ -13,5 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlanColor: {r: 1, g: 1, b: 1, a: 0.247}
   SelectedColor: {r: 0.44117647, g: 1, b: 0.93062884, a: 0.191}
-  BuildColor: {r: 0.6691177, g: 0.45684588, b: 0, a: 0}
+  BuildColor: {r: 0.6691177, g: 0.45684588, b: 0, a: 1}
   InvalidColor: {r: 1, g: 0.36764705, b: 0.36764705, a: 0.541}

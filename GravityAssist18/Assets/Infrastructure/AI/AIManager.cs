@@ -8,8 +8,8 @@ namespace Infrastructure
     public class AIManager : MonoBehaviour
     {
 
-        public List<AIModule> AIunits = new List<AIModule>();
-        public List<AIModule> HighSpeedAIunits = new List<AIModule>();
+        public List<AIModule> AIUnits = new List<AIModule>();
+        public List<AIModule> HighSpeedAIUnits = new List<AIModule>();
 
         public float updateTime = 1f;
 
@@ -22,27 +22,30 @@ namespace Infrastructure
         }
         public System.Collections.IEnumerator TriggerAI()
         {
-            if (i <= AIunits.Count - 1)
+            if (i <= AIUnits.Count - 1)
             {
-                AIunits[i].Trigger(updateTime);
+                
             }
             else
             {
                 i = 0;
             }
-            yield return new WaitForSeconds(updateTime/AIunits.Count);
+            AIUnits[i].Trigger(updateTime);
+            yield return new WaitForSeconds(updateTime/AIUnits.Count);
+            i++;
+            StartCoroutine(TriggerAI());
         }
         public System.Collections.IEnumerator TriggerHighSpeedAI()
         {
-            if (i <= HighSpeedAIunits.Count - 1)
+            if (i <= HighSpeedAIUnits.Count - 1)
             {
-                HighSpeedAIunits[i].Trigger(updateTime);
+                HighSpeedAIUnits[i].Trigger(updateTime);
             }
             else
             {
                 i = 0;
             }
-            yield return new WaitForSeconds(updateTime / HighSpeedAIunits.Count);
+            yield return new WaitForSeconds(updateTime / HighSpeedAIUnits.Count);
         }
 
     }
