@@ -8,10 +8,10 @@ namespace Infrastructure
     public class BuildController : MonoBehaviour
     {
 
-        public LayerMask CubeMask;
+        public LayerMask CTORMasks;
         Camera cam;
-        public CubeEditor cubeEditor;
-        public UnityEvent toCubeEditor;
+        public ConstructionEditor constructinEditor;
+        public UnityEvent toConstructionEditor;
         private void Start()
         {
             cam = Camera.main;
@@ -24,10 +24,10 @@ namespace Infrastructure
                 var pos = MousePositioning.MouseToWorldPos(cam);
                 RaycastHit hit = new RaycastHit();
 
-                if (MousePositioning.VerticalRayCast(pos, 5f, out hit, CubeMask))
+                if (MousePositioning.VerticalRayCast(pos, 5f, out hit, CTORMasks))
                 {
-                    cubeEditor.currentCubePlan = hit.collider.gameObject.GetComponent<ConstructionPlan>();
-                    toCubeEditor.Invoke();
+                    constructinEditor.SelectedConstruction = hit.collider.gameObject.GetComponent<ConstructionPlan>();
+                    toConstructionEditor.Invoke();
                 }
 
             }

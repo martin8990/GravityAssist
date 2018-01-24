@@ -3,7 +3,7 @@
 namespace Infrastructure
 {
     [CreateAssetMenu()]
-    public class CubeColors : ScriptableObject
+    public class ConstructionColors : ScriptableObject
     {
         public Color PlanColor;
         public Color SelectedColor;

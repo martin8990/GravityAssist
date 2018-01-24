@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 namespace Infrastructure
 {
 
@@ -7,11 +8,19 @@ namespace Infrastructure
         public float WorkLeft = 10;
         public float Material = 0;
         public int Invalid;
-        public int CubeLayer = 8;
+        public LayerMask CTORLayers = 8;
+        public float nvOffset = 0.5f;
+        public LayerMask ConstructionLayer;
+
+        public ConstructionColors cubeColors;
         public ConstructionStatus constructionStatus = ConstructionStatus.INPROGRESS;
+        [HideInInspector]
+        public NavMeshSurface navMesh;
+
+
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer == CubeLayer)
+            if (other.gameObject.layer == CTORLayers)
             {
                 Invalid++;
             }
@@ -19,11 +28,20 @@ namespace Infrastructure
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.layer == CubeLayer)
+            if (other.gameObject.layer == CTORLayers)
             {
                 Invalid--;
             }
         }
+
+        public void onComplete()
+        {
+            cubeColors.SetBuild(gameObject);
+            NavmeshLinkAdder.AddLinks(gameObject, gameObject.transform.localScale, nvOffset);
+            navMesh.UpdateNavMesh(navMesh.navMeshData);
+            gameObject.layer = 9;
+        }
+                
 
     }
 

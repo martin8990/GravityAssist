@@ -11,17 +11,16 @@ namespace Infrastructure
     public class Architect : MonoBehaviour
     {
 
-        public GameObject cubePF;
+        public GameObject CTORPlanPF;
         public float height = 1f;
         public float nvlinkOffset = 1f;
-        public NavMeshSurface navMeshSurface;
-        public PathFinderManager finderManager;
         
-        public LayerMask cubeMask;
-        public CubeColors cubeColors;
+        public LayerMask CTORMask;
+        public ConstructionColors cubeColors;
         public ConstructionLibrary constructionLibrary;
 
         public UnityEvent ToBuildController;
+        public NavMeshSurface navMesh;
 
         GameObject curGO;
         Camera cam;
@@ -36,14 +35,15 @@ namespace Infrastructure
         }
         public void OnEnable()
         {
-            curGO = GameObject.Instantiate(cubePF);
+            curGO = GameObject.Instantiate(CTORPlanPF);
             curGO.transform.SetParent(transform, false);
+            curGO.GetComponent<ConstructionPlan>().navMesh = navMesh;
                   
         }
         
         public void Update()
         {
-            var pos = Snap.GetSnappedPos(cam, Vector3.one,~cubeMask);
+            var pos = Snap.GetSnappedPos(cam, Vector3.one,~CTORMask);
             if (curGO.GetComponent<ConstructionPlan>().Invalid>0)
             {
                 validPos = false;
@@ -77,8 +77,7 @@ namespace Infrastructure
                     Dragging = false;
                     if (validPos)
                     {
-                        NavmeshLinkAdder.AddLinks(curGO, curGO.transform.localScale, nvlinkOffset);
-                        navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
+                        
                         constructionLibrary.constructionPlans.Add(curGO.GetComponent<ConstructionPlan>());
                     }
                     else

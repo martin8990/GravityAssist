@@ -22,6 +22,8 @@ namespace Infrastructure
         }
         public System.Collections.IEnumerator TriggerAI()
         {
+
+            yield return new WaitForSeconds(updateTime / AIUnits.Count);
             if (i <= AIUnits.Count - 1)
             {
                 
@@ -31,12 +33,12 @@ namespace Infrastructure
                 i = 0;
             }
             AIUnits[i].Trigger(updateTime);
-            yield return new WaitForSeconds(updateTime/AIUnits.Count);
             i++;
             StartCoroutine(TriggerAI());
         }
         public System.Collections.IEnumerator TriggerHighSpeedAI()
         {
+            yield return new WaitForSeconds(updateTime / HighSpeedAIUnits.Count);
             if (i <= HighSpeedAIUnits.Count - 1)
             {
                 HighSpeedAIUnits[i].Trigger(updateTime);
@@ -45,7 +47,7 @@ namespace Infrastructure
             {
                 i = 0;
             }
-            yield return new WaitForSeconds(updateTime / HighSpeedAIUnits.Count);
+            
         }
 
     }
