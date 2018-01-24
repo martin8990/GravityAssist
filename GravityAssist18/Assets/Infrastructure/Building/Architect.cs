@@ -17,7 +17,8 @@ namespace Infrastructure
         
         public LayerMask CTORMask;
         public ConstructionColors cubeColors;
-        public ConstructionLibrary constructionLibrary;
+        public ConstructionTaskBoard constructionTaskboard;
+        public TransportationTaskboard transportationTaskboard;
 
         public UnityEvent ToBuildController;
         public NavMeshSurface navMesh;
@@ -78,7 +79,8 @@ namespace Infrastructure
                     if (validPos)
                     {
                         
-                        constructionLibrary.constructionPlans.Add(curGO.GetComponent<ConstructionPlan>());
+                        constructionTaskboard.constructionPlans.Add(curGO.GetComponent<ConstructionPlan>());
+                        transportationTaskboard.transportationTasks.Add(curGO.GetComponent<ConstructionPlan>());
                     }
                     else
                     {
@@ -110,15 +112,15 @@ namespace Infrastructure
             if (Input.GetKeyDown(KeyCode.Z) && Input.GetKey(KeyCode.LeftControl))
             {
                 bool deleted = false;
-                int i = constructionLibrary.constructionPlans.Count-1;
+                int i = constructionTaskboard.constructionPlans.Count-1;
                 
                 while (!deleted && i>=0)
                 {
-                    if (!(constructionLibrary.constructionPlans[i].constructionStatus == ConstructionStatus.DAMAGED))
+                    if (!(constructionTaskboard.constructionPlans[i].constructionStatus == ConstructionStatus.COMPLETE))
                     {
                         deleted = true;
-                        var plan = constructionLibrary.constructionPlans[i]; 
-                        constructionLibrary.constructionPlans.RemoveAt(i);
+                        var plan = constructionTaskboard.constructionPlans[i]; 
+                        constructionTaskboard.constructionPlans.RemoveAt(i);
                         Destroy(plan.gameObject);
                     }
                     else

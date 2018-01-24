@@ -16,8 +16,7 @@ namespace Infrastructure
         public ConstructionStatus constructionStatus = ConstructionStatus.INPROGRESS;
         [HideInInspector]
         public NavMeshSurface navMesh;
-
-
+        
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.layer == CTORLayers)
@@ -40,6 +39,7 @@ namespace Infrastructure
             NavmeshLinkAdder.AddLinks(gameObject, gameObject.transform.localScale, nvOffset);
             navMesh.UpdateNavMesh(navMesh.navMeshData);
             gameObject.layer = 9;
+            constructionStatus = ConstructionStatus.COMPLETE;
         }
                 
 
@@ -47,10 +47,8 @@ namespace Infrastructure
 
     public enum ConstructionStatus
     {
-        COMPLETE,DAMAGED,INPROGRESS
+        COMPLETE,INPROGRESS
     }
 
-    
-    
-
+  
 }

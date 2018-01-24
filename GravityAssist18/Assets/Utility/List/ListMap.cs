@@ -8,7 +8,7 @@ namespace Utility
 {
     public static class ListMap
     {
-        public static List<Result> Map<Result, Input1>(List<Input1> in1, Func<Input1, Result> func)
+        public static List<Result> Map<Result, Input1>(this List<Input1> in1, Func<Input1, Result> func)
         {
             var result = new List<Result>();
             for (int i = 0; i < in1.Count; i++)
@@ -27,4 +27,19 @@ namespace Utility
             return result;
         }
     }
+
+    public static class ListIter
+    {
+        public static void Iter<T>(this List<T> list, Action<T> action)
+        {
+             for (int x = 0; x < list.Count; x++)
+            {
+
+                action(list[x]);
+
+            }
+        }
+    }
+
+
 }
