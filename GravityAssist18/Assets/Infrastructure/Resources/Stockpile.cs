@@ -7,5 +7,7 @@ namespace Infrastructure
     public class Stockpile : MonoBehaviour
     {
         public int nMaterial = 10000;
+        public WorkSpaceBuilder workSpaceBuilder;
+        
     }
 }

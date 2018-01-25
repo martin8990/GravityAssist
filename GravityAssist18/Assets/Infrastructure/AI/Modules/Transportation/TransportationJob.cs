@@ -14,10 +14,12 @@ namespace Infrastructure
         public Action<Job> OnComplete;  
         public int MaterialsRequested = 10;
         public int MaterialsTransported = 0;
+        public WorkSpaceBuilder workSpaceBuilder;
+        
 
         public override float CalculateUtility(AIUnit aiUnit)
         {
-            if (nUnitsAssigned == CoopMax)
+            if (workSpaceBuilder.AllWorkspacesOccupied())
             {
                 return 0;
             }
@@ -32,27 +34,32 @@ namespace Infrastructure
 
         public override void Execute(AIUnit aiUnit, int Period)
         {
+            
             var trans = aiUnit.transportModule;
             var navMeshAgent = aiUnit.navMeshAgent;
             var pos = aiUnit.transform.position;
             if (trans.nMaterials > trans.MinMaterialsForTransport)
             {
-                var targetPos = ConstructionHelper.GetClosestWorkSpace(transform, pos);
-                if (pos.SquareDist2(targetPos) > aiUnit.DestinationReachedMargin)
+                
+                aiUnit.workspace = Workspace.GetClosestWorkSpace(workSpaceBuilder.workspaces, pos);
+                if (aiUnit.workspace!=null)
                 {
-                    navMeshAgent.destination = targetPos;
-                }
-                else
-                {
-                    navMeshAgent.destination = pos;
-                    int delta = (int)Mathf.Min(MaterialsRequested - MaterialsTransported, trans.nMaterials);
-                    MaterialsTransported += delta;
-                    trans.nMaterials -= delta;
-                    if (MaterialsTransported == MaterialsRequested)
+                    if (pos.SquareDist2(aiUnit.workspace.Position) > aiUnit.DestinationReachedMargin)
                     {
-                        OnComplete(this);
+                        navMeshAgent.destination = aiUnit.workspace.Position;
                     }
-                }
+                    else
+                    {
+                        navMeshAgent.destination = pos;
+                        int delta = (int)Mathf.Min(MaterialsRequested - MaterialsTransported, trans.nMaterials);
+                        MaterialsTransported += delta;
+                        trans.nMaterials -= delta;
+                        if (MaterialsTransported == MaterialsRequested)
+                        {
+                            OnComplete(this);
+                        }
+                    }
+                }               
 
             }
             else
@@ -60,20 +67,24 @@ namespace Infrastructure
                 Stockpile closestSP = TransportationHelper.GetClosestStockPile(aiUnit.stockPiles, transform.position);
                 if (closestSP != null)
                 {
-                    var dest = ConstructionHelper.GetClosestWorkSpace(closestSP.transform,pos);
-                    if (pos.SquareDist2(dest) > aiUnit.DestinationReachedMargin)
+                    aiUnit.workspace = Workspace.GetClosestWorkSpace(closestSP.workSpaceBuilder.workspaces,pos);
+                    if (aiUnit.workspace!=null)
                     {
-                        navMeshAgent.destination = dest;
+                        if (pos.SquareDist2(aiUnit.workspace.Position) > aiUnit.DestinationReachedMargin)
+                        {
+                            navMeshAgent.destination = aiUnit.workspace.Position;
+                        }
+                        else
+                        {
+                            navMeshAgent.destination = pos;
+                            int delta = (int)Mathf.Min(new float[] { closestSP.nMaterial, trans.Capacity - trans.nMaterials });
+
+                            closestSP.nMaterial -= delta;
+                            trans.nMaterials += delta;
+
+                        }
                     }
-                    else
-                    {
-                        navMeshAgent.destination = pos;
-                        int delta = (int)Mathf.Min(new float[] { closestSP.nMaterial, trans.Capacity - trans.nMaterials });
-                        
-                        closestSP.nMaterial -= delta;
-                        trans.nMaterials += delta;
-                        
-                    }
+                    
                 }
                 else
                 {

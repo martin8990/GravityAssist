@@ -14,6 +14,7 @@ namespace Infrastructure
         public GameObject CTORPlanPF;
         public float height = 1f;
         public float nvlinkOffset = 1f;
+        public int CostModifier = 1000; 
         
         public LayerMask CTORMask;
         public ConstructionColors cubeColors;
@@ -31,6 +32,7 @@ namespace Infrastructure
         bool validPos;
         ConstructionJob curCTORJob;
         TransportationJob curTransJob;
+        WorkSpaceBuilder wsBuilder;
 
         public void Start()
         {
@@ -56,6 +58,7 @@ namespace Infrastructure
             curCTORJob = curGO.GetComponent<ConstructionJob>();
             curCTORJob.OnComplete = OnCompleteCTORJob;
             curCTORJob.navMesh = navMesh;
+            wsBuilder = curGO.GetComponent<WorkSpaceBuilder>();
         }
         
         public void Update()
@@ -84,8 +87,9 @@ namespace Infrastructure
                     var scale = new Vector3(Mathf.Abs(p2.x - p1.x) + 1, height, Mathf.Abs(p2.z - p1.z) + 1);
                     curGO.transform.localScale = scale;
                     curGO.transform.position = new Vector3(p1.x + (p2.x - p1.x) /2f , height/2f + pos.y, p1.z + (p2.z - p1.z)/2f);
-                    curCTORJob.WorkLeft = scale.x * scale.y * scale.z;
-                    curTransJob.MaterialsRequested = (int)curCTORJob.WorkLeft; 
+                    curCTORJob.WorkLeft = scale.x * scale.y * scale.z * CostModifier;
+                    curTransJob.MaterialsRequested = (int)curCTORJob.WorkLeft;
+                    wsBuilder.UpdatePositions();
                 }
             }
             else

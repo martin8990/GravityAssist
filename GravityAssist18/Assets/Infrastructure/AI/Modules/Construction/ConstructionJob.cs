@@ -5,14 +5,14 @@ using Utility;
 
 namespace Infrastructure
 {
-
+    
     public class ConstructionJob : Job
     {
         public int Invalid;
         public TransportationJob transportationJob;
         public float WorkLeft = 10;
         public LayerMask CTORLayers = 8;
-        public float nvOffset = 0.5f;
+    
         public LayerMask ConstructionLayer;
 
         [Range(0, 0.1f)]
@@ -22,6 +22,8 @@ namespace Infrastructure
         [HideInInspector]
         public NavMeshSurface navMesh;
         public Action<Job> OnComplete;
+        public WorkSpaceBuilder wsBuilder;
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.layer == CTORLayers)
@@ -41,7 +43,7 @@ namespace Infrastructure
     
         public override float CalculateUtility(AIUnit aiUnit)
         {
-            if (nUnitsAssigned == CoopMax || transportationJob.MaterialsTransported< MinPossibleWork)
+            if (wsBuilder.AllWorkspacesOccupied()|| transportationJob.MaterialsTransported< MinPossibleWork)
             {
                 return 0;
             }
@@ -58,24 +60,28 @@ namespace Infrastructure
         public override void Execute(AIUnit aiUnit, int Period)
         {
             var pos = aiUnit.transform.position;
-            var dest = ConstructionHelper.GetClosestWorkSpace(transform, pos);
-            if (pos.SquareDist2(dest) < aiUnit.DestinationReachedMargin)
+             aiUnit.workspace = Workspace.GetClosestWorkSpace(wsBuilder.workspaces, pos);
+            if (aiUnit.workspace!=null)
             {
-                aiUnit.navMeshAgent.destination = pos;
-                var work = Mathf.Min(aiUnit.constructionModule.WorkPerMs * Period,transportationJob.MaterialsRequested);
-
-                transportationJob.MaterialsTransported -= work;
-                transportationJob.MaterialsRequested -= work;
-                if (transportationJob.MaterialsRequested == 0)
+                if (pos.SquareDist2(aiUnit.workspace.Position) < aiUnit.DestinationReachedMargin)
                 {
-                    OnComplete(this);
+                    aiUnit.navMeshAgent.destination = pos;
+                    var work = Mathf.Min(aiUnit.constructionModule.WorkPerMs * Period, transportationJob.MaterialsRequested);
+
+                    transportationJob.MaterialsTransported -= work;
+                    transportationJob.MaterialsRequested -= work;
+                    if (transportationJob.MaterialsRequested == 0)
+                    {
+                        OnComplete(this);
+                    }
+
                 }
-                
+                else
+                {
+                    aiUnit.navMeshAgent.destination = aiUnit.workspace.Position;
+                }
             }
-            else
-            {
-                aiUnit.navMeshAgent.destination = dest;
-            }
+            
         }
     }
 

@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 54752084199273852}
   - component: {fileID: 114169428930406198}
   - component: {fileID: 114358179453975072}
+  - component: {fileID: 114124831488130428}
   m_Layer: 9
   m_Name: ConstructionPlan
   m_TagString: Untagged
@@ -113,6 +114,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 0.9, z: 0.9}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114124831488130428
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1418595980456444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6454abf2f3c65e14bb5f99f3442bed7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  workspaces: []
 --- !u!114 &114169428930406198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,7 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugColor: {r: 0, g: 1, b: 0.17241383, a: 1}
   nUnitsAssigned: 0
-  CoopPenalty: 0.5
+  CoopPenalty: 0
   CoopMax: 2
   Invalid: 0
   transportationJob: {fileID: 114358179453975072}
@@ -134,13 +147,13 @@ MonoBehaviour:
   CTORLayers:
     serializedVersion: 2
     m_Bits: 776
-  nvOffset: 0.5
   ConstructionLayer:
     serializedVersion: 2
     m_Bits: 256
-  distModifier: 0.01
+  distModifier: 0.0068
   MinPossibleWork: 5
   navMesh: {fileID: 0}
+  wsBuilder: {fileID: 114124831488130428}
 --- !u!114 &114358179453975072
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,8 +167,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugColor: {r: 1, g: 0.8728195, b: 0.16176468, a: 1}
   nUnitsAssigned: 0
-  CoopPenalty: 0.5
+  CoopPenalty: 0
   CoopMax: 2
   distModifier: 0.0025
   MaterialsRequested: 10
   MaterialsTransported: 0
+  workSpaceBuilder: {fileID: 114124831488130428}

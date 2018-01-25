@@ -18,6 +18,7 @@ namespace Infrastructure
         public TaskBoard taskBoard;
         public List<Stockpile> stockPiles;
         Job prevJob;
+        public Workspace workspace;
 
         private void Start()
         {
@@ -30,6 +31,10 @@ namespace Infrastructure
             if (prevJob!=null)
             {
                 prevJob.nUnitsAssigned--;
+            }
+            if (workspace != null)
+            {
+                workspace.Reserved = false;
             }
             float bestUtil = 0;
             Job bestJob = null;
