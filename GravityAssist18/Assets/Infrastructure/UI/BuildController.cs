@@ -26,7 +26,7 @@ namespace Infrastructure
 
                 if (MousePositioning.VerticalRayCast(pos, 5f, out hit, CTORMasks))
                 {
-                    constructinEditor.SelectedConstruction = hit.collider.gameObject.GetComponent<ConstructionPlan>();
+                    constructinEditor.SelectedConstruction = hit.collider.gameObject;
                     toConstructionEditor.Invoke();
                 }
 

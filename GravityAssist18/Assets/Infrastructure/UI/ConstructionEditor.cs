@@ -6,14 +6,14 @@ namespace Infrastructure
     public class ConstructionEditor : MonoBehaviour
     {
         [HideInInspector]
-        public ConstructionPlan SelectedConstruction;
-        public ConstructionColors cubeColors;
+        public GameObject SelectedConstruction;
+        public ConstructionColors ConstructionColors;
 
         public UnityEvent ToBuildController;
         
         private void OnEnable()
         {
-            cubeColors.SetSelect(SelectedConstruction.gameObject);
+            ConstructionColors.SetSelect(SelectedConstruction.gameObject);
         }
 
         private void Update()
@@ -22,12 +22,12 @@ namespace Infrastructure
             {
                 Destroy(SelectedConstruction.gameObject);
                 ToBuildController.Invoke();
-                cubeColors.SetPlan(SelectedConstruction.gameObject);
+                ConstructionColors.SetPlan(SelectedConstruction.gameObject);
             }
             if (Input.GetMouseButtonDown(1))
             {
                 ToBuildController.Invoke();
-                cubeColors.SetPlan(SelectedConstruction.gameObject);
+                ConstructionColors.SetPlan(SelectedConstruction.gameObject);
             }
         }
     }

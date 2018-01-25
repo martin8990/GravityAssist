@@ -39,36 +39,7 @@ namespace Infrastructure
             }
         }
 
-        public static ConstructionPlan ChoosePlan(ref ConstructionPlan curPlan, ConstructionTaskBoard constructionLibrary, Vector3 pos)
-        {
-            if (curPlan != null && curPlan.constructionStatus == ConstructionStatus.COMPLETE)
-            {
-                curPlan = null;
-                Debug.Log("Already done");
-            }
-            int cnt = constructionLibrary.constructionPlans.Count;
-            int i = cnt - 1;
-
-            float curdist = 10000000;
-            if (curPlan != null)
-            {
-                curdist = pos.SquareDist2(curPlan.transform.position);
-            }
-
-            foreach (var plan in constructionLibrary.constructionPlans)
-            {
-                if (plan.constructionStatus != ConstructionStatus.COMPLETE)
-                {
-                    var dist = pos.SquareDist2(plan.transform.position);
-                    if (dist < curdist)
-                    {
-                        curdist = dist;
-                        curPlan = plan;
-                    }
-                }
-            }
-            return curPlan;
-        }
+       
     }
 
 

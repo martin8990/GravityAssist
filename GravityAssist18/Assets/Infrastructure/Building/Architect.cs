@@ -17,8 +17,7 @@ namespace Infrastructure
         
         public LayerMask CTORMask;
         public ConstructionColors cubeColors;
-        public ConstructionTaskBoard constructionTaskboard;
-        public TransportationTaskboard transportationTaskboard;
+        public TaskBoard taskboard;
 
         public UnityEvent ToBuildController;
         public NavMeshSurface navMesh;
@@ -29,6 +28,8 @@ namespace Infrastructure
         Vector3 p2;
         bool Dragging;
         bool validPos;
+        ConstructionJob curCTORJob;
+        TransportationJob curTransJob;
 
         public void Start()
         {
@@ -38,14 +39,18 @@ namespace Infrastructure
         {
             curGO = GameObject.Instantiate(CTORPlanPF);
             curGO.transform.SetParent(transform, false);
-            curGO.GetComponent<ConstructionPlan>().navMesh = navMesh;
+            curTransJob = curGO.GetComponent<TransportationJob>();
+            curCTORJob = curGO.GetComponent<ConstructionJob>();
+
+            curCTORJob.navMesh = navMesh;
+
                   
         }
         
         public void Update()
         {
             var pos = Snap.GetSnappedPos(cam, Vector3.one,~CTORMask);
-            if (curGO.GetComponent<ConstructionPlan>().Invalid>0)
+            if (curCTORJob.Invalid>0)
             {
                 validPos = false;
                 cubeColors.SetInvalid(curGO);
@@ -68,7 +73,8 @@ namespace Infrastructure
                     var scale = new Vector3(Mathf.Abs(p2.x - p1.x) + 1, height, Mathf.Abs(p2.z - p1.z) + 1);
                     curGO.transform.localScale = scale;
                     curGO.transform.position = new Vector3(p1.x + (p2.x - p1.x) /2f , height/2f + pos.y, p1.z + (p2.z - p1.z)/2f);
-                    curGO.GetComponent<ConstructionPlan>().WorkLeft = scale.x * scale.y * scale.z; 
+                    curCTORJob.WorkLeft = scale.x * scale.y * scale.z;
+                    curTransJob.MaterialsRequested = (int)curCTORJob.WorkLeft; 
                 }
             }
             else
@@ -78,9 +84,8 @@ namespace Infrastructure
                     Dragging = false;
                     if (validPos)
                     {
-                        
-                        constructionTaskboard.constructionPlans.Add(curGO.GetComponent<ConstructionPlan>());
-                        transportationTaskboard.transportationTasks.Add(curGO.GetComponent<ConstructionPlan>());
+                        taskboard.tasks.Add(curTransJob);
+                        taskboard.tasks.Add(curCTORJob);
                     }
                     else
                     {
@@ -111,23 +116,23 @@ namespace Infrastructure
             }
             if (Input.GetKeyDown(KeyCode.Z) && Input.GetKey(KeyCode.LeftControl))
             {
-                bool deleted = false;
-                int i = constructionTaskboard.constructionPlans.Count-1;
+                //bool deleted = false;
+                //int i = constructionTaskboard.constructionPlans.Count-1;
                 
-                while (!deleted && i>=0)
-                {
-                    if (!(constructionTaskboard.constructionPlans[i].constructionStatus == ConstructionStatus.COMPLETE))
-                    {
-                        deleted = true;
-                        var plan = constructionTaskboard.constructionPlans[i]; 
-                        constructionTaskboard.constructionPlans.RemoveAt(i);
-                        Destroy(plan.gameObject);
-                    }
-                    else
-                    {
-                        i--;
-                    }
-                }
+                //while (!deleted && i>=0)
+                //{
+                //    if (!(constructionTaskboard.constructionPlans[i].constructionStatus == ConstructionStatus.COMPLETE))
+                //    {
+                //        deleted = true;
+                //        var plan = constructionTaskboard.constructionPlans[i]; 
+                //        constructionTaskboard.constructionPlans.RemoveAt(i);
+                //        Destroy(plan.gameObject);
+                //    }
+                //    else
+                //    {
+                //        i--;
+                //    }
+                //}
 
             }
         }

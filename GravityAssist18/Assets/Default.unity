@@ -197,59 +197,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 165561149}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &521408615
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 521408616}
-  - component: {fileID: 521408617}
-  m_Layer: 0
-  m_Name: TransportAI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &521408616
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 521408615}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1795571074}
-  m_Father: {fileID: 1913894370}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &521408617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 521408615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ac4c90bb9ffdb4ea3841c10df95abf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  navMeshAgent: {fileID: 1913894372}
-  color: {r: 0.45155707, g: 0.85294116, b: 0.47093427, a: 0}
-  currentActivvity: 0
-  utility: {fileID: 1795571073}
-  DestinationReachedMargin: {fileID: 11400000, guid: 9378d5f89e520594db33e5c520d0204c,
-    type: 2}
-  stockpiles:
-  - {fileID: 1800803136}
-  taskboard: {fileID: 656564528}
-  nMaterials: 0
-  MinMaterialsForTransport: 5
-  Capacity: 100
 --- !u!1 &656564525
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,10 +251,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 656564525}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7ea96f82e50bdb4d90ffa0e3494e897, type: 3}
+  m_Script: {fileID: 11500000, guid: ed494d8c8f14b8747a77da6cbe45ec33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transportationTasks: []
+  tasks:
+  - {fileID: 656564529}
 --- !u!114 &656564529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,10 +264,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 656564525}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 036376e4cdf97834195349087fe00ec5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7dc9ee6f8b148284c90de686e9047c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  constructionPlans: []
+  DebugColor: {r: 1, g: 0, b: 0, a: 0}
+  lazyness: 0.01
 --- !u!1 &714371746
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,7 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectedConstruction: {fileID: 0}
-  cubeColors: {fileID: 0}
+  ConstructionColors: {fileID: 11400000, guid: 90c48b5b701dff744abd574bafa86be1, type: 2}
   ToBuildController:
     m_PersistentCalls:
       m_Calls:
@@ -600,6 +549,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1326024229
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1326024231}
+  - component: {fileID: 1326024230}
+  m_Layer: 0
+  m_Name: TransportModule
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1326024230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1326024229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f4533f4d0a62af40b12bff896a27940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nMaterials: 0
+  MinMaterialsForTransport: 5
+  Capacity: 10
+  Priority: 2
+--- !u!4 &1326024231
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1326024229}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1913894370}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1414838212
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,8 +627,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   cubeColors: {fileID: 11400000, guid: 90c48b5b701dff744abd574bafa86be1, type: 2}
-  constructionTaskboard: {fileID: 656564529}
-  transportationTaskboard: {fileID: 656564528}
+  taskboard: {fileID: 656564528}
   ToBuildController:
     m_PersistentCalls:
       m_Calls:
@@ -810,53 +802,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1587466177
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1587466179}
-  - component: {fileID: 1587466178}
-  m_Layer: 0
-  m_Name: IdleAI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1587466178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1587466177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e3369007b518ba4ea82c561b298dd4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  navMeshAgent: {fileID: 1913894372}
-  color: {r: 1, g: 0, b: 0, a: 0}
-  currentActivvity: 0
-  utility: {fileID: 2147373073}
-  DestinationReachedMargin: {fileID: 11400000, guid: 9378d5f89e520594db33e5c520d0204c,
-    type: 2}
---- !u!4 &1587466179
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1587466177}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2147373072}
-  m_Father: {fileID: 1913894370}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1607421770
 GameObject:
@@ -1110,47 +1055,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1708196477}
---- !u!1 &1795571072
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1795571074}
-  - component: {fileID: 1795571073}
-  m_Layer: 0
-  m_Name: TransportUtility
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1795571073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1795571072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19b4f0db6162bd419db89da017e8ef9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  value: 2
---- !u!4 &1795571074
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1795571072}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 521408616}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1800803135
 GameObject:
   m_ObjectHideFlags: 0
@@ -1421,8 +1325,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 521408616}
-  - {fileID: 1587466179}
+  - {fileID: 1326024231}
   m_Father: {fileID: 656564527}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1437,9 +1340,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a98a06a33b59634abda8c7e1ebf65a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AIModules:
-  - {fileID: 521408617}
-  - {fileID: 1587466178}
+  navMeshAgent: {fileID: 0}
+  transportModule: {fileID: 1326024230}
+  DestinationReachedMargin: {fileID: 11400000, guid: 9378d5f89e520594db33e5c520d0204c,
+    type: 2}
+  taskBoard: {fileID: 656564528}
+  stockPiles:
+  - {fileID: 1800803136}
 --- !u!195 &1913894372
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1589,44 +1496,3 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2000952844}
---- !u!1 &2147373071
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2147373072}
-  - component: {fileID: 2147373073}
-  m_Layer: 0
-  m_Name: IdleAIUtitlity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2147373072
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2147373071}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1587466179}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2147373073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2147373071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19b4f0db6162bd419db89da017e8ef9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  value: 1
