@@ -10,7 +10,7 @@ namespace Infrastructure
     {
 
         public List<AIUnit> AIUnits = new List<AIUnit>();
-        public float updateTime = 1f;
+        public int Period = 1000;//ms
         int i = 0;
 
         private void Start()
@@ -20,7 +20,7 @@ namespace Infrastructure
         public System.Collections.IEnumerator TriggerAI()
         {
 
-            yield return new WaitForSeconds(updateTime / AIUnits.Count);
+            yield return new WaitForSeconds(Period / AIUnits.Count/1000f);
             if (i <= AIUnits.Count - 1)
             {
                 
@@ -29,7 +29,7 @@ namespace Infrastructure
             {
                 i = 0;
             }
-            AIUnits[i].Trigger(updateTime);
+            AIUnits[i].Trigger(Period);
             i++;
             StartCoroutine(TriggerAI());
         }

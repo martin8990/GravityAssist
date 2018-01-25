@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AI;
+using Utility;
+
 namespace Infrastructure
 {
 
@@ -11,12 +14,14 @@ namespace Infrastructure
         public LayerMask CTORLayers = 8;
         public float nvOffset = 0.5f;
         public LayerMask ConstructionLayer;
-        
-        public ConstructionColors cubeColors;
-        public ConstructionStatus constructionStatus = ConstructionStatus.INPROGRESS;
+
+        [Range(0, 0.1f)]
+        public float distModifier = 0.01f;
+        public int MinPossibleWork = 5;
+
         [HideInInspector]
         public NavMeshSurface navMesh;
-        
+        public Action<Job> OnComplete;
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.layer == CTORLayers)
@@ -33,30 +38,48 @@ namespace Infrastructure
             }
         }
 
-        public override void OnComplete()
-        {
-            cubeColors.SetBuild(gameObject);
-            NavmeshLinkAdder.AddLinks(gameObject, gameObject.transform.localScale, nvOffset);
-            navMesh.UpdateNavMesh(navMesh.navMeshData);
-            gameObject.layer = 9;
-            constructionStatus = ConstructionStatus.COMPLETE;
-        }
-
+    
         public override float CalculateUtility(AIUnit aiUnit)
         {
-            return 0;
+            if (nUnitsAssigned == CoopMax || transportationJob.MaterialsTransported< MinPossibleWork)
+            {
+                return 0;
+            }
+            else
+            {
+                var dist = Mathf.Min(transform.position.SquareDist2(aiUnit.transform.position) * distModifier, 1);
+                var CoopPen = CoopPenalty * nUnitsAssigned;
+               
+                return aiUnit.constructionModule.Priority - dist - CoopPenalty * nUnitsAssigned;
+            }
+
         }
 
-        public override void Execute(AIUnit aiUnit, float Period)
+        public override void Execute(AIUnit aiUnit, int Period)
         {
-            throw new System.NotImplementedException();
+            var pos = aiUnit.transform.position;
+            var dest = ConstructionHelper.GetClosestWorkSpace(transform, pos);
+            if (pos.SquareDist2(dest) < aiUnit.DestinationReachedMargin)
+            {
+                aiUnit.navMeshAgent.destination = pos;
+                var work = Mathf.Min(aiUnit.constructionModule.WorkPerMs * Period,transportationJob.MaterialsRequested);
+
+                transportationJob.MaterialsTransported -= work;
+                transportationJob.MaterialsRequested -= work;
+                if (transportationJob.MaterialsRequested == 0)
+                {
+                    OnComplete(this);
+                }
+                
+            }
+            else
+            {
+                aiUnit.navMeshAgent.destination = dest;
+            }
         }
     }
 
-    public enum ConstructionStatus
-    {
-        COMPLETE,INPROGRESS
-    }
+    
 
   
 }

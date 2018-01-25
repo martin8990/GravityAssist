@@ -9,15 +9,12 @@ namespace Infrastructure
             return lazyness;
         }
 
-        public override void Execute(AIUnit aiUnit, float Period)
+        public override void Execute(AIUnit aiUnit, int Period)
         {
             
         }
 
-        public override void OnComplete()
-        {
-            
-        }
+        
     }
 }
 

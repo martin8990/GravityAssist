@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Utility;
@@ -9,19 +10,27 @@ namespace Infrastructure
     {
         [Range(0,0.1f)]
         public float distModifier = 0.01f;
-     
-        public int NAssigned;
-        public float CoopPenalty = 0.5f;
+
+        public Action<Job> OnComplete;  
         public int MaterialsRequested = 10;
         public int MaterialsTransported = 0;
 
         public override float CalculateUtility(AIUnit aiUnit)
         {
-            var dist = Mathf.Min(transform.position.SquareDist2(aiUnit.transform.position) - distModifier,1);
-            return aiUnit.transportModule.Priority - dist - CoopPenalty * NAssigned;
+            if (nUnitsAssigned == CoopMax)
+            {
+                return 0;
+            }
+            else
+            {
+                var dist = Mathf.Min(transform.position.SquareDist2(aiUnit.transform.position) * distModifier, 1);
+                var CoopPen = CoopPenalty * nUnitsAssigned;
+                return aiUnit.transportModule.Priority - dist - CoopPenalty * nUnitsAssigned;
+            }
+
         }
 
-        public override void Execute(AIUnit aiUnit, float Period)
+        public override void Execute(AIUnit aiUnit, int Period)
         {
             var trans = aiUnit.transportModule;
             var navMeshAgent = aiUnit.navMeshAgent;
@@ -35,13 +44,13 @@ namespace Infrastructure
                 }
                 else
                 {
-                    navMeshAgent.destination = transform.position;
+                    navMeshAgent.destination = pos;
                     int delta = (int)Mathf.Min(MaterialsRequested - MaterialsTransported, trans.nMaterials);
                     MaterialsTransported += delta;
                     trans.nMaterials -= delta;
                     if (MaterialsTransported == MaterialsRequested)
                     {
-                        OnComplete();
+                        OnComplete(this);
                     }
                 }
 
@@ -75,10 +84,7 @@ namespace Infrastructure
 
 
         }
-        public override void OnComplete()
-        {
-         
-        }
+       
     }
 
 }

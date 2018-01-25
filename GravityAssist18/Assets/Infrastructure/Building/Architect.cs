@@ -21,6 +21,7 @@ namespace Infrastructure
 
         public UnityEvent ToBuildController;
         public NavMeshSurface navMesh;
+        
 
         GameObject curGO;
         Camera cam;
@@ -35,16 +36,26 @@ namespace Infrastructure
         {
             cam = Camera.main;
         }
+
+        public void OnCompleteCTORJob(Job job)
+        {
+            cubeColors.SetBuild(job.gameObject);
+            job.gameObject.layer = 8;
+            NavmeshLinkAdder.AddLinks(job.gameObject, job.gameObject.transform.localScale, nvlinkOffset);
+            navMesh.UpdateNavMesh(navMesh.navMeshData);
+            
+            taskboard.jobs.Remove(job);
+        }
+
         public void OnEnable()
         {
             curGO = GameObject.Instantiate(CTORPlanPF);
             curGO.transform.SetParent(transform, false);
             curTransJob = curGO.GetComponent<TransportationJob>();
+            curTransJob.OnComplete = taskboard.RemoveFromBoard; 
             curCTORJob = curGO.GetComponent<ConstructionJob>();
-
+            curCTORJob.OnComplete = OnCompleteCTORJob;
             curCTORJob.navMesh = navMesh;
-
-                  
         }
         
         public void Update()
@@ -84,8 +95,8 @@ namespace Infrastructure
                     Dragging = false;
                     if (validPos)
                     {
-                        taskboard.tasks.Add(curTransJob);
-                        taskboard.tasks.Add(curCTORJob);
+                        taskboard.jobs.Add(curTransJob);
+                        taskboard.jobs.Add(curCTORJob);
                     }
                     else
                     {

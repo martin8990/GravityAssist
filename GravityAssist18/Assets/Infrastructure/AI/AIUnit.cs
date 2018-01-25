@@ -13,10 +13,11 @@ namespace Infrastructure
         [HideInInspector]
         public NavMeshAgent navMeshAgent;
         public TransportModule transportModule;
+        public ConstructionModule constructionModule;
         public CFloat DestinationReachedMargin;
         public TaskBoard taskBoard;
         public List<Stockpile> stockPiles;
-
+        Job prevJob;
 
         private void Start()
         {
@@ -24,25 +25,31 @@ namespace Infrastructure
             navMeshAgent = this.GetComponent<NavMeshAgent>();
         }
 
-        public void Trigger(float period)
+        public void Trigger(int period)
         {
-            float bestUtil = 0;
-            Job bestTasks = null;
-            Debug.Log(taskBoard.tasks.Count);
-            foreach (var task in taskBoard.tasks)
+            if (prevJob!=null)
             {
-                var util = task.CalculateUtility(this);
+                prevJob.nUnitsAssigned--;
+            }
+            float bestUtil = 0;
+            Job bestJob = null;
 
-                Debug.Log(task.GetType().Name + " : " + util);
+            foreach (var job in taskBoard.jobs)
+            {
+                var util = job.CalculateUtility(this);
+
+
                 if (util > bestUtil)
                 {
                     bestUtil = util;
-                    bestTasks = task;
+                    bestJob = job;
 
                 }
             }
-            mat.color = bestTasks.DebugColor;
-            bestTasks.Execute(this, period);
+            mat.color = bestJob.DebugColor;
+            bestJob.Execute(this, period);
+            bestJob.nUnitsAssigned++;
+            prevJob = bestJob;
             
                 
 
