@@ -18,7 +18,7 @@ namespace Utility
         public Polar2(Vector2 cart)
         {
             this.r = Mathf.Sqrt(cart.x * cart.x + cart.y * cart.y);
-            this.phi = Mathf.Atan(cart.y / cart.x);
+            this.phi = Mathf.Atan2(cart.y , cart.x);
         }
 
 

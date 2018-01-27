@@ -22,7 +22,7 @@ namespace Utility
         {
             this.r = Mathf.Sqrt(cart.x * cart.x + cart.z * cart.z);
             this.h = cart.y;
-            this.phi = Mathf.Atan(cart.y / cart.x);
+            this.phi = Mathf.Atan2(cart.z , cart.x);
         }
 
         public Vector3 toCart()
@@ -54,6 +54,21 @@ namespace Utility
             var t = (r - start.r) / (finish.r - start.r);
             return Lerp(start, finish, t);
         }
+
+        public static Polar3 SplineCalc(float t,Polar3[] Polars)
+        {
+            float t3 = Mathf.Pow(1f - t, 3);
+            float t2 = Mathf.Pow(1f - t, 2);
+            float t1 = 1f - t;
+
+            Polar3 P =
+             t3 * Polars[0] 
+            + 3 * t2 * t * Polars[1]
+            +  3 * t1 * t * t * Polars[2] 
+            +  t * t * t * Polars[3];
+            return P;
+        }
+
 
     }
 }

@@ -1,0 +1,103 @@
+﻿#pragma kernel MapVonoroi
+
+RWTexture2D<float4> Result;
+RWStructuredBuffer<float2> VonoroiBuffer;
+RWStructuredBuffer<int> VonoroiMap;
+RWStructuredBuffer<float> HeightSamples;
+
+int nPoints;
+int radiiPerAngle;
+int VonoroiRes;
+float radiusUnit;
+
+
+[numthreads(8,8,1)]
+void MapVonoroi(uint3 id : SV_DispatchThreadID)
+{
+    float minDist = 100000000.0;
+    int myId = 0;
+    for (int i = 0; i < nPoints; i++)
+    {
+        float dist = distance(VonoroiBuffer[i], float2(id.xy));
+        if(minDist>dist)
+        {
+            minDist = dist;
+            myId = i;
+        }
+    }
+
+    Result[id.xy] = float4(myId / (float)nPoints, 0, 0, 1);
+    VonoroiMap[id.x + id.y * VonoroiRes] = myId;
+}
+
+struct TerrainPoint
+{
+    float3 Position;
+    int NNeighbours;
+    int StartingIndex;
+};
+RWStructuredBuffer<TerrainPoint> TerrainPointBuffer;
+
+struct TerrainSample
+{
+    float Height;
+    float Angle;
+};
+RWStructuredBuffer<TerrainSample> TerrainSampleBuffer;
+
+
+[numthreads(8, 8, 1)]
+void TerrainGen(uint3 id : SV_DispatchThreadID)
+{
+    float minDist = 100000000.0;
+    int myId = 0;
+    float dist = 0;
+    for (int i = 0; i < nPoints; i++)
+    {
+        dist = distance(TerrainPointBuffer[i].Position.xz, float2(id.xy));
+        if (minDist > dist)
+        {
+            minDist = dist;
+            myId = i;
+        }
+    }
+    float rawRadiusId = dist / radiusUnit;
+    
+    int radiusIdLow = floor(rawRadiusId);
+    int radiusIdHigh = radiusIdLow + 1;
+    float t = (rawRadiusId - radiusIdLow);
+
+    TerrainPoint tPoint = TerrainPointBuffer[i];
+    float myAngle = atan2(id.y - tPoint.Position.z, id.x - tPoint.Position.x);
+
+    int minAngleId = 0;
+    int maxAngleId = 1;
+    
+    for (i = 1; i < tPoint.NNeighbours; i++)
+    {
+        int myid = tPoint.StartingIndex + i * radiiPerAngle + radiusIdLow;
+        float dAngle = myAngle - TerrainSampleBuffer[myid].Angle;
+        if(dAngle > 0)
+        {
+            maxAngleId = i;
+            minAngleId = tPoint.NNeighbours - 1;
+            break;
+        }
+    }
+    float A1 = TerrainSampleBuffer[tPoint.StartingIndex + minAngleId * radiiPerAngle + radiusIdLow].Angle;
+    float A2 = TerrainSampleBuffer[tPoint.StartingIndex + maxAngleId * radiiPerAngle + radiusIdLow].Angle;
+
+    float Angle_t = (myAngle - A1) / (A2 - A1);
+    
+
+    TerrainSample r1A1 = TerrainSampleBuffer[tPoint.StartingIndex + minAngleId * radiiPerAngle + radiusIdLow];
+    TerrainSample r2A1 = TerrainSampleBuffer[tPoint.StartingIndex + minAngleId * radiiPerAngle + radiusIdHigh];
+    TerrainSample r1A2 = TerrainSampleBuffer[tPoint.StartingIndex + maxAngleId * radiiPerAngle + radiusIdLow];
+    TerrainSample r2A2 = TerrainSampleBuffer[tPoint.StartingIndex + maxAngleId * radiiPerAngle + radiusIdHigh];
+
+    float A1h = lerp(r1A1.Height, r2A1.Height,t);
+    float A2h = lerp(r1A2.Height, r2A2.Height,t);
+    float h = lerp(A1h, A2h, Angle_t);
+    
+    Result[id.xy] = float4(h, 0, 0, 1);
+}
