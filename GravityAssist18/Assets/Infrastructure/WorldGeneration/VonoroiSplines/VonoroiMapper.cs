@@ -1,37 +1,8 @@
 ﻿using UnityEngine;
-using System.Linq;
 using Utility;
-using Domain;
 using System.Collections.Generic;
 namespace Infrastructure
 {
-
-    public struct GPUTerrainSample
-    {
-        float Height;
-        float Angle;
-    }
-
-    public class GPUConversion : MonoBehaviour
-    {
-        public Heightmapper heightmapper;
-        public GPUTerrainPoint[] GPUterrainPoints;
-        public void PrepareForGPU()
-        {
-            var Samples = heightmapper.Samples;
-            int StartingId = 0;
-            GPUterrainPoints = new GPUTerrainPoint[Samples.Count];
-            for (int i = 0; i < Samples.Count; i++)
-            {
-                int NNeighbours = Samples[i].Count;
-                
-                new GPUTerrainSample
-
-            }
-        }
-
-
-    }
 
 
 
@@ -54,10 +25,8 @@ namespace Infrastructure
             int nPoints = pointsV2.Length;
             int VonoroiRes = voronoiGenerator.VonoroiRes;
             var VonoroiBuffer = new ComputeBuffer(pointsV2.Length, sizeof(float) * 2);
-
             VonoroiBuffer.SetData(pointsV2);
-
-
+            
             var planes = planeMeshGenerator.planes;
             int dd = planeMeshGenerator.drawDistance * 2 + 1;
             voronoiMaps = new RenderTexture[dd, dd];
