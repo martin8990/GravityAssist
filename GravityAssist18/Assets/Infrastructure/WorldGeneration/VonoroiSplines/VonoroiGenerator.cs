@@ -20,6 +20,11 @@ namespace Infrastructure
      
         public List<GameObject> markers = new List<GameObject>();
         public int VonoroiRes = 256;
+        public float distMod = 1/256f;
+
+        public int BeachDist;
+        public int BeachRandomAmp;
+
 
         [Button]
         public void GenerateVoronoi()
@@ -38,13 +43,19 @@ namespace Infrastructure
             foreach (var site in sites.Keys)
             {
                 var tPoint = new TerrainPoint();
-                tPoint.Pos = new Vector3(site.x, Random.Range(0f, 1f), site.y);
+                var dist = Vector2.Distance(new Vector2(site.x, site.y), Vector2.one * 0.5f * VonoroiRes);
+                float Height = 0.5f;
+                if (dist + Mathf.PerlinNoise(site.x,site.y)* BeachRandomAmp > BeachDist)
+                {
+                    Height = 0;
+                }
+                tPoint.Pos = new Vector3(site.x, Height, site.y);
                 tPoint.TerrainVal = new TerrainValue(0, 1, Color.green,tPoint.Pos.y);
                 terrainPoints.Add(tPoint);
 
                 var mark = GameObject.Instantiate(VoronoiMarker);
                 mark.transform.SetParent(this.transform, false);
-                mark.transform.position = new Vector3(-(site.x - 0.5f* VonoroiRes), tPoint.Pos.y * 20f, site.y - 0.5f* VonoroiRes)/VonoroiRes*((2*planeMeshGenerator.drawDistance + 1) * planeMeshGenerator.size);
+                mark.transform.position = new Vector3(-(site.x - 0.5f* VonoroiRes), tPoint.Pos.y * 100f, site.y - 0.5f* VonoroiRes)/VonoroiRes*((2*planeMeshGenerator.drawDistance + 1) * planeMeshGenerator.size);
                 markers.Add(mark);
             }
             var sitesArr = sites.Values.ToArray();

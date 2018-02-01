@@ -23,7 +23,7 @@ namespace Domain
         {
             float radiusUnit = maxRadius / nRadii;
             var samples = new List<List<List<Polar3>>>();
-            Debug.Log(radiusUnit);
+
             List<List<Polar3>> mySamps = new List<List<Polar3>>();
 
             for (int i = 0; i < terrainPoints.Count; i++)

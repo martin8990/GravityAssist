@@ -3,24 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Domain;
-using Infrastructure;
 using Utility;
+using System.Diagnostics;
+public class WorldGenControl : MonoBehaviour
+{
 
-public class WorldGenControl : MonoBehaviour {
 
-    public PlaneMeshGenerator planeMeshGenerator;
-    public VonoroiGenerator vonoroiGenerator;
-    public VonoroiMapper vonoroiMapper;
 
-    public Heightmapper heightMapper;
+    private void Start()
+    {
+        GenerateWorld();
+    }
 
     [Button]
     public void GenerateWorld()
     {
-        planeMeshGenerator.GeneratePlanes();
-        vonoroiGenerator.GenerateVoronoi();
 
-        heightMapper.SampleVonoroi();
-        vonoroiMapper.MapVoronoi();
+
+
+        Stopwatch stopWatch = new Stopwatch();
+        stopWatch.Start();
+        stopWatch.Stop();
+        UnityEngine.Debug.Log(stopWatch.Elapsed.ToString());
+
+
+
+
     }
+
 }

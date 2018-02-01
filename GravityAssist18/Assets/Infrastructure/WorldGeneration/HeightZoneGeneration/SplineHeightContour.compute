@@ -1,0 +1,171 @@
+﻿#pragma kernel CalculateHeight
+#pragma kernel CalculateHeight2
+#include "noiseSimplex.cginc"
+
+
+
+struct ContourPoint
+{
+    float r;
+    float h;
+    float angle;
+    float NoiseAmp;
+};
+
+struct HeightContour
+{
+    float2 center;
+    float smoothness;
+    float fractals;
+    float seed;
+    int nCPoints;
+
+};
+
+
+
+RWTexture2D<float4> Result;
+RWStructuredBuffer<ContourPoint> CPointBuffer;
+RWStructuredBuffer<HeightContour> HCBuffer;
+int nContours;
+
+float fractalize(float amplitude, float fractals, float seed, float smoothness, int2 id)
+{
+    float2 pos = (id) / (smoothness);
+    float val = 0;
+    for (int i = 0; i < fractals; i++)
+    {
+        val += ((snoise((pos.xy + uint2(seed, seed)) * pow(2, i)) + 1.0) / 2.0) / pow(2, i);
+    }
+
+    return lerp(-amplitude, amplitude, val);
+}
+
+[numthreads(8, 8, 1)]
+void CalculateHeight(uint3 id : SV_DispatchThreadID)
+{
+    float Height = 0;
+    float tw = 0;
+    int indexer = 0;
+    for (int i = 0; i < nContours; i++)
+    {
+        HeightContour hc = HCBuffer[i];
+        float Radius = distance(id.xy, hc.center);
+        float Angle = atan2(id.y - hc.center.y, id.x - hc.center.x);
+        float A1 = 0;
+        float A2 = 0;
+        int nCPoints = hc.nCPoints;
+        
+        ContourPoint cPoint1 = CPointBuffer[0];
+        ContourPoint cPoint2 = CPointBuffer[1];
+        for (int j = 1; j < nCPoints; j++)
+        {
+            if (CPointBuffer[j + indexer].angle - Angle > 0)
+            {
+                cPoint1 = CPointBuffer[j + indexer - 1];
+                cPoint2 = CPointBuffer[j + indexer];
+                A1 = cPoint1.angle;
+                A2 = cPoint2.angle;
+                break;
+            }
+        }
+        if (CPointBuffer[0 + indexer].angle - Angle > 0)
+        {
+                cPoint1 = CPointBuffer[nCPoints-1 + indexer];
+                cPoint2 = CPointBuffer[0 + indexer];
+                A1 = cPoint1.angle - 2.0 * 3.14159265359;
+                A2 = cPoint2.angle;
+        }
+        if (CPointBuffer[nCPoints - 1 + indexer].angle - Angle < 0)
+        {
+            cPoint1 = CPointBuffer[nCPoints - 1 + indexer];
+            cPoint2 = CPointBuffer[0 + indexer];
+            A1 = cPoint1.angle;
+            A2 = cPoint2.angle + 2.0 * 3.14159265359;
+        }
+
+        float t = (Angle - A1) / (A2 - A1);
+        float r = lerp(cPoint1.r, cPoint2.r, t);
+        // If r > radius && smaller UpperRad || r < radius && bigger LowerRad;
+        
+
+        float height = lerp(cPoint1.h, cPoint2.h, t);
+        float amp = lerp(cPoint1.NoiseAmp, cPoint2.NoiseAmp, t);
+        float w = 1.0 / pow((r - Radius), 2);
+
+        Height +=( height + fractalize(amp,hc.fractals,hc.seed , hc.smoothness, id.xy)) * w;
+        tw += w;
+        indexer += nCPoints;
+        
+    }
+    Result[id.xy] = float4(Height / tw, 0, 0, 0);
+}
+
+[numthreads(8, 8, 1)]
+void CalculateHeight2(uint3 id : SV_DispatchThreadID)
+{
+    float Height = 0;
+    float tw = 0;
+    int indexer = 0;
+    float lowerHeight = 0;
+    float upperHeight = 0;
+    float lowerRad = -1e14;
+    float UpperRad = 1e14;
+
+    for (int i = 0; i < nContours; i++)
+    {
+        HeightContour hc = HCBuffer[i];
+        float Radius = distance(id.xy, hc.center);
+        float Angle = atan2(id.y - hc.center.y, id.x - hc.center.x);
+        float A1 = 0;
+        float A2 = 0;
+        int nCPoints = hc.nCPoints;
+        
+        ContourPoint cPoint1 = CPointBuffer[0];
+        ContourPoint cPoint2 = CPointBuffer[1];
+        for (int j = 1; j < nCPoints; j++)
+        {
+            if (CPointBuffer[j + indexer].angle - Angle > 0)
+            {
+                cPoint1 = CPointBuffer[j + indexer - 1];
+                cPoint2 = CPointBuffer[j + indexer];
+                A1 = cPoint1.angle;
+                A2 = cPoint2.angle;
+                break;
+            }
+        }
+        if (CPointBuffer[0 + indexer].angle - Angle > 0)
+        {
+            cPoint1 = CPointBuffer[nCPoints - 1 + indexer];
+            cPoint2 = CPointBuffer[0 + indexer];
+            A1 = cPoint1.angle - 2.0 * 3.14159265359;
+            A2 = cPoint2.angle;
+        }
+        if (CPointBuffer[nCPoints - 1 + indexer].angle - Angle < 0)
+        {
+            cPoint1 = CPointBuffer[nCPoints - 1 + indexer];
+            cPoint2 = CPointBuffer[0 + indexer];
+            A1 = cPoint1.angle;
+            A2 = cPoint2.angle + 2.0 * 3.14159265359;
+        }
+
+        float t = (Angle - A1) / (A2 - A1);
+        float r = lerp(cPoint1.r, cPoint2.r, t);
+        // If r > radius && smaller UpperRad || r < radius && bigger LowerRad;
+        if(r > Radius && r - Radius < UpperRad)
+        {
+            UpperRad = r - Radius;
+            float amp = lerp(cPoint1.NoiseAmp, cPoint2.NoiseAmp, t);
+            upperHeight = lerp(cPoint1.h, cPoint2.h, t) + fractalize(amp, hc.fractals, hc.seed, hc.smoothness, id.xy);
+        }
+        if (r < Radius && r - Radius > lowerRad)
+        {
+            lowerRad = r - Radius;
+            float amp = lerp(cPoint1.NoiseAmp, cPoint2.NoiseAmp, t);
+            lowerHeight = lerp(cPoint1.h, cPoint2.h, t) + fractalize(amp, hc.fractals, hc.seed, hc.smoothness, id.xy);
+        }
+        indexer += nCPoints;        
+    }
+    float t = (-lowerRad) / (UpperRad - lowerRad);
+    Result[id.xy] = float4(lerp(lowerHeight,upperHeight,t), 0, 0, 0);
+}

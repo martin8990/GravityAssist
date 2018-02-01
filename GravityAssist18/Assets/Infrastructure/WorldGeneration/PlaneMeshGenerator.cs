@@ -19,7 +19,11 @@ namespace Infrastructure
         public int nNodes;
         public TerrainNode[,] terrainRaster;
 
- 
+        private void Start()
+        {
+            GeneratePlanes();
+        }
+
         public int PlaneRes;
         [Button]
         public void GeneratePlanes()

@@ -26,7 +26,7 @@ namespace Infrastructure
         {
            
             terrainPoints = vonoroiGenerator.terrainPoints;
-
+            Samples = new List<List<List<Polar3>>>();
             Samples = VoronoiSampler.SampleVoronoiSplines(terrainPoints, SampleFreq, nRadii, maxRadius);
             
 

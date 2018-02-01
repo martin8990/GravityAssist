@@ -1,0 +1,51 @@
+﻿
+#pragma kernel CalculateHeight
+
+#include "noiseSimplex.cginc"
+
+struct HeightContour
+{
+    float height;
+    float radius;
+    float2 center;
+    
+    float amplitude;
+    float smoothness;
+    float fractals;
+    float seed;
+};
+
+RWTexture2D<float4> Result;
+RWStructuredBuffer<HeightContour> HeightContourBuffer;
+int nContours;
+
+
+float fractalize(float amplitude, float fractals, float seed, float smoothness, int2 id)
+{
+    float2 pos = (id) / (smoothness);
+    float val = 0;
+    for (int i = 0; i < fractals; i++)
+    {
+        val += ((snoise((pos.xy + uint2(seed, seed)) * pow(2, i)) + 1.0) / 2.0) / pow(2, i);
+    }
+
+    return lerp(-amplitude, amplitude, val);
+}
+
+[numthreads(8, 8, 1)]
+void CalculateHeight(uint3 id : SV_DispatchThreadID)
+{
+    float Height = 0;
+    float tw = 0;
+    for (int i = 0; i < nContours; i++)
+    {
+        HeightContour hc = HeightContourBuffer[i];
+        float Radius = distance(id.xy, hc.center);
+        
+        float w = 1.0 / pow((hc.radius - Radius),2);
+        Height += (hc.height + fractalize(hc.amplitude, hc.fractals, hc.seed, hc.smoothness, id.xy)) * w;
+            tw += w;
+        
+    }
+    Result[id.xy] = float4(Height / tw, 0, 0, 0);
+}

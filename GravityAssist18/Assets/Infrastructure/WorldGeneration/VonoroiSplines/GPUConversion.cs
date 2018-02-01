@@ -2,6 +2,8 @@
 using System.Linq;
 using Utility;
 using Domain;
+using System.Collections.Generic;
+
 namespace Infrastructure
 {
     public class GPUConversion : MonoBehaviour
@@ -18,22 +20,9 @@ namespace Infrastructure
             var Samples = heightmapper.Samples;
             var tPoints = vonoroiGenerator.terrainPoints;
             int StartingId = 0;
+
             GPUterrainPoints = new GPUTerrainPoint[Samples.Count];
-
-            for (int i = 0; i < Samples.Count; i++)
-            {
-                for (int k = 0; k < RadiiPerAngle; k++)
-                {
-                    for (int j = 0; j < Samples[i].Count; j++)
-                    {
-                        if (k < Samples[i][j].Count)
-                        {
-                            
-                        }
-                    }
-                }
-            }
-
+            AddContinuityAngles(Samples);
 
             for (int i = 0; i < tPoints.Count; i++)
             {
@@ -41,11 +30,13 @@ namespace Infrastructure
                 StartingId += (tPoints[i].Neighbours.Count + 2) * RadiiPerAngle;
             }
             terrainSamples = new TerrainSample[StartingId];
+            ConvertToGpuSamples(Samples);
+
+        }
+
+        private void ConvertToGpuSamples(List<List<List<Polar3>>> Samples)
+        {
             int counter = 0;
-
-
-
-
             for (int i = 0; i < Samples.Count; i++)
             {
                 for (int j = 0; j < Samples[i].Count; j++)
@@ -68,7 +59,49 @@ namespace Infrastructure
                     }
                 }
             }
+        }
 
+        private void AddContinuityAngles(List<List<List<Polar3>>> Samples)
+        {
+            List<Polar3> underSamples = new List<Polar3>();
+            List<Polar3> overSamples = new List<Polar3>();
+
+            for (int i = 0; i < Samples.Count; i++)
+            {
+                for (int k = 0; k < RadiiPerAngle; k++)
+                {
+                    var CurAngles = new List<float>();
+                    var CurSamples = new List<Polar3>();
+                    for (int j = 0; j < Samples[i].Count; j++)
+                    {
+
+                        if (k < Samples[i][j].Count)
+                        {
+                            CurAngles.Add(Samples[i][j][k].phi);
+                            CurSamples.Add(Samples[i][j][k]);
+
+                        }
+                    }
+                    if (CurAngles.Count > 0)
+                    {
+                        int mindex = CurAngles.ListMin();
+                        int maxdex = CurAngles.ListMax();
+
+                        var minSamp = CurSamples[mindex];
+                        minSamp = new Polar3(minSamp.r, minSamp.h, minSamp.phi + 2f * Mathf.PI);
+
+                        var maxSamp = CurSamples[maxdex];
+                        maxSamp = new Polar3(maxSamp.r, maxSamp.h, maxSamp.phi - 2f * Mathf.PI);
+                        underSamples.Add(minSamp);
+                        overSamples.Add(maxSamp);
+
+                    }
+                }
+                Samples[i].Add(underSamples);
+                Samples[i].Add(overSamples);
+
+
+            }
         }
 
         public void SendToGPU()
