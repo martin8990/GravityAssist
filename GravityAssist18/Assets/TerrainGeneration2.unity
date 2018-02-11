@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -428,7 +428,7 @@ MonoBehaviour:
     smoothness: 955
     seed: 3323
     color: {r: 0.32179928, g: 0.45911884, b: 0.6838235, a: 0}
-  - height: 0
+  - height: 0.01
     t: 0.0001
     amplitude: 0
     smoothness: 40
@@ -460,30 +460,34 @@ MonoBehaviour:
     color: {r: 0.44117647, g: 0.75, b: 0.5710953, a: 0}
   - height: 0.255
     t: 0.382
-    amplitude: 0.0966
+    amplitude: 0.233
     smoothness: 358
     seed: 1715
     color: {r: 0.6764706, g: 0.4843694, b: 0.2785467, a: 0}
   - height: 0.438
     t: 0.51
-    amplitude: 0.0243
+    amplitude: 0.083
     smoothness: 64
     seed: 1715
     color: {r: 0.7352941, g: 0.7091934, b: 0.68122834, a: 0}
-  - height: 1
+  - height: 0.417
     t: 0.9
-    amplitude: 0
+    amplitude: 0.108
     smoothness: 40
     seed: 1715
     color: {r: 1, g: 0, b: 0, a: 0}
-  BiomeGradient: 0.000337
+  BiomeGradient: 0.00113
   BiomeAmplitude: 0.225
-  BiomeSmoothness: 2694
+  BiomeSmoothness: 838
   BiomeSeed: 90293
+  warpOffset: 257
+  warpMult: 746
   planeMeshGenerator: {fileID: 183988427}
   biomeShader: {fileID: 7200000, guid: 1fca60f7e22d5b84199de0332e70da36, type: 3}
-  TextureResolution: 4096
+  TextureResolution: 1024
   renderTexture: {fileID: 0}
+  deltaMax: 1
+  deltaArea: 0
 --- !u!1 &1925388873
 GameObject:
   m_ObjectHideFlags: 0

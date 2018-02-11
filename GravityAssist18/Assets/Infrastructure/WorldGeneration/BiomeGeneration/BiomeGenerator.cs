@@ -18,13 +18,24 @@ public class BiomeGenerator : MonoBehaviour
    
     [Range(10000, 50000)]
      public float BiomeSeed = 90293;
+    [Range(0,1000)]
+    public float warpOffset;
+    [Range(0, 1000)]
+    public float warpMult;
+
     ComputeBuffer BiomeBuffer;
+    ComputeBuffer heightMap;
+
     int nBiomes;
-    
     public PlaneMeshGenerator planeMeshGenerator;
     public ComputeShader biomeShader;
     public int TextureResolution;
     public RenderTexture renderTexture;
+    [Range(0.1f, 1)]
+    public float deltaMax = 1;
+    [Range(0,5)]
+    public int deltaArea = 2;
+
     int id;
     int Center;
 
@@ -33,8 +44,10 @@ public class BiomeGenerator : MonoBehaviour
     {
        
         BiomeBuffer = new ComputeBuffer(10,sizeof(float) * 9);
+        heightMap = new ComputeBuffer(TextureResolution * TextureResolution, sizeof(float));
+        heightMap.SetData(new float[TextureResolution * TextureResolution]);
         int id = biomeShader.FindKernel("CalculateHeight");
-
+        
         renderTexture = new RenderTexture(TextureResolution, TextureResolution, 24);
         renderTexture.enableRandomWrite = true;
         renderTexture.Create();
@@ -59,13 +72,22 @@ public class BiomeGenerator : MonoBehaviour
 
         var planes = planeMeshGenerator.planes;
         biomeShader.SetTexture(id, "Result", renderTexture);
-        biomeShader.SetInt("nBiomes", nBiomes);
-        biomeShader.SetInt("Center", Center);
         biomeShader.SetFloat("BiomeGradient", BiomeGradient);
         biomeShader.SetFloat("BiomeAmplitude", BiomeAmplitude);
         biomeShader.SetFloat("BiomeSmoothness", BiomeSmoothness);
         biomeShader.SetFloat("BiomeSeed", BiomeSeed);
+        biomeShader.SetFloat("warpOffset", warpOffset);
+        biomeShader.SetFloat("warpMult", warpMult);
+        biomeShader.SetFloat("deltaMax", deltaMax);
 
+        biomeShader.SetInt("nBiomes", nBiomes);
+        biomeShader.SetInt("Center", Center);
+        biomeShader.SetInt("TextureResolution", TextureResolution);
+        biomeShader.SetInt("deltaArea", deltaArea);
+
+
+
+        biomeShader.SetBuffer(id, "heightMap", heightMap);
         biomeShader.SetBuffer(id, "BiomeBuffer", BiomeBuffer);
         biomeShader.Dispatch(id, TextureResolution / 8, TextureResolution / 8, 1);
 
