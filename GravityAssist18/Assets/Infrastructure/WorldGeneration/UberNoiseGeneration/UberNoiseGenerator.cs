@@ -4,25 +4,36 @@ using Utility;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Diagnostics;
-public class BiomeGenerator : MonoBehaviour
+
+[System.Serializable]
+public struct NoiseLayer
+{
+    [Range(0, 1)]
+    public float amplitude;
+    [Range(40, 10000)]
+    public float smoothness;
+    [Range(1, 5)]
+    public float fractals;
+    [Range(1000, 10000)]
+    public float seed;
+
+    public Vector2 Warp;
+    [Range(0,1000)]
+    public float mult;
+    [Range(-10, 10)]
+    public float sharpness;
+    public Color color;
+}
+
+
+public class UberNoiseGenerator : MonoBehaviour
 {
     public Text timeText;
-    public List<Biome> biomes = new List<Biome>();
-    [Range(0,0.003f)]
-    public float BiomeGradient = 0.0005f;
-    [Range(0, 1f)]
-    public float BiomeAmplitude = 0.2f;
-    [Range(100, 10000)]
-
-    public float BiomeSmoothness = 1000f;
-   
-    [Range(10000, 50000)]
-     public float BiomeSeed = 90293;
-    ComputeBuffer BiomeBuffer;
-    int nBiomes;
-    
+    ComputeBuffer NoiseLayerBuffer;
+    int nLayers;
+    public List<NoiseLayer> noiseLayers;
     public PlaneMeshGenerator planeMeshGenerator;
-    public ComputeShader biomeShader;
+    public ComputeShader uberNoiseShader;
     public int TextureResolution;
     public RenderTexture renderTexture;
     int id;
@@ -32,8 +43,8 @@ public class BiomeGenerator : MonoBehaviour
     public void Start()
     {
        
-        BiomeBuffer = new ComputeBuffer(10,sizeof(float) * 9);
-        int id = biomeShader.FindKernel("CalculateHeight");
+        NoiseLayerBuffer = new ComputeBuffer(10,sizeof(float) * 12);
+        int id = uberNoiseShader.FindKernel("CalculateHeight");
 
         renderTexture = new RenderTexture(TextureResolution, TextureResolution, 24);
         renderTexture.enableRandomWrite = true;
@@ -53,21 +64,17 @@ public class BiomeGenerator : MonoBehaviour
     [Button]
     public void GenerateHeight()
     {
-        nBiomes = biomes.Count;
-        BiomeBuffer.SetData(biomes);
+        nLayers = noiseLayers.Count;
+        NoiseLayerBuffer.SetData(noiseLayers);
 
 
         var planes = planeMeshGenerator.planes;
-        biomeShader.SetTexture(id, "Result", renderTexture);
-        biomeShader.SetInt("nBiomes", nBiomes);
-        biomeShader.SetInt("Center", Center);
-        biomeShader.SetFloat("BiomeGradient", BiomeGradient);
-        biomeShader.SetFloat("BiomeAmplitude", BiomeAmplitude);
-        biomeShader.SetFloat("BiomeSmoothness", BiomeSmoothness);
-        biomeShader.SetFloat("BiomeSeed", BiomeSeed);
-
-        biomeShader.SetBuffer(id, "BiomeBuffer", BiomeBuffer);
-        biomeShader.Dispatch(id, TextureResolution / 8, TextureResolution / 8, 1);
+        uberNoiseShader.SetTexture(id, "Result", renderTexture);
+        uberNoiseShader.SetInt("nLayers", nLayers);
+        uberNoiseShader.SetInt("Center", Center);
+        
+        uberNoiseShader.SetBuffer(id, "NoiseLayerBuffer", NoiseLayerBuffer);
+        uberNoiseShader.Dispatch(id, TextureResolution / 8, TextureResolution / 8, 1);
 
         int scale = TextureResolution / planes.GetLength(0);
         float texScale = 1f / planes.GetLength(0);
@@ -77,7 +84,7 @@ public class BiomeGenerator : MonoBehaviour
             {
                 var mat = planes[x, y].GetComponent<MeshRenderer>().material;
                mat.SetTexture("mainTex", renderTexture);
-                var offset = new Vector2(texScale * y, (planes.GetLength(0)-x -1) *texScale );
+                var offset = new Vector2(texScale * (planeMeshGenerator.drawDistance - x + 1), texScale * y);
                 var texyScale = new Vector2(texScale, texScale);
                 mat.SetTextureOffset("mainTex", offset);
                 mat.SetTextureScale("mainTex", texyScale);

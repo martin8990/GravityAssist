@@ -13,10 +13,13 @@ namespace Utility
             if (GUILayout.Button("increase 1"))
             {
                 myInt.val += 1;
+                EditorUtility.SetDirty(myInt);
+
             }
             if (GUILayout.Button("Decrease 1"))
             {
                 myInt.val -= 1;
+                EditorUtility.SetDirty(myInt);
             }
         }
     }

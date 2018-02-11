@@ -1,13 +1,15 @@
 ﻿#pragma kernel CalculateHeight
+
 #include "noiseSimplex.cginc"
+
 
 
 struct Biome
 {
     float height;
+    float t;
     float amplitude;
     float smoothness;
-    float fractals;
     float seed;
     float4 color;
 };
@@ -15,53 +17,77 @@ struct Biome
 float BiomeGradient;
 float BiomeAmplitude;
 float BiomeSmoothness;
-float BiomeFractals;
 float BiomeSeed;
+
+
 
 RWTexture2D<float4> Result;
 RWStructuredBuffer<Biome> BiomeBuffer;
 int nBiomes;
 int Center;
 
-float fractalize(float amplitude, float fractals, float seed, float smoothness, int2 id)
+float fractalize(float amplitude,float seed, float smoothness, int2 id)
 {
-    float2 pos = (id) / (smoothness);
-    float val = 0;
-    for (int i = 0; i < fractals; i++)
+   
+    const int octaves = 3;
+    float frequency = 1.0 / smoothness;
+    
+    float y = 0;
+    for (int i = 0; i < octaves; i++)
     {
-        val += ((snoise((pos.xy + uint2(seed, seed)) * pow(2, i)) + 1.0) / 2.0) / pow(2, i);
+        y += amplitude * snoise(id.xy*frequency + seed);
+        frequency *= 2;
+        amplitude *= 1.0 / 2; 
     }
-
-    return lerp(-amplitude, amplitude, val);
+    return y + 0.5f;
 }
 [numthreads(8, 8, 1)]
 void CalculateHeight(uint3 id : SV_DispatchThreadID)
 {
-    float biome_h = fractalize(BiomeAmplitude, BiomeFractals, BiomeSeed, BiomeSmoothness, id.xy) + 0.5f - distance(id.xy,Center) * BiomeGradient;
+    float biome_t = fractalize(BiomeAmplitude, BiomeSeed, BiomeSmoothness, id.xy)  - distance(id.xy,Center) * BiomeGradient;
     Biome lowerBiome = BiomeBuffer[0];
-    Biome upperBiome = BiomeBuffer[nBiomes-1];
-    float lowerHeight = -1e14;
-    float upperHeight = 1e14;
-    for (int i = 0; i < nBiomes;i++)
+    Biome upperBiome = BiomeBuffer[nBiomes - 1];
+    float lower_t = -1e14;
+    float upper_t = 1e14;
+    for (int i = 0; i < nBiomes; i++)
     {
         Biome biome = BiomeBuffer[i];
-        if (biome.height < biome_h && biome.height > lowerHeight)
+        if (biome.t < biome_t && biome.t > lower_t)
         {
             lowerBiome = biome;
-            lowerHeight = biome.height;
+            lower_t = biome.t;
         }
-        else if (biome.height > biome_h && biome.height < upperHeight)
+        else if (biome.t > biome_t && biome.t < upper_t)
         {
             upperBiome = biome;
-            upperHeight = biome.height;
+            upper_t = biome.t;
         }
     }
-    float t = (biome_h - lowerHeight) / (upperHeight - lowerHeight);
+    float t = (biome_t - lower_t) / (upper_t - lower_t);
     //float lowerNoise = fractalize(lowerBiome.amplitude, lowerBiome.fractals, lowerBiome.seed, lowerBiome.smoothness, id.xy);
     //float upperNoise = fractalize(upperBiome.amplitude, upperBiome.fractals, upperBiome.seed, upperBiome.smoothness, id.xy);
 
-    lowerHeight += fractalize(lowerBiome.amplitude, lowerBiome.fractals, lowerBiome.seed, lowerBiome.smoothness, id.xy);
-    upperHeight += fractalize(upperBiome.amplitude, upperBiome.fractals, upperBiome.seed, upperBiome.smoothness, id.xy);
-    Result[id.xy] = float4(lerp(lowerBiome.color,upperBiome.color,t).xyz, lerp(lowerHeight, upperHeight, t));
+    float lowerHeight = lowerBiome.height + fractalize(lowerBiome.amplitude, lowerBiome.seed, lowerBiome.smoothness, id.xy);
+    float upperHeight = upperBiome.height + fractalize(upperBiome.amplitude, upperBiome.seed, upperBiome.smoothness, id.xy);
+    
+    //
+
+    Result[id.xy] = float4(lerp(lowerBiome.color, upperBiome.color, t).xyz, lerp(lowerHeight, upperHeight, t));
 
 }
+
+
+float SplineCalc(float t, float K1,float C1,float C2,float K2  )
+{
+    float t3 = pow(1 - t, 3);
+    float t2 = pow(1 - t, 2);
+    float t1 = 1 - t;
+
+    float h =
+             t3 * K1
+            + 3 * t2 * t * C1
+            + 3 * t1 * t * t * C2
+            + t * t * t * K2;
+    return h;
+}
+
