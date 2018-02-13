@@ -14,6 +14,4 @@ public struct Biome
     public float smoothness;
     [Range(1000,10000)]
     public float seed;
-
-    public Color color;
 }

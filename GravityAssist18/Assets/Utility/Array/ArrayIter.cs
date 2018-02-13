@@ -17,6 +17,19 @@ namespace Utility
                 }
             }
         }
+        public static void Iteri2D_<T>(this T[,] arr, Action<int, int, T> action)
+        {
+            for (int x = 0; x < arr.GetLength(0); x++)
+            {
+                for (int y = 0; y < arr.GetLength(1); y++)
+                {
+
+                    
+                        action(x, y, arr[x, y]);
+                    
+                }
+            }
+        }
         public static void Iteri2D<T>(T[,] arr, Action<int, int, T>[] actions)
         {
             for (int x = 0; x < arr.GetLength(0); x++)

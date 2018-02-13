@@ -2,17 +2,17 @@
 using UnityEditor;
 using System.Reflection;
 using System.Collections.Generic;
-
+using System.IO;
 
 
 namespace Utility
 {
-    [CustomEditor(typeof(MonoBehaviour), true)]
+    [CustomEditor(typeof(MonoBehaviourExt), true)]
     public class MonobehaviourInspector : Editor
     {
         bool setup = false;
         List<MethodInfo> methods;
-
+        
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -37,6 +37,17 @@ namespace Utility
                     method.Invoke(target,null);
                 }
             }
+            if (GUILayout.Button("Save"))
+            {
+                DataPersistor.Save(target);
+            }
+            if (GUILayout.Button("Load"))
+            {
+                var jsonString = DataPersistor.Load(target);
+                JsonUtility.FromJsonOverwrite(jsonString, target);
+            }
+
+
 
         }
 

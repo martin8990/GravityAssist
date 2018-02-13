@@ -1,48 +1,56 @@
-﻿Shader "Custom/TS2" {
-	Properties {
-		_Color ("Color", Color) = (1,1,1,1)
-		_MainTex ("Albedo (RGB)", 2D) = "white" {}
-		_Glossiness ("Smoothness", Range(0,1)) = 0.5
-		_Metallic ("Metallic", Range(0,1)) = 0.0
+﻿Shader "GenerationShader/TerrainShader2" {
+	Properties{
+		mainTex("mainTex", 2D) = "Red" {}
+	testTexture("testTexture", 2D) = "Red" {}
+	testScale("testScale", float) = 1 
+	pos("pos", Vector) = (1,1,0,0)
+
 	}
-	SubShader {
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-
+		SubShader{
+		Tags{ "RenderType" = "Opaque" }
 		CGPROGRAM
-		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard fullforwardshadows
 
-		// Use shader model 3.0 target, to get nicer looking lighting
-		#pragma target 3.0
+#pragma surface surf Lambert vertex:vert
 
-		sampler2D _MainTex;
 
 		struct Input {
-			float2 uv_MainTex;
-		};
+		float2 uvmainTex;
+		float3 worldPos;
+		float3 worldNormal;
+		float gradient;
+	};
 
-		half _Glossiness;
-		half _Metallic;
-		fixed4 _Color;
+	sampler2D mainTex;
+	sampler2D testTexture;
 
-		// Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
-		// See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
-		// #pragma instancing_options assumeuniformscaling
-		UNITY_INSTANCING_BUFFER_START(Props)
-			// put more per-instance properties here
-		UNITY_INSTANCING_BUFFER_END(Props)
+	float heightMult;
+	float maxHeight;
+	float gradientMult;
+	float testScale;
+	float4 pos;
 
-		void surf (Input IN, inout SurfaceOutputStandard o) {
-			// Albedo comes from a texture tinted by color
-			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-			o.Albedo = c.rgb;
-			// Metallic and smoothness come from slider variables
-			o.Metallic = _Metallic;
-			o.Smoothness = _Glossiness;
-			o.Alpha = c.a;
-		}
-		ENDCG
+	void vert(inout appdata_full v, out Input o) {
+		float4 tex = tex2Dlod(mainTex,float4(v.texcoord.xy * pos.xy + pos.wz,0,0));
+		UNITY_INITIALIZE_OUTPUT(Input, o);
+		o.gradient = tex.r;//grad/9.0;
+
 	}
-	FallBack "Diffuse"
+
+	void surf(Input IN, inout SurfaceOutput o) {
+		//IN.gradient * gradientMult;// IN.worldPos.y / maxHeight / heightMult; //
+		// 
+		float3 scaledWorldPos = IN.worldPos / testScale;
+		float3 blendAxes = abs(IN.worldNormal);
+		float3 xProjection = tex2D(testTexture, scaledWorldPos.yz) * blendAxes.x;
+		float3 yProjection = tex2D(testTexture, scaledWorldPos.xz) * blendAxes.y;
+		float3 zProjection = tex2D(testTexture, scaledWorldPos.xy) * blendAxes.z;
+
+
+		o.Albedo = blendAxes;
+		// use gradient texture to change color 
+
+	}
+	ENDCG
+	}
+		Fallback "Diffuse"
 }

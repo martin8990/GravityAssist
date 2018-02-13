@@ -28,17 +28,17 @@ namespace Infrastructure
         public void GeneratePlanes()
         {
 
-            if (planes1d!=null)
+            if (planes1d != null)
             {
                 ArrayIter.Iter(planes1d, (x) => DestroyImmediate(x));
             }
-            planes = WorldFactory.BuildPlanes(drawDistance, planePF, transform,size);
+            planes = WorldFactory.BuildPlanes(drawDistance, planePF, transform, size);
             planes1d = ArrayMap.Map2D1D(planes, (x) => x);
-            PlaneRes = (int)Mathf.Sqrt(planes[0,0].GetComponent<MeshFilter>().sharedMesh.vertexCount);
+            PlaneRes = (int)Mathf.Sqrt(planes[0, 0].GetComponent<MeshFilter>().sharedMesh.vertexCount);
         }
     }
 
- 
+
 
 
 
