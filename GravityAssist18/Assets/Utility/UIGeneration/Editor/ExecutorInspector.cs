@@ -37,15 +37,7 @@ namespace Utility
                     method.Invoke(target,null);
                 }
             }
-            if (GUILayout.Button("Save"))
-            {
-                DataPersistor.Save(target);
-            }
-            if (GUILayout.Button("Load"))
-            {
-                var jsonString = DataPersistor.Load(target);
-                JsonUtility.FromJsonOverwrite(jsonString, target);
-            }
+   
 
 
 

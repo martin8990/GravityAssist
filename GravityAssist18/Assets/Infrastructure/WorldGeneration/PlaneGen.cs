@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public static class PlaneGen
 {
-    public static GameObject GeneratePlane(int res,Material mat)
+    public static GameObject GeneratePlane(int res,Material mat, float[] heightMap,Vector2Int id, int texRes)
     {
         float size = res;
         var gameObject = new GameObject();
@@ -24,16 +25,14 @@ public static class PlaneGen
             {
                 // [ -size / 2, size / 2 ]
                 float xPos = ((float)x / (res - 1) - .5f) * size;
-                vertices[x + z * res] = new Vector3(xPos, 0f, zPos);
+                //Debug.Log(x + id.x * (res - 1) + (z + id.y * (res - 1)) * texRes);
+                float yPos = heightMap[x + id.x * (res-1) + (z + id.y * (res -1)) * texRes];
+                vertices[x + z * res] = new Vector3(xPos, yPos, zPos);
             }
         }
         #endregion
 
-        #region Normales
-        Vector3[] normales = new Vector3[vertices.Length];
-        for (int n = 0; n < normales.Length; n++)
-            normales[n] = Vector3.up;
-        #endregion
+
 
         #region UVs		
         Vector2[] uvs = new Vector2[vertices.Length];
@@ -66,22 +65,51 @@ public static class PlaneGen
         #endregion
 
         mesh.vertices = vertices;
-        mesh.normals = normales;
         mesh.uv = uvs;
         mesh.triangles = triangles;
-
-        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+        //mesh.RecalculateBounds();
+        //mesh.RecalculateTangents();
+        
         return gameObject;
     }
 
-    public static void UpdatePlane(Vector3[] vertices,GameObject gameObject)
+    public static void UpdateHeight(int res,float[] heightMap, GameObject gameObject, Vector2Int id, int texRes)
+    {
+        MeshFilter filter = gameObject.GetComponent<MeshFilter>();
+        float size = res;
+        Mesh mesh = filter.mesh;
+        Vector3[] vertices = new Vector3[res * res];
+        for (int z = 0; z < res; z++)
+        {
+            // [ -size / 2, size / 2 ]
+            float zPos = ((float)z / (res - 1) - .5f) * size;
+            for (int x = 0; x < res; x++)
+            {
+                // [ -size / 2, size / 2 ]
+                float xPos = ((float)x / (res - 1) - .5f) * size;
+                float yPos = heightMap[x + id.x * (res - 1) + (z + id.y * (res - 1)) * texRes];
+                vertices[x + z * res] = new Vector3(xPos, yPos, zPos);
+            }
+        }
+        mesh.vertices = vertices;
+        //mesh.RecalculateNormals();
+        //mesh.RecalculateBounds();
+
+
+    }
+
+    public static void UpdateNormals(GameObject gameObject)
     {
         MeshFilter filter = gameObject.GetComponent<MeshFilter>();
         Mesh mesh = filter.mesh;
-        mesh.vertices = vertices;
         mesh.RecalculateNormals();
         //mesh.RecalculateBounds();
 
 
     }
 }
+
+
+
+ 

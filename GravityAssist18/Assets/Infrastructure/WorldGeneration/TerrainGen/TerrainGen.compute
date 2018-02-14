@@ -1,0 +1,88 @@
+﻿#pragma kernel CalculateHeight
+#include "noiseSimplex.cginc"
+
+struct Biome
+{
+    float height;
+    float t;
+    float amplitude;
+    float smoothness;
+    float seed;
+};
+
+
+float BiomeGradient;
+float BiomeAmplitude;
+float BiomeSmoothness;
+float BiomeSeed;
+
+float warpOffset;
+float warpMult;
+float heightMult;
+float maxHeight;
+
+int texRes;
+int nBiomes;
+int Center;
+
+
+RWTexture2D<float4> Result;
+RWStructuredBuffer<Biome> BiomeBuffer;
+RWStructuredBuffer<float> heightMap;
+
+
+float fractalize(float amplitude, float seed, float smoothness, float base, int2 id)
+{
+   
+    const int octaves = 4;
+    float frequency = 1.0 / smoothness;
+    
+    float y = 0;
+    for (int i = 0; i < octaves; i++)
+    {
+        y += amplitude * snoise(id.xy * frequency + seed);
+        frequency *= 2;
+        amplitude *= 1.0 / 2;
+    }
+    return y/2 + base;
+}
+
+float FractalizeAndPreturb(float amplitude, float seed, float smoothness, int2 id, float warpOffset, float warpMult, float base)
+{
+    float2 q = float2(fractalize(amplitude, seed, smoothness, base, id), fractalize(amplitude, seed, smoothness, base, id + warpOffset));
+    return fractalize(amplitude, seed, smoothness, base, id + warpMult * q);
+}
+
+[numthreads(8, 8, 1)]
+void CalculateHeight(uint3 id : SV_DispatchThreadID)
+{
+    float biome_t = FractalizeAndPreturb(BiomeAmplitude, BiomeSeed, BiomeSmoothness, id.xy, warpOffset, warpMult, 0.5f) - distance(id.xy, Center) * BiomeGradient;
+    Biome lowerBiome = BiomeBuffer[0];
+    Biome upperBiome = BiomeBuffer[nBiomes - 1];
+    float lower_t = -1;
+    float upper_t = 2;
+    for (int i = 0; i < nBiomes; i++)
+    {
+        Biome biome = BiomeBuffer[i];
+        if (biome.t < biome_t && biome.t > lower_t)
+        {
+            lowerBiome = biome;
+            lower_t = biome.t;
+        }
+        else if (biome.t > biome_t && biome.t < upper_t)
+        {
+            upperBiome = biome;
+            upper_t = biome.t;
+        }
+    }
+    float t = (biome_t - lower_t) / (upper_t - lower_t);
+    
+    float lowerHeight = FractalizeAndPreturb(lowerBiome.amplitude, lowerBiome.seed, lowerBiome.smoothness, id.xy, warpOffset, warpMult, lowerBiome.height);
+    float upperHeight = FractalizeAndPreturb(upperBiome.amplitude, upperBiome.seed, upperBiome.smoothness, id.xy, warpOffset, warpMult, upperBiome.height);
+    float myHeight = lerp(lowerHeight, upperHeight, t) * heightMult;
+    heightMap[id.x + id.y * texRes] = myHeight;
+}
+
+
+
+

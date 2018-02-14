@@ -10,8 +10,8 @@ public struct Biome
     public float t;
     [Range(0, 0.4f)]
     public float amplitude;
-    [Range(40, 10000)]
+    [Range(40, 1000)]
     public float smoothness;
-    [Range(1000,10000)]
+    [Range(10f,100f)]
     public float seed;
 }

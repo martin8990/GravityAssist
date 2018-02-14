@@ -1,0 +1,1 @@
+{"drawDistance":{"instanceID":10832},"texRes":{"instanceID":10844},"planeMaterial":{"instanceID":10376},"meshRes":{"instanceID":10390},"normalsPerFrame":2,"updatesPerFrame":2}
