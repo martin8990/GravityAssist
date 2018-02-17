@@ -16,7 +16,7 @@ public class TerrainGenerator : MonoBehaviourExt
     public BiomeDesigner biomeDesigner;
     public TerrainMeshEditor meshEditor;
     public SurfaceDesigner surfaceDesigner;
-    public GameGrid gameGrid;
+    public ConstructionMatrix constructionMatrix;
     public LayerMask terrainLayer;
 
 
@@ -121,7 +121,7 @@ public class TerrainGenerator : MonoBehaviourExt
         planes.Iter2D((x) => x.layer = 10);
 
         NavMeshManager.UpdateNavMesh();
-        gameGrid.CreateGrid(heightMap);
+        constructionMatrix.Generate(heightMap);
     }
 
 }
