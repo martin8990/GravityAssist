@@ -36,7 +36,7 @@ namespace Infrastructure
         bool validPos;
         ConstructionJob curCTORJob;
         TransportationJob curTransJob;
-        WorkSpaceBuilder wsBuilder;
+    
    
         public void Start()
         {
@@ -62,7 +62,6 @@ namespace Infrastructure
             curTransJob.OnComplete = taskboard.RemoveFromBoard;
             curCTORJob = curGO.GetComponent<ConstructionJob>();
             curCTORJob.OnComplete = OnCompleteCTORJob;
-            wsBuilder = curGO.GetComponent<WorkSpaceBuilder>();
         }
         
         public void Update()
@@ -115,8 +114,7 @@ namespace Infrastructure
 
                     costText.text = "Cost : " + cost;
                     curCTORJob.WorkLeft = cost * CostModifier;
-                    curTransJob.MaterialsRequested = (int)curCTORJob.WorkLeft;
-                    wsBuilder.UpdatePositions();
+                    curTransJob.MaterialsRequested = (int)curCTORJob.WorkLeft;                   
                 }
             }
             else

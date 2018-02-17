@@ -1,5 +1,7 @@
 ﻿
+using System.Collections.Generic;
 using UnityEngine;
+using Utility;
 
 namespace Infrastructure
 {
@@ -7,8 +9,28 @@ namespace Infrastructure
     {
         public Color DebugColor;
         public int nUnitsAssigned = 0;
+        public CInt aiLayer;
 
-        
+        public List<AIUnit> inRange = new List<AIUnit>();
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.layer == aiLayer)
+            {
+                inRange.Add(other.GetComponent<AIUnit>());
+            }           
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.layer == aiLayer)
+            {
+                inRange.Remove(other.GetComponent<AIUnit>());
+            }
+        }
+        public bool InRange(AIUnit unit)
+        {
+            return inRange.Contains(unit);
+        }
 
         public float CoopPenalty = 0.5f;
 

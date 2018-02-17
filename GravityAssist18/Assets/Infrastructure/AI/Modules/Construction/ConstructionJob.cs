@@ -22,7 +22,6 @@ namespace Infrastructure
         [HideInInspector]
         public NavMeshSurface navMesh;
         public Action<Job> OnComplete;
-        public WorkSpaceBuilder wsBuilder;
 
         private void OnTriggerEnter(Collider other)
         {
