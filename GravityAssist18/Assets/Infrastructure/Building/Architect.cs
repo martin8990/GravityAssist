@@ -3,17 +3,20 @@ using Utility;
 using UnityEngine.AI;
 using System.Collections;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Infrastructure
 {
-
+    public enum ConstructionType
+    {
+        Wall,Floor
+    }
 
     public class Architect : MonoBehaviour
     {
-
         public GameObject CTORPlanPF;
-        public float height = 1f;
-        public float nvlinkOffset = 1f;
+        public int height = 1;
+   
         public int CostModifier = 1000; 
         
         public LayerMask CTORMask;
@@ -21,9 +24,10 @@ namespace Infrastructure
         public TaskBoard taskboard;
 
         public UnityEvent ToBuildController;
-        public NavMeshSurface navMesh;
         
-
+        public ConstructionType constructionType;
+        public Text costText;
+        
         GameObject curGO;
         Camera cam;
         Vector3 p1;
@@ -33,7 +37,7 @@ namespace Infrastructure
         ConstructionJob curCTORJob;
         TransportationJob curTransJob;
         WorkSpaceBuilder wsBuilder;
-
+   
         public void Start()
         {
             cam = Camera.main;
@@ -43,8 +47,8 @@ namespace Infrastructure
         {
             cubeColors.SetBuild(job.gameObject);
             job.gameObject.layer = 8;
-            NavmeshLinkAdder.AddLinks(job.gameObject, job.gameObject.transform.localScale, nvlinkOffset);
-            navMesh.UpdateNavMesh(navMesh.navMeshData);
+        //    NavmeshLinkAdder.AddLinks(job.gameObject, job.gameObject.transform.localScale, nvlinkOffset);
+            NavMeshManager.UpdateNavMesh();
             
             taskboard.jobs.Remove(job);
         }
@@ -53,11 +57,11 @@ namespace Infrastructure
         {
             curGO = GameObject.Instantiate(CTORPlanPF);
             curGO.transform.SetParent(transform, false);
+
             curTransJob = curGO.GetComponent<TransportationJob>();
-            curTransJob.OnComplete = taskboard.RemoveFromBoard; 
+            curTransJob.OnComplete = taskboard.RemoveFromBoard;
             curCTORJob = curGO.GetComponent<ConstructionJob>();
             curCTORJob.OnComplete = OnCompleteCTORJob;
-            curCTORJob.navMesh = navMesh;
             wsBuilder = curGO.GetComponent<WorkSpaceBuilder>();
         }
         
@@ -83,11 +87,34 @@ namespace Infrastructure
                 }
                 if (Dragging)
                 {
+
                     p2 = pos;
                     var scale = new Vector3(Mathf.Abs(p2.x - p1.x) + 1, height, Mathf.Abs(p2.z - p1.z) + 1);
                     curGO.transform.localScale = scale;
-                    curGO.transform.position = new Vector3(p1.x + (p2.x - p1.x) /2f , height/2f + pos.y, p1.z + (p2.z - p1.z)/2f);
-                    curCTORJob.WorkLeft = scale.x * scale.y * scale.z * CostModifier;
+                    curGO.transform.position = new Vector3(p1.x + (p2.x - p1.x) / 2f, height / 2f, p1.z + (p2.z - p1.z) / 2f);
+                    int x0 = (int)Mathf.Min(p1.x, p2.x);
+                    int x1 = (int)Mathf.Max(p1.x, p2.x);
+                    int z0 = (int)Mathf.Min(p1.z, p2.z);
+                    int z1 = (int)Mathf.Max(p1.z, p2.z);
+
+                    float cost = 0;
+                    int minHeight = height;
+                    for (int x = x0; x< x1; x++)
+                    {
+                        for (int z = z0; z < z1; z++)
+                        {
+                            float ggHeight = GameGrid.gameGrid[x, z].height;
+                            cost += Mathf.Max(height - ggHeight,0);
+                            if (ggHeight < minHeight)
+                            {
+                                minHeight = (int)ggHeight;
+                            }
+                        }
+                    }
+                    GameGrid.ChangeNodeTypes(new Vector2Int(x0, x1), new Vector2Int(z0, z1), NodeType.BuildPos);
+
+                    costText.text = "Cost : " + cost;
+                    curCTORJob.WorkLeft = cost * CostModifier;
                     curTransJob.MaterialsRequested = (int)curCTORJob.WorkLeft;
                     wsBuilder.UpdatePositions();
                 }
@@ -111,7 +138,8 @@ namespace Infrastructure
                 }
                 else
                 {
-                    curGO.transform.position = new Vector3(pos.x,height/2f + pos.y, pos.z);
+                    height = (int)pos.y;
+                    curGO.transform.position = new Vector3(pos.x,height/2f, pos.z);
                     curGO.transform.localScale = new Vector3(1, height, 1);
                 }
             }

@@ -21,14 +21,10 @@ public class BiomeDesigner : MonoBehaviourExt
     public float warpMult;
 
     public List<Biome> biomes = new List<Biome>();
-    
     ComputeBuffer BiomeBuffer;
-
-    
+        
     int nBiomes;
   
-
-
     public void Awake()
     {
         BiomeBuffer = new ComputeBuffer(10, sizeof(float) * 5);
@@ -48,7 +44,6 @@ public class BiomeDesigner : MonoBehaviourExt
         terrainShader.SetFloat("warpMult", warpMult);
 
         terrainShader.SetInt("nBiomes", nBiomes);
-       
         terrainShader.SetBuffer(id, "BiomeBuffer", BiomeBuffer);
         
     }

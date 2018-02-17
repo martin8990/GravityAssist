@@ -6,16 +6,20 @@ using UnityEngine.UI;
 using System.Diagnostics;
 using System.Collections;
 
+
 public class TerrainGenerator : MonoBehaviourExt
 {
-    
-    
+       
     public CInt texRes;
     
     public ComputeShader terrainShader;
     public BiomeDesigner biomeDesigner;
     public TerrainMeshEditor meshEditor;
     public SurfaceDesigner surfaceDesigner;
+    public GameGrid gameGrid;
+    public LayerMask terrainLayer;
+
+
     [Range(1,100)]
     public float heightMult = 50;
 
@@ -28,6 +32,7 @@ public class TerrainGenerator : MonoBehaviourExt
     float[] heightMap;
     GameObject[,] planes;
     bool ready;
+    bool done;
 
     public void Start()
     {
@@ -45,7 +50,7 @@ public class TerrainGenerator : MonoBehaviourExt
     }
     private void Update()
     {
-        if (ready)
+        if (ready && !done)
         {
             surfaceDesigner.DesignSurface(planes);
 
@@ -58,9 +63,19 @@ public class TerrainGenerator : MonoBehaviourExt
         GenerateHeightMap();
         yield return StartCoroutine(meshEditor.GenerateTerrain(heightMap));
         planes = meshEditor.planes;
-        StartCoroutine(UpdateHeight());
-        StartCoroutine(UpdateNormals());
+        surfaceDesigner.DesignSurface(planes);
         ready = true;
+        if (update)
+        {
+            StartCoroutine(UpdateHeight());
+            StartCoroutine(UpdateNormals());
+        }
+        else
+        {
+            FinalizeTerrain();
+        }
+        
+
     }
     
     public IEnumerator UpdateHeight()
@@ -97,6 +112,16 @@ public class TerrainGenerator : MonoBehaviourExt
 
         heightMapbfr.GetData(heightMap);
         
+    }
+
+    public void FinalizeTerrain()
+    {
+        done = true;
+        planes.Iter2D((x) => x.AddComponent<MeshCollider>());
+        planes.Iter2D((x) => x.layer = 10);
+
+        NavMeshManager.UpdateNavMesh();
+        gameGrid.CreateGrid(heightMap);
     }
 
 }

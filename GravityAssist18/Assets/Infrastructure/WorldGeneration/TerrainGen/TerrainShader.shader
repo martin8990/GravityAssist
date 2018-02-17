@@ -16,7 +16,7 @@
 		float3 worldNormal;
 	};
 
-		const static int nLayers = 4;
+		const static int nLayers = 5;
 		const static float epsilon = 1e-14;
 
 	float4 colours[nLayers * 4];

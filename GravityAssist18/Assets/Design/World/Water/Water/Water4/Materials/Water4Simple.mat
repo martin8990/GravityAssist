@@ -59,7 +59,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _FresnelScale: 0.302
+    - _FresnelScale: 0.72
     - _GerstnerIntensity: 1
     - _HeightDisplacement: 2.3370318
     - _NormalsDisplacement: 72.72728

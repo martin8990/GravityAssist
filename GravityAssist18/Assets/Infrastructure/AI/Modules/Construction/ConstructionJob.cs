@@ -43,7 +43,7 @@ namespace Infrastructure
     
         public override float CalculateUtility(AIUnit aiUnit)
         {
-            if (wsBuilder.AllWorkspacesOccupied()|| transportationJob.MaterialsTransported< MinPossibleWork)
+            if (transportationJob.MaterialsTransported< MinPossibleWork)
             {
                 return 0;
             }
