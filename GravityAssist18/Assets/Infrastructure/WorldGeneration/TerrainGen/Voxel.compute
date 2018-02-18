@@ -1,0 +1,44 @@
+﻿#pragma kernel CalculateHeight
+#include "noiseSimplex.cginc"
+
+RWTexture2D<float4> Result;
+RWStructuredBuffer<float> heightMap;
+RWStructuredBuffer<float3> vertices;
+//Allocate vertices a lot
+RWStructuredBuffer<float3> normals;
+
+RWStructuredBuffer<int> triangles;
+int texRes;
+
+[numthreads(24, 8, 1)]
+void UpdateVertMesh(uint3 id : SV_DispatchThreadID, uint3 tid : SV_DieAndere)
+{
+    if(tid.x < 8)
+    {
+        // Raycast SouthNorth
+        int x = id.x;
+        int y = id.y;
+        for (int z = 0; z < texRes; z++)
+        {
+                // Condition empty to full Voxel , left is empty
+                // Go Right until empty
+                
+                
+
+        }
+
+    }
+    else if (tid.x < 16)
+    {
+        // Raycast WestEast
+
+    }
+    else
+    {
+        // Raycast UpDown
+    }
+}
+
+
+
+
