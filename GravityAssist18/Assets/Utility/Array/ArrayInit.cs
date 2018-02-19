@@ -20,12 +20,12 @@ namespace Utility
 
         }
 
-        public static T[] Init<T>(int size, Func<T> initer)
+        public static T[] Init<T>(this T[] arr, int size, Func<T> initer)
         {
-            T[] arr = new T[size];
+            arr = new T[size];
             for (int y = 0; y < size; y++)
             {
-                arr[size] = initer();
+                arr[y] = initer();
             }
             return arr;
 

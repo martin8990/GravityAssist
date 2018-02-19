@@ -1,25 +1,18 @@
 ﻿public struct GameNode
 {
-    public int height;
+    public float height;
     public NodeType nodeType;
 
-    public GameNode(int height,NodeType nodeType) : this()
+    public GameNode(float height, NodeType nodeType)
     {
         this.height = height;
         this.nodeType = nodeType;
-        
     }
 }
 
 
 public enum NodeType
 {
-    Terrain,
-    Workpos,
-    BuildPos,
-    Floor,
-    Wall,
-
-
+    free,reserved
 }
 

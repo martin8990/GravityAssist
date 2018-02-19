@@ -22,9 +22,9 @@ namespace Utility
         {
             var pos = MousePositioning.MouseToWorldPos(cam,layerMask);
             var posRound = new Vector3(
-                Mathf.Round(pos.x - scale.x / 2f) + scale.x / 2f,
+                Mathf.Round(pos.x) + 0.5f,
                 Mathf.Round(pos.y),
-                Mathf.Round(pos.z - scale.z / 2f) + scale.z / 2f);
+                Mathf.Round(pos.z ) + 0.5f);
             return posRound;
         }
     }

@@ -1,1 +1,1 @@
-{"texRes":{"instanceID":10864},"terrainShader":{"instanceID":10450},"biomeDesigner":{"instanceID":11158},"meshEditor":{"instanceID":11222},"surfaceDesigner":{"instanceID":11176},"heightMult":100.0,"update":true}
+{"texRes":{"instanceID":0},"terrainShader":{"instanceID":0},"splineDesigner":{"instanceID":0},"meshEditor":{"instanceID":0},"surfaceDesigner":{"instanceID":0},"update":true}

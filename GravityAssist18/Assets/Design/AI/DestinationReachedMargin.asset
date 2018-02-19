@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562e5642a6f5a99488f1f3773fd337dc, type: 3}
   m_Name: DestinationReachedMargin
   m_EditorClassIdentifier: 
-  val: 0
+  val: 1

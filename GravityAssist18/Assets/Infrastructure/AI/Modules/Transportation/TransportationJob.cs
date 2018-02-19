@@ -32,11 +32,15 @@ namespace Infrastructure
             var trans = aiUnit.transportModule;
             var navMeshAgent = aiUnit.navMeshAgent;
             var pos = aiUnit.transform.position;
+
+            var buildMap = aiUnit.buildMap;
             if (trans.nMaterials > trans.MinMaterialsForTransport)
             {
-                if (!InRange(aiUnit))
+                aiUnit.workSpace = buildMap.GetClosestWorkspace(gameObject, aiUnit.gameObject);
+
+                if (aiUnit.workSpace.SquareDist2(aiUnit.transform.position) > aiUnit.DestinationReachedMargin)
                 {
-                    navMeshAgent.destination = transform.position;
+                    navMeshAgent.destination = aiUnit.workSpace;
                 }
                 else
                 {
@@ -56,21 +60,21 @@ namespace Infrastructure
                 Stockpile closestSP = TransportationHelper.GetClosestStockPile(aiUnit.stockPiles, transform.position);
                 if (closestSP != null)
                 {
-                    
-                        if (!closestSP.InRange(aiUnit))
-                        {
-                            navMeshAgent.destination = closestSP.transform.position;
-                        }
-                        else
-                        {
-                            navMeshAgent.destination = pos;
-                            int delta = (int)Mathf.Min(new float[] { closestSP.nMaterial, trans.Capacity - trans.nMaterials });
+                    aiUnit.workSpace = buildMap.GetClosestWorkspace(closestSP.gameObject, aiUnit.gameObject);
+                    if (aiUnit.transform.position.SquareDist2(aiUnit.workSpace) > aiUnit.DestinationReachedMargin)
+                    {
+                        navMeshAgent.destination = aiUnit.workSpace;
+                    }
+                    else
+                    {
+                        navMeshAgent.destination = pos;
+                        int delta = (int)Mathf.Min(new float[] { closestSP.nMaterial, trans.Capacity - trans.nMaterials });
 
-                            closestSP.nMaterial -= delta;
-                            trans.nMaterials += delta;
+                        closestSP.nMaterial -= delta;
+                        trans.nMaterials += delta;
 
-                        }
-                    
+                    }
+
                 }
                 else
                 {

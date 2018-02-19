@@ -3,45 +3,45 @@ using UnityEditor;
 using System.Reflection;
 using System.Collections.Generic;
 using System.IO;
-
+using Utility;
 
 namespace Utility
 {
     [CustomEditor(typeof(MonoBehaviourExt), true)]
     public class MonobehaviourInspector : Editor
     {
-        bool setup = false;
-        List<MethodInfo> methods;
+        //bool setup = false;
+        //List<MethodInfo> methods;
         
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
+        //public override void OnInspectorGUI()
+        //{
+        //    base.OnInspectorGUI();
      
-            if (methods == null)
-            {
-                methods = new List<MethodInfo>();
-                var methds = target.GetType().GetMethods();
-                foreach (var method in methds)
-                {
-                    var GoodMethod = method.GetCustomAttribute<ButtonAttribute>();
-                    if (GoodMethod!=null)
-                    {
-                        methods.Add(method);
-                    }
-                }
-            }
-            foreach (var method in methods)
-            {
-                if (GUILayout.Button(method.Name))
-                {
-                    method.Invoke(target,null);
-                }
-            }
+        //    if (methods == null)
+        //    {
+        //        methods = new List<MethodInfo>();
+        //        var methds = target.GetType().GetMethods();
+        //        foreach (var method in methds)
+        //        {
+        //            var GoodMethod = method.GetCustomAttribute<ButtonAttribute>();
+        //            if (GoodMethod!=null)
+        //            {
+        //                methods.Add(method);
+        //            }
+        //        }
+        //    }
+        //    foreach (var method in methods)
+        //    {
+        //        if (GUILayout.Button(method.Name))
+        //        {
+        //            method.Invoke(target,null);
+        //        }
+        //    }
    
 
 
 
-        }
+       
 
     }
 

@@ -13,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - Construction
-  - ConstructionPlan
-  - 
-  - 
+  - Building
+  - BuildPlan
+  - Terrain
+  - AI
   - 
   - 
   - 

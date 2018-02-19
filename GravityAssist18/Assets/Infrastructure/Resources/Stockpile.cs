@@ -4,18 +4,9 @@ using Utility;
 
 namespace Infrastructure
 {
-    public class Stockpile : Job
+    public class Stockpile : MonoBehaviour
     {
         public int nMaterial = 10000;
 
-        public override float CalculateUtility(AIUnit aiUnit)
-        {
-            return 0;
-        }
-
-        public override void Execute(AIUnit aiUnit, int Period)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

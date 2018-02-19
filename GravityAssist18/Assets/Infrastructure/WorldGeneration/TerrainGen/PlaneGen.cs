@@ -69,11 +69,11 @@ public static class PlaneGen
         for (int z = 0; z < res; z++)
         {
             // [ -size / 2, size / 2 ]
-            float zPos = ((float)z / (res - 1) - .5f) * size;
+            float zPos = z;
             for (int x = 0; x < res; x++)
             {
                 // [ -size / 2, size / 2 ]
-                float xPos = ((float)x / (res - 1) - .5f) * size;
+                float xPos = x;
                 float yPos = heightMap[x + id.x * (res - 1) + (z + id.y * (res - 1)) * texRes];
                 vertices[x + z * res] = new Vector3(xPos, yPos, zPos);
             }

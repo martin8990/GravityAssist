@@ -6,23 +6,30 @@ using Utility;
 
 namespace Infrastructure
 {
+
     public class AIUnit : MonoBehaviour
     {
        
         Material mat;
-        [HideInInspector]
+     
         public NavMeshAgent navMeshAgent;
         public TransportModule transportModule;
-        public ConstructionModule constructionModule;
+        public BuildModule constructionModule;
         public CFloat DestinationReachedMargin;
+        
         public TaskBoard taskBoard;
+   
         public List<Stockpile> stockPiles;
         Job prevJob;
+        [HideInInspector]
+        public Vector3 workSpace = Vector3.zero;
+        public BuildMap buildMap;
+
+        public SkinnedMeshRenderer mr;
 
         private void Start()
         {
-            mat = GetComponent<MeshRenderer>().material;
-            navMeshAgent = this.GetComponent<NavMeshAgent>();
+            mat = mr.material;
         }
 
         public void Trigger(int period)
@@ -31,7 +38,10 @@ namespace Infrastructure
             {
                 prevJob.nUnitsAssigned--;
             }
-        
+            if (workSpace!=Vector3.zero)
+            {
+                buildMap.FreeWorkspace(workSpace);
+            }
             float bestUtil = 0;
             Job bestJob = null;
 
@@ -54,6 +64,12 @@ namespace Infrastructure
             
                 
 
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawCube(workSpace, Vector3.one);
         }
     }
 

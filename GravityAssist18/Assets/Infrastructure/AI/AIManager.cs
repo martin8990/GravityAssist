@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using UnityEngine;
-
 namespace Infrastructure
 {
 
@@ -19,19 +18,27 @@ namespace Infrastructure
         }
         public System.Collections.IEnumerator TriggerAI()
         {
-
-            yield return new WaitForSeconds(Period / AIUnits.Count/1000f);
-            if (i <= AIUnits.Count - 1)
+            if (AIUnits.Count > 0)
             {
-                
+                yield return new WaitForSeconds(Period / AIUnits.Count / 1000f);
+                if (i <= AIUnits.Count - 1)
+                {
+
+                }
+                else
+                {
+                    i = 0;
+                }
+                AIUnits[i].Trigger(Period);
+                i++;
+                StartCoroutine(TriggerAI());
             }
             else
             {
-                i = 0;
+                yield return null;
+                StartCoroutine(TriggerAI());
+
             }
-            AIUnits[i].Trigger(Period);
-            i++;
-            StartCoroutine(TriggerAI());
         }
         
 

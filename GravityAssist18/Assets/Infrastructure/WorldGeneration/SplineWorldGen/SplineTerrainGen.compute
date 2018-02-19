@@ -1,0 +1,85 @@
+﻿#pragma kernel CalculateHeight
+#include "noiseSimplex.cginc"
+
+struct Spline
+{
+    float3 K_1;
+    float3 C_Out_1;
+    float3 C_In_2;
+    float3 K_2;
+
+    
+};
+
+RWTexture2D<float4> Result;
+RWStructuredBuffer<Spline> SplineBuffer;
+int nSplines;
+float maxRadius;
+int2 Center;
+
+float3 SplineCalc(float t, Spline spline)
+{
+    float t3 = pow(1 - t, 3);
+    float t2 = pow(1 - t, 2);
+    float t1 = 1 - t;
+
+    float h =
+             t3 * spline.K_1
+            + 3 * t2 * t * spline.C_Out_1
+            + 3 * t1 * t * t * spline.C_In_2
+            + t * t * t * spline.K_2;
+    return h;
+}
+
+
+[numthreads(8, 8, 1)]
+void CalculateHeight(uint3 id : SV_DispatchThreadID)
+{
+
+    float t = min(1, distance(id.xy, Center) / maxRadius);
+    float myAngle = atan2(id.y - Center.y, id.x - Center.x);
+
+    float lowAngle = -3.14;
+    float highAngle = 3.14;
+
+    float3 minPos = float3(0,0,0);
+    float3 maxPos = float3(0, 0, 0);
+
+
+    for (int i = 0; i < nSplines; i++)
+    {
+        float3 P = SplineCalc(t, SplineBuffer[i]);
+        if(P.z > myAngle && P.z < highAngle)
+        {
+            highAngle = P.z;
+            maxPos = P;            
+        }
+        float3 P_Up = float3(P.x, P.y, P.z + 6.28);
+        if (P_Up.z > myAngle && P_Up.z < highAngle)
+        {
+            highAngle = P_Up.z;
+            maxPos = P_Up;
+        }
+
+        if (P.z < myAngle && P.z > lowAngle)
+        {
+            lowAngle = P.z;
+            minPos = P;
+        }
+
+        float3 P_down = float3(P.x, P.y, P.z - 6.28);
+        if (P_down.z < myAngle && P_down.z > lowAngle)
+        {
+            lowAngle = P_down.z;
+            minPos = P_down;
+        }        
+    }
+
+    float angle_t = (myAngle - lowAngle) / (highAngle - lowAngle);
+    float3 myPos = lerp(minPos, maxPos, angle_t);
+    Result[id.xy] = id.x/maxRadius; //float4(myPos, 0);
+
+}
+
+
+

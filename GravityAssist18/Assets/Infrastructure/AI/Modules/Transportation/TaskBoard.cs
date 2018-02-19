@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 
 using UnityEngine;
-
 namespace Infrastructure
 {
     public class TaskBoard : MonoBehaviour
@@ -13,7 +12,6 @@ namespace Infrastructure
 
         }
     }
-    
 
 }
 

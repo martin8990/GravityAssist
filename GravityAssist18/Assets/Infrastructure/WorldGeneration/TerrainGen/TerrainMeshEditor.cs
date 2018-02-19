@@ -29,7 +29,7 @@ public class TerrainMeshEditor : MonoBehaviour
             {
                 var GO = PlaneGen.GeneratePlane(meshRes, planeMaterial, heightMap, new Vector2Int(x, z), texRes);
                 GO.transform.SetParent(transform);
-                GO.transform.position = new Vector3((x+0.5f) * meshRes , 0, (z+0.5f) * meshRes );
+                GO.transform.position = new Vector3((x) * (meshRes-1)  , 0, (z) * (meshRes - 1));
                 GO.name = "Plane x : " + x + " z : " + z;
                 planes[x, z] = GO;
                 cnt++;

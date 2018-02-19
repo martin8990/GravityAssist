@@ -7,7 +7,7 @@ namespace Infrastructure
     {
         [HideInInspector]
         public GameObject SelectedConstruction;
-        public ConstructionColors ConstructionColors;
+        public BuildColors ConstructionColors;
 
         public UnityEvent ToBuildController;
         
