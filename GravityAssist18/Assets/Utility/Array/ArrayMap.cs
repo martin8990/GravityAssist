@@ -29,6 +29,20 @@ namespace Utility
             }
             return result;
         }
+        public static Result[,] Conv1D2D<Result>(this Result[] in1, int res)
+        {
+            var result = new Result[res ,res];
+            for (int x = 0; x < res; x++)
+            {
+                for (int y = 0; y < res; y++)
+                {
+                    result[x,y] = in1[x + y *res];
+                }
+
+            }
+            return result;
+        }
+
         public static Result[] Map2<Result,Input1,Input2>(Input1[] in1,Input2[] in2, Func<Input1,Input2,Result> func)
         {
             var result = new Result[in1.Length];

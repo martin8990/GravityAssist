@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class PlaneGen
 {
-    public static GameObject GeneratePlane(int res,Material mat, float[] heightMap,Vector2Int id, int texRes)
+    public static GameObject GeneratePlane(int res,Material mat, float[,] heightMap,Vector2Int id, int texRes)
     {
         float size = res;
         var gameObject = new GameObject();
@@ -60,7 +60,7 @@ public static class PlaneGen
         return gameObject;
     }
 
-    public static Vector3[] UpdateHeight(int res,float[] heightMap, GameObject gameObject, Vector2Int id, int texRes)
+    public static Vector3[] UpdateHeight(int res,float[,] heightMap, GameObject gameObject, Vector2Int id, int texRes)
     {
         MeshFilter filter = gameObject.GetComponent<MeshFilter>();
         float size = res;
@@ -74,7 +74,7 @@ public static class PlaneGen
             {
                 // [ -size / 2, size / 2 ]
                 float xPos = x;
-                float yPos = heightMap[x + id.x * (res - 1) + (z + id.y * (res - 1)) * texRes];
+                float yPos = heightMap[x + id.x * (res - 1) , (z + id.y * (res - 1))];
                 vertices[x + z * res] = new Vector3(xPos, yPos, zPos);
             }
         }

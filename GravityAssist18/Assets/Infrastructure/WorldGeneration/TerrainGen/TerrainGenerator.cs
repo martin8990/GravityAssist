@@ -16,10 +16,9 @@ public class TerrainGenerator : MonoBehaviourExt
     public BiomeDesigner biomeDesigner;
     public TerrainMeshEditor meshEditor;
     public SurfaceDesigner surfaceDesigner;
-    public BuildMap buildMap;
     public LayerMask terrainLayer;
 
-
+    public HeightMap heightMap2d;
     [Range(1,100)]
     public float heightMult = 50;
 
@@ -61,7 +60,8 @@ public class TerrainGenerator : MonoBehaviourExt
     {
         biomeDesigner.GenerateHeight(terrainShader, kernelId);
         GenerateHeightMap();
-        yield return StartCoroutine(meshEditor.GenerateTerrain(heightMap));
+        heightMap2d.heightMap = heightMap.Conv1D2D(texRes);
+        yield return StartCoroutine(meshEditor.GenerateTerrain());
         planes = meshEditor.planes;
         surfaceDesigner.DesignSurface(planes);
         ready = true;
@@ -82,7 +82,7 @@ public class TerrainGenerator : MonoBehaviourExt
     {
         biomeDesigner.GenerateHeight(terrainShader, kernelId);
         GenerateHeightMap();
-        yield return StartCoroutine(meshEditor.UpdateHeight(planes, heightMap));
+        yield return StartCoroutine(meshEditor.UpdateHeight(planes));
         
         if (update)
         {
@@ -121,7 +121,7 @@ public class TerrainGenerator : MonoBehaviourExt
         planes.Iter2D((x) => x.layer = 10);
 
         NavMeshManager.UpdateNavMesh();
-        buildMap.Generate(heightMap);
+       
     }
 
 }

@@ -13,14 +13,14 @@ TagManager:
   - UI
   - 
   - 
-  - Building
-  - BuildPlan
+  - Foundation
+  - FoundationPlan
   - Terrain
   - AI
-  - 
-  - 
-  - 
-  - 
+  - Wall
+  - WallPlan
+  - Editing
+  - SmartBlock
   - 
   - 
   - 

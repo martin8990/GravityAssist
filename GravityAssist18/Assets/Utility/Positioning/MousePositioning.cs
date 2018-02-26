@@ -21,7 +21,7 @@ namespace Utility
 
                 // Do something with the object that was hit by the raycast.
             }
-            Debug.Log("mis");
+            //Debug.Log("mis");
             return Vector3.zero;
         }
         public static Vector3 MouseToWorldPos(Camera cam,LayerMask layermask)
@@ -29,13 +29,15 @@ namespace Utility
 
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            
             if (Physics.Raycast(ray, out hit,Mathf.Infinity, layermask))
             {
+                Debug.DrawRay(hit.point + Vector3.down * 10,Vector3.up * 10,Color.red);
                 return hit.point;
 
                 // Do something with the object that was hit by the raycast.
             }
-            Debug.Log("mis");
+           // Debug.Log("mis");
             return Vector3.zero;
         }
 

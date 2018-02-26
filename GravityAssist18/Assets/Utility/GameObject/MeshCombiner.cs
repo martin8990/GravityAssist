@@ -5,7 +5,7 @@ namespace Infrastructure
     [RequireComponent(typeof(MeshRenderer))]
     public class MeshCombiner : MonoBehaviour
     {
-        void Start()
+        public void CombineChildren()
         {
             MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
             CombineInstance[] combine = new CombineInstance[meshFilters.Length];

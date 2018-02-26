@@ -2,6 +2,7 @@
 
 namespace Infrastructure
 {
+
     public class PositionChecker : MonoBehaviour
     {
         public int[] CollisionLayers;

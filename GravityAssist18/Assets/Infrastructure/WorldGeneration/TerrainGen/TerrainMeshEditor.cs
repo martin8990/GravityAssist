@@ -11,13 +11,14 @@ public class TerrainMeshEditor : MonoBehaviour
 
     public Material planeMaterial;
     public CInt meshRes;
+    public HeightMap heightMap;
 
     public int normalsPerFrame;
     public int updatesPerFrame;
 
     public GameObject[,] planes;
 
-    public IEnumerator GenerateTerrain(float[] heightMap)
+    public IEnumerator GenerateTerrain()
     {
 
         meshRes.val = texRes / drawDistance;
@@ -44,7 +45,7 @@ public class TerrainMeshEditor : MonoBehaviour
 
     }
 
-    public IEnumerator UpdateHeight(GameObject[,] planes, float[] heigthMap)
+    public IEnumerator UpdateHeight(GameObject[,] planes)
     {
         int l = planes.GetLength(0);
         int cnt = 0;
@@ -52,7 +53,7 @@ public class TerrainMeshEditor : MonoBehaviour
         {
             for (int z = 0; z < l; z++)
             {
-                PlaneGen.UpdateHeight(meshRes,heigthMap,planes[x, z], new Vector2Int(x,z),texRes);
+                PlaneGen.UpdateHeight(meshRes,heightMap,planes[x, z], new Vector2Int(x,z),texRes);
                 cnt++;
                 if (cnt == updatesPerFrame)
                 {

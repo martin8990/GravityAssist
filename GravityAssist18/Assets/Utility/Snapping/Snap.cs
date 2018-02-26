@@ -27,5 +27,10 @@ namespace Utility
                 Mathf.Round(pos.z ) + 0.5f);
             return posRound;
         }
+
+        public static Vector3Int ToInt(this Vector3 v3)
+        {
+            return new Vector3Int((int)v3.x, (int)v3.y, (int)v3.z);
+        }
     }
 }

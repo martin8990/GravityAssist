@@ -51,7 +51,7 @@ public class SplineTerrainGenerator : MonoBehaviourExt
     {
         splineDesigner.designSplines(terrainShader, kernelId);
         DispatchComputeShader();
-        yield return StartCoroutine(meshEditor.GenerateTerrain(new float[texRes*texRes]));
+        yield return StartCoroutine(meshEditor.GenerateTerrain());
         planes = meshEditor.planes;
         surfaceDesigner.DesignSurface(planes,renderTexture);
         ready = true;
