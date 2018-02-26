@@ -4,49 +4,38 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-
-
 namespace Infrastructure
 {
-
-
     public class BuildPlanner : MonoBehaviour
     {
 
-        public LayerMask buildMask;
+        public LayerMask blockMask;
         public Text costText;
-        public List<Block> blocks;
         public int index;
+        public SmartBlock smartBlockPrefab;
 
+        public int dHeight;
         Camera cam;
-        Block curBlock;
+        SmartBlock curBlock;
         Vector3 p1;
         Vector3 p2;
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawCube(p1, Vector3.one);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawCube(p2, Vector3.one);
-        }
-
         bool Dragging;
-        
+        int priority = int.MaxValue;
         void Start()
         {
             cam = Camera.main;
         }
         void OnEnable()
         {
-            curBlock = GameObject.Instantiate(blocks[index], transform);
+            curBlock = GameObject.Instantiate(smartBlockPrefab, transform);
+            curBlock.Priority = priority;
+            priority--;
         }
 
         void Update()
         {
-            var pos = Snap.GetSnappedPos(cam, Vector3.one, ~buildMask);
-
+            var pos = Snap.GetSnappedPos(cam, Vector3.one, ~blockMask);
             if (!Dragging)
             {
                 p1 = pos;
@@ -62,26 +51,25 @@ namespace Infrastructure
                 this.enabled = false;
             }
 
-            p2 = pos;
-            curBlock.TransformBlock(p1, p2);
-            costText.text = curBlock.cost.ToString();
+            p2 = pos + Vector3.up*dHeight + Vector3.one;
+            curBlock.transform.position = 0.5f*(p1 + p2);
+            curBlock.transform.localScale = 
+                new Vector3(Mathf.Abs(p2.x - p1.x),Mathf.Abs(p2.y-p1.y),Mathf.Abs(p2.z-p1.z));
+
+            costText.text = "Calculate Cost";
 
             if (Input.GetMouseButtonUp(0))
             {
                 Dragging = false;
-                if (curBlock.valid)
-                {
-                    curBlock.CompleteBlock();
                     OnEnable();
-                }
+
             }
 
         }
 
         public void SetBlock(int id)
         {
-            
-            index = id;
+
             enabled = true;
         }
     }
