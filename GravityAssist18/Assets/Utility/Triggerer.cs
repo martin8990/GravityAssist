@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Utility;
 using UnityEngine.Events;
+[RequireComponent(typeof(Rigidbody))]
 public class Triggerer : MonoBehaviour
 {
     public CIntArr MergeMasks;

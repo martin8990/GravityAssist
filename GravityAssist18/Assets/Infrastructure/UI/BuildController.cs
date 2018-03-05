@@ -1,40 +1,40 @@
-﻿using UnityEngine;
-using Utility;
-using UnityEngine.Events;
+﻿//using UnityEngine;
+//using Utility;
+//using UnityEngine.Events;
 
-namespace Infrastructure
-{
+//namespace Infrastructure
+//{
 
-    public class BuildController : MonoBehaviour
-    {
+//    public class BuildController : MonoBehaviour
+//    {
 
-        public LayerMask CTORMasks;
-        Camera cam;
-        public ConstructionEditor constructinEditor;
-        public UnityEvent toConstructionEditor;
-        private void Start()
-        {
-            cam = Camera.main;
-        }
+//        public LayerMask CTORMasks;
+//        Camera cam;
+//        public ConstructionEditor constructinEditor;
+//        public UnityEvent toConstructionEditor;
+//        private void Start()
+//        {
+//            cam = Camera.main;
+//        }
 
-        public void Update()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                var pos = MousePositioning.MouseToWorldPos(cam);
-                RaycastHit hit = new RaycastHit();
+//        public void Update()
+//        {
+//            if (Input.GetMouseButtonDown(0))
+//            {
+//                var pos = MousePositioning.MouseToWorldPos(cam);
+//                RaycastHit hit = new RaycastHit();
 
-                if (MousePositioning.VerticalRayCast(pos, 5f, out hit, CTORMasks))
-                {
-                    constructinEditor.SelectedConstruction = hit.collider.gameObject;
-                    toConstructionEditor.Invoke();
-                }
+//                if (MousePositioning.VerticalRayCast(pos, 5f, out hit, CTORMasks))
+//                {
+//                    constructinEditor.SelectedConstruction = hit.collider.gameObject;
+//                    toConstructionEditor.Invoke();
+//                }
 
-            }
-        }
-
-
+//            }
+//        }
 
 
-    }
-}
+
+
+//    }
+//}

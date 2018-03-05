@@ -14,12 +14,12 @@ TagManager:
   - 
   - 
   - Foundation
-  - FoundationPlan
+  - Floor
   - Terrain
   - AI
-  - Wall
-  - WallPlan
-  - Editing
+  - 
+  - 
+  - EditingSmartBlock
   - SmartBlock
   - 
   - 

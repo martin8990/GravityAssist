@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Diagnostics;
+
+
+
 public class GPUChunk : MonoBehaviour {
 	
-	public float[,,] map;
+	public byte[,,] map;
 	public Mesh Cube;
     public Material mat;
 
@@ -25,7 +28,7 @@ public class GPUChunk : MonoBehaviour {
     
     private void Start()
     {
-        map = new float[res, height, res];
+        map = new byte[res, height, res];
 
         for (int x = 0; x < res; x++)
         {
@@ -33,7 +36,7 @@ public class GPUChunk : MonoBehaviour {
             {
                 for (int y = 0; y < height; y++)
                 {
-                    map[x, y, z] = x+y+z;
+                    map[x, y, z] = 1;
                 }
             }
         }
