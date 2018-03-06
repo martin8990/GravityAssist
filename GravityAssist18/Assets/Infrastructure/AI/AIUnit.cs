@@ -20,7 +20,7 @@ namespace Infrastructure
       //  public TaskBoard taskBoard;
 
         public List<Stockpile> stockPiles;
-//        Job prevJob;
+        Job prevJob;
         [HideInInspector]
         public Vector3 workSpace = Vector3.zero;
 
@@ -39,27 +39,27 @@ namespace Infrastructure
             }
             if (workSpace != Vector3.zero)
             {
-                buildMap.FreeWorkspace(workSpace);
+              //  buildMap.FreeWorkspace(workSpace);
             }
             float bestUtil = 0;
-            Job bestJob = null;
+            //Job bestJob = null;
 
-            foreach (var job in taskBoard.jobs)
-            {
-                var util = job.CalculateUtility(this);
+            //foreach (var job in taskBoard.jobs)
+            //{
+            //    var util = job.CalculateUtility(this);
 
 
-                if (util > bestUtil)
-                {
-                    bestUtil = util;
-                    bestJob = job;
+            //    if (util > bestUtil)
+            //    {
+            //        bestUtil = util;
+            //        bestJob = job;
 
-                }
-            }
-            mat.color = bestJob.DebugColor;
-            bestJob.Execute(this, period);
-            bestJob.nUnitsAssigned++;
-            prevJob = bestJob;
+            //    }
+            //}
+            //mat.color = bestJob.DebugColor;
+            //bestJob.Execute(this, period);
+            //bestJob.nUnitsAssigned++;
+            //prevJob = bestJob;
 
 
 

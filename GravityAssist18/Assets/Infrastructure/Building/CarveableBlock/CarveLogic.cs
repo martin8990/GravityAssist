@@ -66,14 +66,14 @@ namespace Infrastructure
             if (myMin.z < otherMin.z && otherMin.z < myMax.z)
             {
               
-                s = new Vector3(maxX - minX, minY - maxY, otherMin.z - myMin.z);
+                s = new Vector3(maxX - minX, maxY - minY, otherMin.z - myMin.z);
                 p = new Vector3(maxX + minX, minY+maxY, otherMin.z + myMin.z) / 2f;
                 OnBuildBlock.Invoke(p, s, "BackMesh");
             }
             if (myMax.z > otherMax.z && otherMax.z > myMin.z)
             {
 
-                s = new Vector3(maxX - minX, minY - maxY, myMax.z - otherMax.z);
+                s = new Vector3(maxX - minX, maxY - minY, myMax.z - otherMax.z);
                 p = new Vector3(maxX + minX, minY + maxY, myMax.z + otherMax.z) / 2f;
 
                 OnBuildBlock.Invoke(p, s, "FrontMesh"); 

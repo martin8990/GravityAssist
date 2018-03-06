@@ -30,8 +30,11 @@ namespace Infrastructure
             }
         }
         public void Commit()
-        {
+        {             
             slaves.Iter((x) => x.Disable());
+            slaves.Iter((x) => x.subDivider.childBlocks.Iter((y) => y.gameObject.layer = 15));
+            //slaves.Iter((x) => x.subDivider.childBlocks.Iter((y) => y.Commit()));
+
         }
         private void OnTriggerEnter(Collider other)
         {

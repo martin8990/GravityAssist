@@ -21,6 +21,7 @@ namespace Infrastructure
         
         private void Awake()
         {
+
             OnUpdate = carveMaster.OnUpdate;
             Carve = carveLogic.GetCarved;
             Commit = carveMaster.Commit;

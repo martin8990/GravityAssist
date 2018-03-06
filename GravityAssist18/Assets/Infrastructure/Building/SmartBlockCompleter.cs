@@ -15,7 +15,7 @@ namespace Infrastructure
 
         public void CompleteBlock(CarvableBlock curBlock)
         {
-            curBlock.carveMaster.Commit();
+            curBlock.Commit();
             curBlock.gameObject.layer = SmartBlockLayer;
             curBlock.carveMaster.enabled = false;
             var hElement = new AddedBlock(curBlock);
