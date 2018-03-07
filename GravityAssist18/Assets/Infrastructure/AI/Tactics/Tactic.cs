@@ -5,14 +5,11 @@ using Utility;
 
 namespace Infrastructure
 {
-    public abstract class Job : MonoBehaviour
+    public abstract class Tactic : MonoBehaviour
     {
         public Color DebugColor;
         public int nUnitsAssigned = 0;
-
-
         public float CoopPenalty = 0.5f;
-
         public int CoopMax = 2;
 
         public abstract float CalculateUtility(AIUnit aiUnit);

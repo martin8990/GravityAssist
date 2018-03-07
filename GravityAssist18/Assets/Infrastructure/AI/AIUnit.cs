@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,67 +10,39 @@ namespace Infrastructure
 
     public class AIUnit : MonoBehaviour
     {
-
-        Material mat;
-
-        public NavMeshAgent navMeshAgent;
-        public TransportModule transportModule;
-        public BuildModule constructionModule;
         public CFloat DestinationReachedMargin;
 
-      //  public TaskBoard taskBoard;
-
+        public List<Tactic> tactics;
         public List<Stockpile> stockPiles;
-        Job prevJob;
-        [HideInInspector]
-        public Vector3 workSpace = Vector3.zero;
 
-        public SkinnedMeshRenderer mr;
+        Tactic prevTactic;
 
-        private void Start()
-        {
-            mat = mr.material;
-        }
+        public Action<Color> SetColor;
+        public Action<Vector3> SetDestination;
+        //public Func<List<GameObject>> GetCloseRange;
+        //public Func<List<GameObject>> GetMediumRange;
 
         public void Trigger(int period)
         {
-            if (prevJob != null)
+            if (prevTactic != null)
             {
-                prevJob.nUnitsAssigned--;
-            }
-            if (workSpace != Vector3.zero)
-            {
-              //  buildMap.FreeWorkspace(workSpace);
+                prevTactic.nUnitsAssigned--;
             }
             float bestUtil = 0;
-            //Job bestJob = null;
 
-            //foreach (var job in taskBoard.jobs)
-            //{
-            //    var util = job.CalculateUtility(this);
-
-
-            //    if (util > bestUtil)
-            //    {
-            //        bestUtil = util;
-            //        bestJob = job;
-
-            //    }
-            //}
-            //mat.color = bestJob.DebugColor;
-            //bestJob.Execute(this, period);
-            //bestJob.nUnitsAssigned++;
-            //prevJob = bestJob;
-
-
-
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawCube(workSpace, Vector3.one);
-        }
+            Tactic bestTactic = null;
+            foreach (var tactic in tactics)
+            {
+                var util = tactic.CalculateUtility(this);
+                if (util > bestUtil)
+                {
+                    bestUtil = util;
+                    bestTactic = tactic;
+                }
+            }
+            bestTactic.Execute(this, period);
+            prevTactic = bestTactic;
+        }        
     }
 
 

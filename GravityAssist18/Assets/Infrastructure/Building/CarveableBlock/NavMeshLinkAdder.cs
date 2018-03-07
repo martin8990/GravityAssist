@@ -25,12 +25,16 @@ namespace Infrastructure
         public void Disable()
         {
             enabled = false;
-            links.Iter((x) => Destroy(x));
-            links = new List<NavMeshLink>();
+            links.Iter((x) => x.enabled = false);
         }
         public void Restore()
         {
-            enabled = true;
+            if (!enabled)
+            {
+                enabled = true;
+                links.Iter((x) => x.enabled = true);
+            }
+
         }
 
         public IEnumerator OnUpdate(bool source)
@@ -54,35 +58,40 @@ namespace Infrastructure
                     var sd2 = new Vector2(x + 1f, myMin.z + 0.5f);
                     var ed2 = new Vector2(x + 1f, myMin.z - 0.5f);
 
-                    AddLinkIfAppriopriate(ref myMin, ref myMax, ref scl, yStart, sd2, ed2,source);
+                    yield return StartCoroutine(AddLinkIfAppriopriate( myMin,  myMax,  scl, yStart, sd2, ed2,source));
                 }
                 for (int x = myMin.x; x < myMax.x - 1; x++)
                 {
                     var sd2 = new Vector2(x + 1f, myMax.z - 0.5f);
                     var ed2 = new Vector2(x + 1f, myMax.z + 0.5f);
 
-                    AddLinkIfAppriopriate(ref myMin, ref myMax, ref scl, yStart, sd2, ed2, source);
+                    yield return StartCoroutine(AddLinkIfAppriopriate( myMin,  myMax,  scl, yStart, sd2, ed2, source));
                 }
                 for (int z = myMin.z; z < myMax.z-1; z++)
                 {
                     var sd2 = new Vector2(myMin.x + 0.5f, z+1f);
                     var ed2 = new Vector2(myMin.x - 0.5f, z+1f);
 
-                    AddLinkIfAppriopriate(ref myMin, ref myMax, ref scl, yStart, sd2, ed2, source);
+                    yield return StartCoroutine(AddLinkIfAppriopriate( myMin,  myMax,  scl, yStart, sd2, ed2, source));
                 }
                 for (int z = myMin.z; z < myMax.z - 1; z++)
                 {
                     var sd2 = new Vector2(myMax.x - 0.5f, z + 1f);
                     var ed2 = new Vector2(myMax.x + 0.5f, z + 1f);
 
-                    AddLinkIfAppriopriate(ref myMin, ref myMax, ref scl, yStart, sd2, ed2, source);
+                    yield return StartCoroutine(AddLinkIfAppriopriate(myMin, myMax,scl, yStart, sd2, ed2, source));
                 }
-                NavMeshManager.UpdateNavMesh();
+                
+                if (source)
+                {
+                    yield return new WaitForSeconds(0.3f);
+                    NavMeshManager.UpdateNavMesh();
+                } 
 
             }
         }
 
-        private void AddLinkIfAppriopriate(ref Vector3Int myMin, ref Vector3Int myMax, ref Vector3Int scl, float yStart, Vector2 start, Vector2 finish,bool source)
+        private IEnumerator AddLinkIfAppriopriate(Vector3Int myMin, Vector3Int myMax, Vector3Int scl, float yStart, Vector2 start, Vector2 finish,bool source)
         {
             RaycastHit startHit;
             RaycastHit endHit;
@@ -114,6 +123,7 @@ namespace Infrastructure
                                 Debug.Log("Update Other " + otherGo.name);
                                 StartCoroutine(otherGo.GetComponentInChildren<NavMeshLinkAdder>().OnUpdate(false));
                                 NVLAS.Add(otherGo);
+                                yield return null;
                             }
                         }
 
