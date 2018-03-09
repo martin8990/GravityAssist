@@ -5,43 +5,47 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody))]
 public class Triggerer : MonoBehaviour
 {
-    public CIntArr MergeMasks;
-    public HashSet<GameObject> TriggeredObjects = new HashSet<GameObject>();
-    public UnityEvent OnEnter;
-    public UnityEvent OnExit;
+    public int[] filterMasks;
+    public List<GameObject> TriggeredObjects = new List<GameObject>();
+
     private void OnTriggerEnter(Collider other)
     {
-        bool enter = false;
-        for (int i = 0; i < MergeMasks.val.Length; i++)
+        for (int i = 0; i < filterMasks.Length; i++)
         {
-            if (other.gameObject.layer == MergeMasks.val[i])
+            if (other.gameObject.layer == filterMasks[i])
             {
                 TriggeredObjects.Add(other.gameObject);
-                enter = true;
+
             }
-        }
-        if (enter)
-        {
-            OnEnter.Invoke();
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        bool exit = false;
 
-        for (int i = 0; i < MergeMasks.val.Length; i++)
+        for (int i = 0; i < filterMasks.Length; i++)
         {
-            if (other.gameObject.layer == MergeMasks.val[i])
+            if (other.gameObject.layer == filterMasks[i])
             {
                 TriggeredObjects.Remove(other.gameObject);
-                exit = false;
+
             }
         }
-        if (exit)
-        {
-            OnExit.Invoke();
-        }
+
     }
+    public static Triggerer AddSphereTrigger(Transform parent, string name, float range, int[] masks)
+    {
+        var GO = new GameObject(name);
+        GO.transform.parent.SetParent(parent, false);
+        var col = GO.AddComponent<SphereCollider>();
+        col.radius = range;
+        col.isTrigger = true;
+        GO.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        var trigger = GO.AddComponent<Triggerer>();
+        trigger.filterMasks = masks;
+        return trigger;
+
+    }
+
 }
 
 

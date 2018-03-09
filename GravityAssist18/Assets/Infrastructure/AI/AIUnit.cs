@@ -17,17 +17,8 @@ namespace Infrastructure
 
         Tactic prevTactic;
 
-        public Action<Color> SetColor;
-        public Action<Vector3> SetDestination;
-        //public Func<List<GameObject>> GetCloseRange;
-        //public Func<List<GameObject>> GetMediumRange;
-
         public void Trigger(int period)
         {
-            if (prevTactic != null)
-            {
-                prevTactic.nUnitsAssigned--;
-            }
             float bestUtil = 0;
 
             Tactic bestTactic = null;
