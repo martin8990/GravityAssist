@@ -16,8 +16,10 @@ namespace Infrastructure
         public Func<List<GameObject>> GetEnemiesInSight;
         public Func<List<GameObject>> GetEnemiesInMeleeRange;
         
-        public event Func<GameObject,float, IEnumerator> OnAttack;
+        public event Func<GameObject, IEnumerator> OnAttack;
+        
         NavMeshAgent agent;
+        public Action<float, float, float> OnHit;
 
         public override float CalculateUtility(AIUnit aiUnit)
         {
@@ -44,7 +46,8 @@ namespace Infrastructure
             {
                 agent.SetDestination(transform.position);
                 var target = EnemiesInRange[0];
-                yield return StartCoroutine( OnAttack(target, GetAttackRating()));
+                OnHit = target.GetComponent<Defence>().GetHit;
+                StartCoroutine( OnAttack(target));
             }
             else
             {
@@ -52,6 +55,8 @@ namespace Infrastructure
                 var closest = EnemiesInSight.Min((x) => transform.position.SquareDist2(x.transform.position));
                 agent.SetDestination(closest.transform.position);
             }
+            yield return null;
+            
         }
     }
 }
