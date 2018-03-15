@@ -11,7 +11,7 @@ namespace Infrastructure
         public abstract float GetStrategyUtility();
         public void ExecuteBestTactic(int period)
         {
-           var bestTactic = tactics.Min((x) => x.CalculateUtility());
+           var bestTactic = tactics.Max((x) => x.CalculateUtility());
            StartCoroutine(bestTactic.Execute(period));
         }
 

@@ -12,6 +12,8 @@ namespace Infrastructure
     {
         Tactic prevTactic;
         public List<Strategy> strategies;
+        public Action OnRemove;
+
 
         public void Trigger(int period)
         {

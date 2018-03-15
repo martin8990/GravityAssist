@@ -2,6 +2,8 @@
 using UnityEngine.AI;
 using UnityEngine;
 using Utility;
+using System;
+
 namespace Infrastructure
 {
 
@@ -10,8 +12,8 @@ namespace Infrastructure
     {
         NavMeshAgent navMeshAgent;
         public CFloat destReachedMargin;
-        public Nexus nexus;
         public int dmg;
+
         private void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
@@ -23,14 +25,21 @@ namespace Infrastructure
 
         public override IEnumerator Execute(int Period)
         {
-            var dest = nexus.transform.position;
+            var dest = transform.position;
+            if (Nexus.nexus!=null)
+            {
+                dest = Nexus.nexus.transform.position;
+            }
+
+            
             if (transform.position.SquareDist2(dest) > destReachedMargin)
             {
                 navMeshAgent.SetDestination(dest);
             }
             else
             {
-                nexus.Hit(dmg);
+                Nexus.nexus.Hit(dmg);
+                GetComponent<AIUnit>().OnRemove();
                 Destroy(gameObject);
             }
             yield return null;
