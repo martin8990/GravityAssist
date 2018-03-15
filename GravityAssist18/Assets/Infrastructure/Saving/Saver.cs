@@ -34,8 +34,8 @@ namespace Infrastructure
             savesPanel.gameObject.DestroyKids();
             var dirs = Directory.GetDirectories(path);
             var ui = UIGenerator.GenerateUI(ButtonPF, savesPanel, dirs.Length, UILayout.Vertical);
-            ui.Iteri((i, x) => x.GetComponentInChildren<Text>().text 
-                = dirs[i].Remove(0,path.Length+1));
+            ui.Iteri((i, x) => x.GetComponentInChildren<Text>().text
+                = dirs[i].Remove(0, path.Length + 1));
             ui.Iteri((i, x) => x.GetComponentInChildren<Button>()
                 .onClick.AddListener(() => OnLoad(dirs[i].Remove(0, path.Length + 1))));
 
@@ -45,7 +45,7 @@ namespace Infrastructure
 
         void OnSave(string SaveName)
         {
-              var path = SaveDirectory.val;
+            var path = SaveDirectory.val;
             string newDir = SaveDirectory + @"\" + SaveName;
 
             //Directory.GetDirectories(path).Iter((x) => Debug.Log(x + " " + SaveDirectory + @"\" + SaveName));
@@ -58,13 +58,13 @@ namespace Infrastructure
                 else
                 {
                     ////// Delete Previous
-                    Directory.Delete(newDir,true);
+                    Directory.Delete(newDir, true);
                     Save(newDir);
                 }
             }
             else
             {
-                   Save(newDir);
+                Save(newDir);
             }
 
 
@@ -79,7 +79,7 @@ namespace Infrastructure
             for (int i = 0; i < OverwriteOnLoad.Count; i++)
             {
                 string jsonString = JsonUtility.ToJson(OverwriteOnLoad[i]);
-                File.WriteAllText(OverwriteDir + @"/"+i +".txt", jsonString);
+                File.WriteAllText(OverwriteDir + @"/" + i + ".txt", jsonString);
             }
             var smartBlocks = mainBuildUI.gameObject.GetKids();
 
@@ -88,7 +88,7 @@ namespace Infrastructure
 
         void OnLoad(string SaveName)
         {
-            var path = SaveDirectory.val; 
+            var path = SaveDirectory.val;
             var saveDir = path + "/" + SaveName;
             var OverwriteDir = saveDir + "/" + "Overwrite";
             var overWriteFiles = Directory.GetFiles(OverwriteDir);
@@ -98,6 +98,11 @@ namespace Infrastructure
                 JsonUtility.FromJsonOverwrite(jsonString, OverwriteOnLoad[i]);
             }
 
+        }
+
+        void SaveSmartBock(BuildingBlock block)
+        {
+            var 
         }
 
     }
