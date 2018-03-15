@@ -35,7 +35,7 @@ public class Triggerer : MonoBehaviour
     public static Triggerer AddSphereTrigger(Transform parent, string name, float range, int[] masks)
     {
         var GO = new GameObject(name);
-        GO.transform.parent.SetParent(parent, false);
+        GO.transform.SetParent(parent, false);
         var col = GO.AddComponent<SphereCollider>();
         col.radius = range;
         col.isTrigger = true;

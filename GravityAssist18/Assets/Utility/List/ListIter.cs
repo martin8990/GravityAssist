@@ -21,6 +21,21 @@ namespace Utility
             }
             return Best;
         }
+        public static T Max<T>(this List<T> list, Func<T, float> func)
+        {
+            float min = float.MinValue;
+            T Best = default(T);
+            for (int i = 0; i < list.Count; i++)
+            {
+                var val = func(list[i]);
+                if (val > min)
+                {
+                    min = val;
+                    Best = list[i];
+                }
+            }
+            return Best;
+        }
     }
 
     public static class ListIter

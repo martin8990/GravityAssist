@@ -6,8 +6,13 @@ namespace Infrastructure
 {
     public class AIUnitAnimator : MonoBehaviour
     {
-        public Animator anim;
-        public NavMeshAgent navMeshAgent;
+        Animator anim;
+        NavMeshAgent navMeshAgent;
+        private void Start()
+        {
+            anim = GetComponent<Animator>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
+        }
         private void Update()
         {
             anim.SetFloat("speed_t", navMeshAgent.velocity.magnitude / navMeshAgent.speed);

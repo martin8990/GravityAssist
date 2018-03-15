@@ -25,6 +25,16 @@ namespace Utility
             }
             return result;
         }
+        public static float Sum<T>(this List<T> in1, Func<T, float> fun)
+        {
+            float val = 0;
+            for (int i = 0; i < in1.Count; i++)
+            {
+                val += fun(in1[i]);
+            }
+            return val;
+        }
+
     }
 
 }

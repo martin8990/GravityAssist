@@ -12,9 +12,7 @@
 //        public AIManager AIManager;
 //        AIUnit curAIUnit;
 //        Camera cam;
-//        public UnityEvent Return;
-//        public TaskBoard taskBoard;
-//        public Map buildMap;
+ 
 //        public GameobjectPool pool;
 //        private void Awake()
 //        {
@@ -24,10 +22,7 @@
 //        private void OnEnable()
 //        {
 //            curAIUnit = pool.GetFromPool().GetComponent<AIUnit>();
-//            curAIUnit.transform.SetParent(transform,true);
-//            curAIUnit.stockPiles = stockPiles;
-//            curAIUnit.taskBoard = taskBoard;
-//            curAIUnit.buildMap = buildMap;
+//            curAIUnit.transform.SetParent(transform, true);
 //        }
 //        public void Update()
 //        {
@@ -37,7 +32,7 @@
 //            {
 //                AIManager.AIUnits.Add(curAIUnit);
 //                NavMeshManager.UpdateNavMesh();
-//                OnEnable();                
+//                OnEnable();
 //            }
 //            if (Input.GetMouseButtonDown(1))
 //            {

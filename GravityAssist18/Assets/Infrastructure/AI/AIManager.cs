@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
+
 namespace Infrastructure
 {
-
     public class AIManager : MonoBehaviour
     {
-
         public List<AIUnit> AIUnits = new List<AIUnit>();
         public int Period = 1000;//ms
         int i = 0;
@@ -16,7 +15,7 @@ namespace Infrastructure
         {
             StartCoroutine(TriggerAI());
         }
-        public System.Collections.IEnumerator TriggerAI()
+        public IEnumerator TriggerAI()
         {
             if (AIUnits.Count > 0)
             {
