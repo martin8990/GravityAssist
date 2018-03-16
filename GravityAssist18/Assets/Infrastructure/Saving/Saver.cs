@@ -102,7 +102,7 @@ namespace Infrastructure
 
         void SaveSmartBock(BuildingBlock block)
         {
-            var 
+            
         }
 
     }
