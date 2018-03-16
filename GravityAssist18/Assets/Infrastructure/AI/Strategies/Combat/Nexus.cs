@@ -19,7 +19,8 @@ namespace Infrastructure
             if (HP==0)
             {
                 Debug.Log("Game over");
-                aIManager.GameOver = true;
+             
+
             }
         }
     }

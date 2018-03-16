@@ -8,10 +8,13 @@ namespace Infrastructure
 
     public class AIManager : MonoBehaviour
     {
-        public List<AIUnit> AIUnits = new List<AIUnit>();
+        public static List<AIUnit> AIUnits = new List<AIUnit>();
         public int Period = 1000;//ms
         int i = 0;
-        public bool GameOver;
+        public static void OnGameOver()
+        {
+            AIUnits = new List<AIUnit>();
+        }
         private void Start()
         {
             AIUnits.Iter((x) => x.OnRemove = (() => AIUnits.Remove(x)));
@@ -24,8 +27,7 @@ namespace Infrastructure
         }
         public IEnumerator TriggerAI()
         {
-            if (!GameOver)
-            {
+          
                 if (AIUnits.Count > 0)
                 {
                     yield return new WaitForSeconds(Period / AIUnits.Count / 1000f);
@@ -48,7 +50,7 @@ namespace Infrastructure
 
                 }
 
-            }
+          
         }
 
 

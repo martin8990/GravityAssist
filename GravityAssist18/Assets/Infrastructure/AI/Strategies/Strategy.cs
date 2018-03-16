@@ -12,7 +12,11 @@ namespace Infrastructure
         public void ExecuteBestTactic(int period)
         {
            var bestTactic = tactics.Max((x) => x.CalculateUtility());
-           StartCoroutine(bestTactic.Execute(period));
+            if (bestTactic!=null)
+            {
+                StartCoroutine(bestTactic.Execute(period));
+
+            }
         }
 
     }

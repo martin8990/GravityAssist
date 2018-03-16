@@ -46,7 +46,7 @@ namespace Infrastructure
             attackTactic.GetEnemiesInMeleeRange = (() => nearby.TriggeredObjects);
             
 
-            defence.GetDamaged += health.TakeDamage;
+            //defence.GetDamaged += health.TakeDamage;
             health.OnDeath += () => Destroy(gameObject);
 
             tactics.Add(attackTactic);

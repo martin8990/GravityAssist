@@ -9,14 +9,19 @@ namespace Infrastructure
 
         public event Action OnDeath;
 
-        public void TakeDamage(float dmg)
+        public void TakeDamage(int dmg,Action<int> returnScore)
         {
             CurrentHP -= dmg;
             if (CurrentHP<=0)
             {
                 OnDeath();
                 CurrentHP = 0;
-            }            
+                returnScore(100 + dmg);
+            }
+            else
+            {
+                returnScore(dmg);
+            }
         }
         public void Heal(float healing)
         {
