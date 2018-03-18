@@ -52,7 +52,7 @@
 			float gradDS = GetSmoothStep(grad_t, 0.4, 0.6);//inverseLerp(-gblend / 2 - 1e-14, gblend / 2, grad_t - mingrad);
 			for (int i = 0; i < nLayers; i++)
 			{
-				float noiseDS = (snoise(IN.worldPos* freqs[i] + seeds[i])+0.5)/4.0;
+				float noiseDS = 0;// (snoise(IN.worldPos.xz* freqs[i] + seeds[i]) + 0.5) / 4.0;
 				
 				float heightDS = inverseLerp(-hblends[i] / 2 - 1e-14, hblends[i]/ 2, height_t - heights[i]);
 				
