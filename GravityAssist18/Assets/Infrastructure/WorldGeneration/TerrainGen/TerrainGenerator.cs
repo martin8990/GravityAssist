@@ -37,15 +37,7 @@ public class TerrainGenerator : MonoBehaviourExt
     public void StartTerrainGeneration()
     {
         meshEditor.gameObject.DestroyKids();
-        heightMap = new float[texRes * texRes];
-        heightMapbfr = new ComputeBuffer(texRes * texRes, sizeof(float));
-        heightMapbfr.SetData(heightMap);
-        kernelId = terrainShader.FindKernel("CalculateHeight");
-
-        renderTexture = new RenderTexture(texRes, texRes, 24);
-        renderTexture.enableRandomWrite = true;
-        renderTexture.Create();
-        Center = texRes / 2;
+        
         GenerateTerrain();
 
     }
@@ -61,7 +53,7 @@ public class TerrainGenerator : MonoBehaviourExt
     {
         biomeDesigner.GenerateHeight(terrainShader, kernelId);
         GenerateHeightMap();
-        heightMap2d.heightMap = heightMap.Conv1D2D(texRes);
+
         meshEditor.GenerateTerrain();
         planes = meshEditor.planes;
         //surfaceDesigner.DesignSurface(planes);
@@ -81,6 +73,8 @@ public class TerrainGenerator : MonoBehaviourExt
     {
         var planes1d = meshEditor.gameObject.GetKids();
         surfaceDesigner.DesignSurface(planes1d);
+
+        GenerateHeightMap();
     }
     public void Update()
     {
@@ -131,6 +125,15 @@ public class TerrainGenerator : MonoBehaviourExt
 
     public void GenerateHeightMap()
     {
+        heightMap = new float[texRes * texRes];
+        heightMapbfr = new ComputeBuffer(texRes * texRes, sizeof(float));
+        heightMapbfr.SetData(heightMap);
+        kernelId = terrainShader.FindKernel("CalculateHeight");
+
+        renderTexture = new RenderTexture(texRes, texRes, 24);
+        renderTexture.enableRandomWrite = true;
+        renderTexture.Create();
+        Center = texRes / 2;
         terrainShader.SetTexture(kernelId, "Result", renderTexture);
 
         terrainShader.SetInt("Center", Center);
@@ -142,16 +145,18 @@ public class TerrainGenerator : MonoBehaviourExt
         terrainShader.Dispatch(kernelId, texRes / 8, texRes / 8, 1);
 
         heightMapbfr.GetData(heightMap);
-        
+        heightMap2d.heightMap = heightMap.Conv1D2D(texRes);
     }
-
+    [Button]
     public void FinalizeTerrain()
     {
         done = true;
-        planes.Iter2D((x) => x.AddComponent<MeshCollider>());
-        planes.Iter2D((x) => x.layer = 10);
 
-        NavMeshManager.UpdateNavMesh();
+        var planes1d = meshEditor.gameObject.GetKids();
+        planes1d.Iter((x) => x.AddComponent<MeshCollider>());
+        planes1d.Iter((x) => x.layer = 10);
+
+     //   NavMeshManager.UpdateNavMesh();
        
     }
 

@@ -27,6 +27,7 @@ namespace Infrastructure
             {
                 for (int y = minPos.z; y < maxPos.z; y++)
                 {
+
                     minHeight = Mathf.Min(heightMap.heightMap[x, y], minHeight);
                 }
             }

@@ -87,7 +87,6 @@
 			o.Albedo = drawLayer(height_t, gradDS, blendAxes, IN.worldPos / scale, o.Albedo, 3, t41, t42);
 			o.Albedo = drawLayer(height_t, gradDS, blendAxes, IN.worldPos / scale, o.Albedo, 4, t51, t52);
 			o.Albedo = drawLayer(height_t, gradDS, blendAxes, IN.worldPos / scale, o.Albedo, 5, t61, t62);
-		
 			
 		}
 		ENDCG
