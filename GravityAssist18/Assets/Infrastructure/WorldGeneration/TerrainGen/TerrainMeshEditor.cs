@@ -18,7 +18,7 @@ public class TerrainMeshEditor : MonoBehaviour
 
     public GameObject[,] planes;
 
-    public IEnumerator GenerateTerrain()
+    public void GenerateTerrain()
     {
 
         meshRes.val = texRes / drawDistance;
@@ -38,7 +38,7 @@ public class TerrainMeshEditor : MonoBehaviour
                 {
               
                     cnt = 0;
-                    yield return null;
+                    
                 }
             }
         }
@@ -53,7 +53,7 @@ public class TerrainMeshEditor : MonoBehaviour
         {
             for (int z = 0; z < l; z++)
             {
-                PlaneGen.UpdateHeight(meshRes,heightMap,planes[x, z], new Vector2Int(x,z),texRes);
+                //PlaneGen.UpdateHeight(meshRes,heightMap,planes[x, z], new Vector2Int(x,z),texRes);
                 cnt++;
                 if (cnt == updatesPerFrame)
                 {

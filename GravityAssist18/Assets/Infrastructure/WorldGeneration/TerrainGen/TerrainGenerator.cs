@@ -33,8 +33,10 @@ public class TerrainGenerator : MonoBehaviourExt
     bool ready;
     bool done;
 
-    public void Start()
+    [Button]
+    public void StartTerrainGeneration()
     {
+        meshEditor.gameObject.DestroyKids();
         heightMap = new float[texRes * texRes];
         heightMapbfr = new ComputeBuffer(texRes * texRes, sizeof(float));
         heightMapbfr.SetData(heightMap);
@@ -44,40 +46,65 @@ public class TerrainGenerator : MonoBehaviourExt
         renderTexture.enableRandomWrite = true;
         renderTexture.Create();
         Center = texRes / 2;
-        StartCoroutine(GenerateTerrain());
+        GenerateTerrain();
 
     }
-    private void Update()
-    {
-        if (ready && !done)
-        {
-            surfaceDesigner.DesignSurface(planes);
+    //private void Update()
+    //{
+    //    if (ready && !done)
+    //    {
+    //        surfaceDesigner.DesignSurface(planes);
 
-        }
-    }
-
-    public IEnumerator GenerateTerrain()
+    //    }
+    //}
+    public void GenerateTerrain()
     {
         biomeDesigner.GenerateHeight(terrainShader, kernelId);
         GenerateHeightMap();
         heightMap2d.heightMap = heightMap.Conv1D2D(texRes);
-        yield return StartCoroutine(meshEditor.GenerateTerrain());
+        meshEditor.GenerateTerrain();
         planes = meshEditor.planes;
-        surfaceDesigner.DesignSurface(planes);
-        ready = true;
-        if (update)
-        {
-            StartCoroutine(UpdateHeight());
-            StartCoroutine(UpdateNormals());
-        }
-        else
-        {
-            FinalizeTerrain();
-        }
-        
-
+        //surfaceDesigner.DesignSurface(planes);
+        //ready = true;
+        //if (update)
+        //{
+        //    StartCoroutine(UpdateHeight());
+        //    StartCoroutine(UpdateNormals());
+        //}
+        //else
+        //{
+        //    FinalizeTerrain();
+        //}
     }
-    
+    [Button]
+    public void Start()
+    {
+        var planes1d = meshEditor.gameObject.GetKids();
+        surfaceDesigner.DesignSurface(planes1d);
+    }
+
+    //public IEnumerator GenerateTerrain()
+    //{
+    //    biomeDesigner.GenerateHeight(terrainShader, kernelId);
+    //    GenerateHeightMap();
+    //    heightMap2d.heightMap = heightMap.Conv1D2D(texRes);
+    //    yield return StartCoroutine(meshEditor.GenerateTerrain());
+    //    planes = meshEditor.planes;
+    //    surfaceDesigner.DesignSurface(planes);
+    //    ready = true;
+    //    if (update)
+    //    {
+    //        StartCoroutine(UpdateHeight());
+    //        StartCoroutine(UpdateNormals());
+    //    }
+    //    else
+    //    {
+    //        FinalizeTerrain();
+    //    }
+
+
+    //}
+
     public IEnumerator UpdateHeight()
     {
         biomeDesigner.GenerateHeight(terrainShader, kernelId);

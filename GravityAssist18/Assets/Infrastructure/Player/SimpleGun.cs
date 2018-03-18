@@ -19,8 +19,8 @@ namespace Infrastructure
         public AudioSource audioSource;
         public AudioClip clip;
         public ParticleSystem system;
-        public Transform hipTransform;
-        public Transform ADSTransform;
+        //public Transform hipTransform;
+        //public Transform ADSTransform;
 
         public event Action<int> OnReceiveScore;
 
@@ -35,16 +35,16 @@ namespace Infrastructure
                 t = 0;
                 Shoot();
             }
-            if (Input.GetMouseButton(1))
-            {
-                transform.position = ADSTransform.position;
-                transform.rotation = ADSTransform.rotation;
-            }
-            else
-            {
-                transform.position = hipTransform.position;
-                transform.rotation = hipTransform.rotation;
-            }
+            //if (Input.GetMouseButton(1))
+            //{
+            //    transform.position = ADSTransform.position;
+            //    transform.rotation = ADSTransform.rotation;
+            //}
+            //else
+            //{
+            //    transform.position = hipTransform.position;
+            //    transform.rotation = hipTransform.rotation;
+            //}
             hitMarker.SetActive(hashit);  
 
         }
@@ -61,7 +61,6 @@ namespace Infrastructure
               //  Debug.Log(go.name + " " + go.layer);
                 if (go.layer == enemyLayer)
                 {
-                    Debug.Log("Hit");
                     hashit = true;
                     var enemyHealth = go.GetComponent<Health>();
                     enemyHealth.TakeDamage(DMG,OnReceiveScore);

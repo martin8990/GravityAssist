@@ -25,8 +25,8 @@ namespace Infrastructure
         }
         private void Update()
         {
-            transform.LookAt(new Vector3(Target.position.x,0,Target.position.z));
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, radialOffset, 0));
+            //transform.LookAt(new Vector3(Target.position.x,0,Target.position.z));
+            //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, radialOffset, 0));
         }
 
         public void OnAnimatorIK()
@@ -42,18 +42,18 @@ namespace Infrastructure
             animator.SetIKRotation(AvatarIKGoal.LeftHand, barrel.transform.rotation);
             animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
 
-            float dy = -transform.position.y - 1 + Target.transform.position.y;
-            float dDist = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(Target.transform.position.x, Target.transform.position.z));
-            float angle = Mathf.Atan2(dy, dDist);
+            //float dy = -transform.position.y - 1 + Target.transform.position.y;
+            //float dDist = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(Target.transform.position.x, Target.transform.position.z));
+            //float angle = Mathf.Atan2(dy, dDist);
 
-            float t = (angle + Mathf.PI / 2f) / (Mathf.PI);
-            var BoneAngle = Vector3.Lerp(bottumRotSpine, topRot, t);
+            //float t = (angle + Mathf.PI / 2f) / (Mathf.PI);
+            //var BoneAngle = Vector3.Lerp(bottumRotSpine, topRot, t);
 
-            Vector3 relativePos = boneTransform.position - Target.position;
+            //Vector3 relativePos = boneTransform.position - Target.position;
  
 
-            animator.SetBoneLocalRotation(bone, Quaternion.LookRotation(bottumRotSpine));
-            Grip.transform.rotation = Quaternion.Euler(bottumRotGrip);
+            //animator.SetBoneLocalRotation(bone, Quaternion.LookRotation(bottumRotSpine));
+            //Grip.transform.rotation = Quaternion.Euler(bottumRotGrip);
            // animator.SetLookAtPosition(Target.position);
 
 

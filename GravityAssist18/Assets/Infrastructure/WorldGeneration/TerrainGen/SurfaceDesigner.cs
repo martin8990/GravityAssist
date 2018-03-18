@@ -20,27 +20,42 @@ public class SurfaceDesigner : MonoBehaviourExt
 
     public float maxHeight = 1;
     public float maxGrad = 0.1f;
+    public Material mat;
     
 
-    public void DesignSurface(GameObject[,] planes)
+    public void DesignSurface(GameObject[] planes)
     {
-        int l = planes.GetLength(0);
+        int l = planes.Length;
+     
+        mat.SetColorArray("colours", colours);
+        mat.SetFloatArray("hblends", hblends);
+        mat.SetFloat("blend", gblend);
+        mat.SetFloatArray("heights", heights);
+
+        mat.SetFloatArray("freqs", freqs);
+        mat.SetFloatArray("seeds", seeds);
+        mat.SetFloat("maxHeight", maxHeight);
+        mat.SetFloat("maxGrad", maxGrad);
+        mat.SetFloat("mingrad", mingrad);
         for (int x = 0; x < l; x++)
         {
-            for (int y = 0; y < l; y++)
-            {
-                var mat = planes[x, y].GetComponent<MeshRenderer>().material;
-                mat.SetColorArray("colours", colours);
-                mat.SetFloatArray("hblends", hblends);
-                mat.SetFloat("blend", gblend);
-                mat.SetFloatArray("heights", heights);
+            
+
+                try
+                {
+                    
+                   planes[x].GetComponent<MeshRenderer>().sharedMaterial = mat;
+                   
+ 
+                }
+                catch (System.Exception)
+                {
+
+                    throw;
+                }
                 
-                mat.SetFloatArray("freqs", freqs);
-                mat.SetFloatArray("seeds", seeds);
-                mat.SetFloat("maxHeight", maxHeight);
-                mat.SetFloat("maxGrad", maxGrad);
-                mat.SetFloat("mingrad", mingrad);
-            }
+
+            
         }
     }
 

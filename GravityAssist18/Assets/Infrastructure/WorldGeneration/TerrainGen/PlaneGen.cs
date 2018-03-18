@@ -11,12 +11,12 @@ public static class PlaneGen
         MeshFilter filter = gameObject.AddComponent<MeshFilter>();
         MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
         mr.material = mat;
-        Mesh mesh = filter.mesh;
+        Mesh mesh = new Mesh();
         mesh.Clear();
-
+        filter.mesh = mesh;
 
         #region Vertices		
-        var vertices = UpdateHeight(res, heightMap, gameObject, id, texRes);
+        var vertices = UpdateHeight(res, heightMap, mesh, id, texRes);
         #endregion
 
 
@@ -60,11 +60,9 @@ public static class PlaneGen
         return gameObject;
     }
 
-    public static Vector3[] UpdateHeight(int res,float[,] heightMap, GameObject gameObject, Vector2Int id, int texRes)
+    public static Vector3[] UpdateHeight(int res,float[,] heightMap, Mesh mesh, Vector2Int id, int texRes)
     {
-        MeshFilter filter = gameObject.GetComponent<MeshFilter>();
         float size = res;
-        Mesh mesh = filter.mesh;
         Vector3[] vertices = new Vector3[res * res];
         for (int z = 0; z < res; z++)
         {

@@ -25,13 +25,14 @@ public class BiomeDesigner : MonoBehaviourExt
         
     int nBiomes;
   
-    public void Awake()
-    {
-        BiomeBuffer = new ComputeBuffer(10, sizeof(float) * 5);
-    }
 
     public void GenerateHeight(ComputeShader terrainShader, int id)
     {
+        if (BiomeBuffer == null)
+        {
+            BiomeBuffer = new ComputeBuffer(10, sizeof(float) * 5);
+
+        }
         nBiomes = biomes.Count;
         BiomeBuffer.SetData(biomes);
 
