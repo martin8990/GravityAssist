@@ -15,7 +15,7 @@ public class TerrainGenerator : MonoBehaviourExt
     public ComputeShader terrainShader;
     public BiomeDesigner biomeDesigner;
     public TerrainMeshEditor meshEditor;
-    public SurfaceDesigner surfaceDesigner;
+    public TexturedSurfaceDesigner surfaceDesigner;
     public LayerMask terrainLayer;
 
     public HeightMap heightMap2d;
@@ -81,6 +81,10 @@ public class TerrainGenerator : MonoBehaviourExt
     {
         var planes1d = meshEditor.gameObject.GetKids();
         surfaceDesigner.DesignSurface(planes1d);
+    }
+    public void Update()
+    {
+        Start();
     }
 
     //public IEnumerator GenerateTerrain()

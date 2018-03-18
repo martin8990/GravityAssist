@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Terrain
-  m_Shader: {fileID: 4800000, guid: 97b5f0cc1b4fff84bb7cfdb8c39e2638, type: 3}
+  m_Shader: {fileID: 4800000, guid: b17d265ac757d294a97acb9770030aa6, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -62,8 +62,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - testNormal:
+        m_Texture: {fileID: 2800000, guid: 017f008a0985a3f48b83d3a808eb67f8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - testTexture:
-        m_Texture: {fileID: 2800000, guid: 42062cb9fe1cd8f40b2f05b73ae6282c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 20ac9ed56abe5d24fa922a675217b936, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -83,7 +87,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - testScale: 13.31
+    - testScale: 38.6
     - uvMult: 1
     - zoom: 1
     m_Colors:
