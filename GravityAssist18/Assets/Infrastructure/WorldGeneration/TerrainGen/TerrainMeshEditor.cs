@@ -35,10 +35,8 @@ public class TerrainMeshEditor : MonoBehaviour
                 planes[x, z] = GO;
                 cnt++;
                 if (cnt == normalsPerFrame)
-                {
-              
-                    cnt = 0;
-                    
+                {              
+                    cnt = 0; 
                 }
             }
         }

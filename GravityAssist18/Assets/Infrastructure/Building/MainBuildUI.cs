@@ -11,20 +11,19 @@ namespace Infrastructure
         public MouseBuildUI mouseBuildUI;
         public BuildMaterialUI BuildMaterialUI;
 
-        public SmartBlockBuilder smartBlockBuilder;
-        public SmartBlockCompleter smartBlockCompleter;
+        public BlockBuilder blockBuilder;
+        public BlockCompleter smartBlockCompleter;
 
         public BuildUIMode mode;
         CarvableBlock curBlock;
         
         private void Start()
         {
-           
-            smartBlockBuilder.OnNewSmartblock = ((x) => BuildMaterialUI.SetCurBuildMaterial(x));
-            smartBlockBuilder.OnNewSmartblock +=((x) => mode = BuildUIMode.MouseDrag);
-            smartBlockBuilder.OnNewSmartblock +=((x) => curBlock = x);
+            blockBuilder.OnNewblock = ((x) => BuildMaterialUI.SetCurBuildMaterial(x));
+            blockBuilder.OnNewblock +=((x) => mode = BuildUIMode.MouseDrag);
+            blockBuilder.OnNewblock +=((x) => curBlock = x);
 
-            mouseBuildUI.newBlock.AddListener(smartBlockBuilder.BuildSmartBlock);
+            mouseBuildUI.newBlock.AddListener(blockBuilder.BuildSmartBlock);
             mouseBuildUI.stopped.AddListener(() => mode = BuildUIMode.Normal);
             mouseBuildUI.completed.AddListener(() => smartBlockCompleter.CompleteBlock(curBlock));
             smartBlockCompleter.blockCompleted = ((x) => historyManager.AddElement(x));
@@ -46,10 +45,6 @@ namespace Infrastructure
                     break;
             }     
         }
-       
-
-
-
     }
 }
 public enum BuildUIMode

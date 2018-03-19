@@ -9,7 +9,7 @@ namespace Infrastructure
     public class DebugTactic : Tactic
     {
         NavMeshAgent agent;
-        public Transform target;
+
         private void Start()
         {
             agent = GetComponent<NavMeshAgent>();
@@ -21,7 +21,7 @@ namespace Infrastructure
 
         public override IEnumerator Execute(int Period)
         {
-            agent.SetDestination(target.position);
+
             yield return null;
         }
     }

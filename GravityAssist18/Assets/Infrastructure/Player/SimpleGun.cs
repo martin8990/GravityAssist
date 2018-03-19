@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace Infrastructure
 {
+
     public class SimpleGun : MonoBehaviour
     {
         public float Range = 100;

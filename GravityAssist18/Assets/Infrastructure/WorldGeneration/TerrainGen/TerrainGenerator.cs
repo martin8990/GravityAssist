@@ -73,13 +73,11 @@ public class TerrainGenerator : MonoBehaviourExt
     {
         var planes1d = meshEditor.gameObject.GetKids();
         surfaceDesigner.DesignSurface(planes1d);
+        biomeDesigner.GenerateHeight(terrainShader, kernelId);
 
         GenerateHeightMap();
     }
-    public void Update()
-    {
-        Start();
-    }
+    
 
     //public IEnumerator GenerateTerrain()
     //{

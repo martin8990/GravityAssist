@@ -30,7 +30,6 @@ namespace Infrastructure
             smartBlock.materializer.buildMaterial = buildMaterial;
             smartBlock.subDivider.buildMaterial = buildMaterial;
             smartBlock.materializer.SetDefaultColor();
-            smartBlock.carveMaster.enabled = false;//.authority = Authority.Neutral;
             var tf = smartBlock.transform;
             tf.localScale = s;
             tf.position = p;

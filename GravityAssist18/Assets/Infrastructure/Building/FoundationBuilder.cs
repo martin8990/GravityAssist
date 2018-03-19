@@ -32,14 +32,16 @@ namespace Infrastructure
                 }
             }
 
-            if (minHeight > height)
+            if (minHeight > height || block.collisionTriggerer.TriggeredObjects.Count > 0)
             {
-              
+                Debug.Log("yo");
                block.valid = false;
+                block.materializer.SetInvalidColor();
             }
             else
             {
-                block.valid = true;             
+                block.valid = true;
+                block.materializer.SetDefaultColor();
             }       
           
             minPos = new Vector3Int(minPos.x, (int)minHeight, minPos.z);

@@ -7,17 +7,15 @@ using System.Collections;
 
 namespace Infrastructure
 {
+
     public class EnemyAISpawner : MonoBehaviour
     {
         public AIUnit aiPrefab;
         public AIManager AIManager;
         
-        public Vector2Int min;
-        public Vector2Int max;
-
         AIUnit curAIUnit;
         public float SpawnInterval;
-
+        public HeightMap heightMap;
         public int amount;
         List<Vector3> positions = new List<Vector3>();
 
@@ -27,26 +25,26 @@ namespace Infrastructure
             positions.Iter((x) => Gizmos.DrawCube(x, Vector3.one));
         }
 
-        private void Awake()
-        {
-            for (int x = min.x; x < max.x; x++)
-            {
-                positions.Add(new Vector3(x, 1, min.y));
-                positions.Add(new Vector3(x, 1, max.y));
-            }
-            for (int z = min.y; z < max.y; z++)
-            {
-                positions.Add(new Vector3(min.x, 1, z));
-                positions.Add(new Vector3(max.x, 1, z));
-            }
-        }
         private void Start()
         {
-            StartCoroutine(Spawn());
+            var hm = heightMap.heightMap;
+            var maxX = hm.GetLength(0)-1;
+            var maxZ = hm.GetLength(1)-1;
+
+            for (int x = 0; x <= maxX; x++)
+            {
+                positions.Add(new Vector3(x, hm[x,0], 0));
+                positions.Add(new Vector3(x, hm[x,maxZ],maxZ));
+            }
+            for (int z = 0; z <= maxZ; z++)
+            {
+                positions.Add(new Vector3(0, hm[0,z], z));
+                positions.Add(new Vector3(maxX, hm[maxX, z], z));
+            }
         }
-    
-        IEnumerator Spawn()
+        public void StartWave()
         {
+              
             for (int i = 0; i < amount; i++)
             {
                 curAIUnit = Instantiate(aiPrefab);
@@ -55,9 +53,7 @@ namespace Infrastructure
                 curAIUnit.transform.position = spawnTFi;
                 AIManager.AddAI(curAIUnit);
             }
-            yield return new WaitForSeconds(SpawnInterval);
-            StartCoroutine(Spawn());
-        }
+         }
         
 
 

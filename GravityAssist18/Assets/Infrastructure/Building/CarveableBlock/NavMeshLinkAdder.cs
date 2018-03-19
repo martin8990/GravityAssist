@@ -8,6 +8,14 @@ namespace Infrastructure
 {
     public class NavMeshLinkAdder : MonoBehaviour
     {
+        public Vector3Int myMin
+        {
+            get { return (transform.position - transform.localScale / 2f).ToInt(); }
+        }
+        public Vector3Int myMax
+        {
+            get { return (transform.position + transform.localScale / 2f).ToInt(); }
+        }
         public List<NavMeshLink> links = new List<NavMeshLink>();
         public LayerMask mask;
         public CarvableBlock carvableBlock;
@@ -43,8 +51,7 @@ namespace Infrastructure
             if (enabled)
             {
 
-                Vector3Int myMin = carvableBlock.carveMaster.myMin;
-                Vector3Int myMax = carvableBlock.carveMaster.myMax;
+                
                 var scl = myMax - myMin;
                
 

@@ -53,7 +53,6 @@ namespace Infrastructure
             }
 
             p2 = pos;
-            curBlock.OnUpdate();
             switch (mode)
             {
                 case Mode.Foundation:

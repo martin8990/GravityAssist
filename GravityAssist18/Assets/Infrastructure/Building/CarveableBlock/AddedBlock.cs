@@ -18,8 +18,8 @@ namespace Infrastructure
             
             fluidCell.Restore();
             yield return null;
-            fluidCell.OnUpdate();
-            fluidCell.carveMaster.Commit();
+
+//            fluidCell.carveMaster.Commit();
         }
 
         public override void CleanUp()

@@ -26,9 +26,8 @@ namespace Infrastructure
             
             cell.transform.position = curPosition;
             cell.transform.localScale = curScale;
-            cell.OnUpdate();
             yield return new WaitForFixedUpdate();
-            cell.OnUpdate();
+
             cell.Commit();
         }
 
@@ -42,9 +41,8 @@ namespace Infrastructure
             
             cell.transform.position = previousPosition;
             cell.transform.localScale = previousScale;
-            cell.OnUpdate();
             yield return new WaitForFixedUpdate();
-            cell.OnUpdate();
+           
             cell.Commit();
         }
     }

@@ -8,26 +8,27 @@ namespace Infrastructure
         public Transform Target;
         public Transform Grip;
 
-        public Vector3 offset;
+        //public Vector3 offset;
         Animator animator;
         public Transform barrel;
         public HumanBodyBones bone;
-    
-        public Vector3 topRot;
-        public Vector3 bottumRotSpine;
-        public Vector3 bottumRotGrip;
-        public float radialOffset;
-        public Transform boneTransform;
 
+        public Transform boneTf;
+        public Transform FPSCam;
+        //public Vector3 topRot;
+        //public Vector3 bottumRotSpine;
+        //public Vector3 bottumRotGrip;
+        public float radialOffset;
+        public Vector3 dir;
+        public float mag;
+
+        //public Transform boneTransform;
+        public bool Aim;
         private void Start()
         {
             animator = GetComponent<Animator>();
         }
-        private void Update()
-        {
-            //transform.LookAt(new Vector3(Target.position.x,0,Target.position.z));
-            //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, radialOffset, 0));
-        }
+
 
         public void OnAnimatorIK()
         {
@@ -52,11 +53,28 @@ namespace Infrastructure
             //Vector3 relativePos = boneTransform.position - Target.position;
  
 
-            //animator.SetBoneLocalRotation(bone, Quaternion.LookRotation(bottumRotSpine));
+            //animator.SetBoneLocalRotation(bone, Quaternion.LookRotation());
             //Grip.transform.rotation = Quaternion.Euler(bottumRotGrip);
            // animator.SetLookAtPosition(Target.position);
 
 
+        }
+
+        public void LateUpdate()
+        {
+     
+
+            if (Aim)
+            {
+                transform.LookAt(new Vector3(Target.position.x, transform.position.y, Target.position.z));
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, radialOffset, 0));
+                FPSCam.LookAt(Target);
+                FPSCam.localRotation = Quaternion.Euler(new Vector3(FPSCam.localRotation.eulerAngles.x, 0, 0));
+                //var prevRot = boneTf.localRotation.eulerAngles; 
+                //boneTf.LookAt(Target);
+                //var newRot = boneTf.localRotation.eulerAngles;
+                //boneTf.rotation = Quaternion.Euler(dir * mag);
+                          }
         }
 
     }
