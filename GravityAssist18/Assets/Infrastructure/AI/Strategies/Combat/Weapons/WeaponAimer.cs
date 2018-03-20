@@ -15,15 +15,18 @@ namespace Infrastructure
 
         public Transform boneTf;
         public Transform FPSCam;
+        public Transform neutral;
         //public Vector3 topRot;
         //public Vector3 bottumRotSpine;
         //public Vector3 bottumRotGrip;
         public float radialOffset;
         public Vector3 dir;
         public float mag;
-
         //public Transform boneTransform;
         public bool Aim;
+
+        public float dx;
+        public float dy;
         private void Start()
         {
             animator = GetComponent<Animator>();
@@ -62,18 +65,18 @@ namespace Infrastructure
 
         public void LateUpdate()
         {
-     
+
 
             if (Aim)
             {
-                transform.LookAt(new Vector3(Target.position.x, transform.position.y, Target.position.z));
-                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, radialOffset, 0));
-                FPSCam.LookAt(Target);
-                FPSCam.localRotation = Quaternion.Euler(new Vector3(FPSCam.localRotation.eulerAngles.x, 0, 0));
+                //   transform.LookAt(new Vector3(Target.position.x, transform.position.y, Target.position.z));
+                //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, radialOffset, 0));
+                // FPSCam.LookAt(Target);
+                // FPSCam.localRotation = Quaternion.Euler(new Vector3(FPSCam.localRotation.eulerAngles.x, 0, 0));
                 //var prevRot = boneTf.localRotation.eulerAngles; 
-                //boneTf.LookAt(Target);
+
                 //var newRot = boneTf.localRotation.eulerAngles;
-                //boneTf.rotation = Quaternion.Euler(dir * mag);
+                boneTf.localRotation = Quaternion.Euler(new Vector3(dx,dy , 0));
                           }
         }
 
