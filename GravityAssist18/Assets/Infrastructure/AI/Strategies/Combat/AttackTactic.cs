@@ -4,25 +4,26 @@ using UnityEngine;
 using Utility;
 using UnityEngine.AI;
 using System.Collections;
-
 namespace Infrastructure
 {
-
+    //public interface IAttackable
+    //{
+    //    void OnTakeDamage(int Damage);
+    //    Transform transform { get;}     
+    //}
 
     public class AttackTactic : Tactic
-    {
-        
-        public Func<float> GetArmorRating;
-        public Func<float> GetAttackRating;
+    {       
+        Func<List<Health>> GetEnemiesInSight;
+        Func<List<Health>> GetEnemiesInAttackRange;
+        public int Damage;        
 
-        public Func<List<GameObject>> GetEnemiesInSight;
-        public Func<List<GameObject>> GetEnemiesInMeleeRange;
-        
-        public event Func<GameObject, IEnumerator> OnAttack;
-        
         NavMeshAgent agent;
-        private void Start()
+
+        public void init(Func<List<Health>> getEnemiesInSight, Func<List<Health>> getEnemiesInAttackRange)
         {
+            GetEnemiesInSight = getEnemiesInSight;
+            GetEnemiesInAttackRange = getEnemiesInAttackRange;
             agent = GetComponent<NavMeshAgent>();
         }
 
@@ -35,28 +36,25 @@ namespace Infrastructure
                 {
                     return 1;
                 }                
-           }
+            }
             return 0;
 
             
         }
-
         public override IEnumerator Execute(int Period)
         {
-            var EnemiesInRange = GetEnemiesInMeleeRange();
+            var EnemiesInRange = GetEnemiesInAttackRange();
             if (EnemiesInRange.Count > 0)
             {
                 agent.SetDestination(transform.position);
-                var target = EnemiesInRange[0];
-          
-                StartCoroutine( OnAttack(target));
+                var target = EnemiesInRange.Min((x) => x.transform.position.SquareDist2(transform.position));
+                target.TakeDamage(Damage,(x) => x =x);
             }
             else
             {
                 var EnemiesInSight = GetEnemiesInSight();
                 if (EnemiesInSight.Count>0)
                 {
-                    Debug.Log("Enemies " + EnemiesInSight.Count);
                     var closest = EnemiesInSight.Min((x) => transform.position.SquareDist2(x.transform.position));
                     agent.SetDestination(closest.transform.position);
                 }          

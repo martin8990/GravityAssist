@@ -657,9 +657,12 @@ GameObject:
   - component: {fileID: 114587553671169564}
   - component: {fileID: 114753721052387196}
   - component: {fileID: 114833671349014362}
-  - component: {fileID: 114479088828811492}
-  - component: {fileID: 114181983134336126}
   - component: {fileID: 65683569237313790}
+  - component: {fileID: 114835156929251336}
+  - component: {fileID: 114025173644607664}
+  - component: {fileID: 114039536557785810}
+  - component: {fileID: 114474015936009842}
+  - component: {fileID: 195903858532002942}
   m_Layer: 18
   m_Name: Friendly
   m_TagString: Untagged
@@ -3110,11 +3113,30 @@ MonoBehaviour:
   bone: 7
   boneTf: {fileID: 4230258538257228}
   FPSCam: {fileID: 4068013781972290}
+  neutral: {fileID: 0}
   radialOffset: 60
   dir: {x: 0, y: 0, z: 0}
   mag: 0
   Aim: 1
---- !u!114 &114181983134336126
+  dx: 0
+  dy: 0
+--- !u!114 &114025173644607664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1536982171696046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7137265c47bdf03458e6ea9d5106d6ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tactics: []
+  health: {fileID: 114835156929251336}
+  sightRange: 20
+  attackRange: 20
+  enemyMasks: {fileID: 11400000, guid: 185215f0e5cec884aa43b01a3161346e, type: 2}
+--- !u!114 &114039536557785810
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -3126,6 +3148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strategies: []
+  combatStrategy: {fileID: 0}
 --- !u!114 &114262437346312400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3228,7 +3251,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
---- !u!114 &114479088828811492
+--- !u!114 &114474015936009842
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -3236,10 +3259,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1536982171696046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c859e318042e5a41b9544fc93c012a7, type: 3}
+  m_Script: {fileID: 11500000, guid: c3d1b88b0982d794ba834a3f356c0001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tactics: []
+  Damage: 10
 --- !u!114 &114587553671169564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3292,6 +3315,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tactics: []
+--- !u!114 &114835156929251336
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1536982171696046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50fa698449a6a8c4f8e6286304ac8fdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHP: 100
+  CurrentHP: 100
 --- !u!114 &114867052207569714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3865,6 +3901,27 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &195903858532002942
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1536982171696046}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!198 &198126158741553954
 ParticleSystem:
   m_ObjectHideFlags: 1

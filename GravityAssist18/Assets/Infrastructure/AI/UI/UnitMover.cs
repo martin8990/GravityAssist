@@ -1,17 +1,23 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
+using Utility;
 namespace Infrastructure
 {
 
     public class UnitMover : MonoBehaviour
     {
-        public UnitSelector unitSelector;
-        public void OnUpdate(List<AIUnit> selected)
+        Camera cam;
+        private void Awake()
         {
-            if (Input.GetMouseButtonDown(1))
+            cam = Camera.main;
+        }
+        public void OnMove(List<FriendlyAIUnit> selected)
+        {
+            for (int i = 0; i < selected.Count; i++)
             {
-
+                var order = selected[i].gameObject.AddComponent<MoveOrder>();
+                order.destination = MousePositioning.MouseToWorldPos(cam);
+                selected[i].orders.Enqueue(order);
             }
         }
     }

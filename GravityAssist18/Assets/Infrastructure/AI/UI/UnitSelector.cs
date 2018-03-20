@@ -4,31 +4,29 @@ using Utility;
 
 namespace Infrastructure
 {
-
-
+    
     public class UnitSelector : MonoBehaviour
     {
-
         Vector3 p1;
         Vector3 p2;
         
         public Camera cam;
-        public List<AIUnit> friendlies;
         bool isSelecting;
         public void OnFirstClick()
         {
             isSelecting = true;
             p1 = Input.mousePosition;
         }
-        public List<AIUnit> OnUp()
+        public List<FriendlyAIUnit> OnUp()
         {
             isSelecting = false;
-            var selected = new List<AIUnit>();
-            for (int i = 0; i < friendlies.Count; i++)
+            var selected = new List<FriendlyAIUnit>();
+
+            for (int i = 0; i < AIManager.friendlies.Count; i++)
             {
-                if (IsWithinSelectionBounds(friendlies[i].gameObject))
+                if (IsWithinSelectionBounds(AIManager.friendlies[i].gameObject))
                 {
-                    selected.Add(friendlies[i]);
+                    selected.Add(AIManager.friendlies[i]);
                 }
             }
             return selected;
@@ -45,8 +43,6 @@ namespace Infrastructure
         }
         bool IsWithinSelectionBounds(GameObject gameObject)
         {
-            if (!isSelecting)
-                return false;
 
             var viewportBounds =
                 GetViewportBounds(cam, p1, Input.mousePosition);

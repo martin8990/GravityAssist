@@ -1,27 +1,45 @@
 ﻿
 using UnityEngine;
-
+using System.Collections.Generic;
 namespace Infrastructure
-{ 
-    [RequireComponent(typeof(FollowOrders))]
+{
+
     [RequireComponent(typeof(DebugStrategy))]
+    [RequireComponent(typeof(FriendlyCombatStrategy))]
     public class FriendlyAIUnit : AIUnit
     {
-        Health health;
+
         DebugStrategy debugStrategy;
-        FollowOrders follow;
+        [HideInInspector]
+        public FriendlyCombatStrategy combatStrategy;
+
+        public Queue<Order> orders = new Queue<Order>();
+        Order currentOrder;
         private void Awake()
         {
-            follow = GetComponent<FollowOrders>();
+            combatStrategy = GetComponent<FriendlyCombatStrategy>();
             debugStrategy = GetComponent<DebugStrategy>();
             strategies.Add(debugStrategy);
-            strategies.Add(follow);
+            strategies.Add(combatStrategy);
+        }
+        public override void Trigger(int period)
+        {
+            if (currentOrder != null)
+            {
+                currentOrder.Execute(period);
+            }
+            else if (orders.Count > 0)
+            {
+                currentOrder = orders.Dequeue();
+                currentOrder.Execute(period);
+            }
+            else
+            {
+                base.Trigger(period);
+            }
         }
 
     }
-
-
-
 
 }
 

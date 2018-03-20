@@ -45,6 +45,18 @@ public class Triggerer : MonoBehaviour
 
     }
 
+    public List<T> GetComponentsInTrigger<T>() where T : Component
+    {
+        var result = new List<T>();
+        for (int i = 0; i < TriggeredObjects.Count; i++)
+        {
+            if (TriggeredObjects[i] != null)
+            {
+                result.Add(TriggeredObjects[i].GetComponent<T>());
+            }
+        }
+        return result;
+    }
 }
 
 

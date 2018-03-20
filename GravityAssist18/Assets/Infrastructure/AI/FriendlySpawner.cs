@@ -6,10 +6,9 @@ namespace Infrastructure
 {
     public class FriendlySpawner : MonoBehaviour
     {
-        public AIUnit aiPrefab;
-        public AIManager AIManager;
+        public FriendlyAIUnit aiPrefab;
         public Camera cam;
-        AIUnit curUnit;
+        FriendlyAIUnit curUnit;
         public LayerMask FriendlyMask = 17;
         
         public void OnEnable()
@@ -20,6 +19,7 @@ namespace Infrastructure
         public void Commit()
         {
             AIManager.AddAI(curUnit);
+            AIManager.friendlies.Add(curUnit);
             enabled = false;
         }
         public void Update()

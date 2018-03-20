@@ -9,6 +9,7 @@ namespace Infrastructure
     public class AIManager : MonoBehaviour
     {
         public static List<AIUnit> AIUnits = new List<AIUnit>();
+        public static List<FriendlyAIUnit> friendlies = new List<FriendlyAIUnit>();
         public int Period = 1000;//ms
         int i = 0;
         public static void OnGameOver()
@@ -17,12 +18,11 @@ namespace Infrastructure
         }
         private void Start()
         {
-            AIUnits.Iter((x) => x.OnRemove = (() => AIUnits.Remove(x)));
             StartCoroutine(TriggerAI());
         }
-        public void AddAI(AIUnit aIUnit)
+        public static void AddAI(AIUnit aIUnit)
         {
-            aIUnit.OnRemove = (() => AIUnits.Remove(aIUnit));
+
             AIUnits.Add(aIUnit);
         }
         public IEnumerator TriggerAI()

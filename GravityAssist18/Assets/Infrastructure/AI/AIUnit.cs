@@ -10,14 +10,14 @@ namespace Infrastructure
 
     public class AIUnit : MonoBehaviour
     {
-        Tactic prevTactic;
-        public List<Strategy> strategies;
-        public Action OnRemove;
+        public List<Strategy> strategies = new List<Strategy>();
+        
 
-
-        public void Trigger(int period)
+        public virtual void Trigger(int period)
         {
-            var bestStrategy = strategies.Min((x) => x.GetStrategyUtility());
+
+            var bestStrategy = strategies.Max((x) => x.GetStrategyUtility());
+        
             bestStrategy.ExecuteBestTactic(period);
         }        
     }

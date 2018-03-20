@@ -29,7 +29,7 @@ namespace Infrastructure
             smartBlockCompleter.blockCompleted = ((x) => historyManager.AddElement(x));
         }
   
-        public void Update()
+        public void OnUpdate()
         {
             switch (mode)
             {
