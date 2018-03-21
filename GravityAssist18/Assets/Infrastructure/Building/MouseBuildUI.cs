@@ -67,7 +67,7 @@ namespace Infrastructure
                     break;
             }
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) && Dragging)
             {
                 Dragging = false;
                 if (curBlock.valid)

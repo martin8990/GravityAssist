@@ -19,7 +19,7 @@ namespace Infrastructure
         //[HideInInspector]
         public BuildMaterial buildMaterial;
         public CColor invalidColor;
-            public void SetDefaultColor()
+        public void SetDefaultColor()
         {
             Mat.color = buildMaterial.color;
         }

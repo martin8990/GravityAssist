@@ -11,22 +11,6 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1908385633864036}
   m_IsPrefabParent: 1
---- !u!1 &1729408972165468
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4380770549853272}
-  - component: {fileID: 114272273348996878}
-  m_Layer: 16
-  m_Name: LinkkAdder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1908385633864036
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,6 +29,7 @@ GameObject:
   - component: {fileID: 114709450420159840}
   - component: {fileID: 114857824328208990}
   - component: {fileID: 114212798950487718}
+  - component: {fileID: 114336077724620124}
   m_Layer: 14
   m_Name: CarveableBlock
   m_TagString: Untagged
@@ -52,19 +37,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4380770549853272
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1729408972165468}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4979226926316922}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4979226926316922
 Transform:
   m_ObjectHideFlags: 1
@@ -72,10 +44,9 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1908385633864036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.131231, y: -9.729305, z: 22.536879}
+  m_LocalPosition: {x: 106.96333, y: 9.457581, z: 105.02961}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4380770549853272}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -93,7 +64,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: fedc75da63b32e249bccd7450cd29351, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -173,12 +144,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   filterMasks: 0e0000000f000000
   TriggeredObjects: []
---- !u!114 &114272273348996878
+--- !u!114 &114336077724620124
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1729408972165468}
+  m_GameObject: {fileID: 1908385633864036}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 096c6b77286fb2d43aafa28a4eacf94b, type: 3}

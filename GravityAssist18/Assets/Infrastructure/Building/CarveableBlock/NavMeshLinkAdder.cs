@@ -47,6 +47,7 @@ namespace Infrastructure
 
         public IEnumerator OnUpdate(bool source)
         {
+            Debug.Log("Com");
             yield return null;
             if (enabled)
             {

@@ -13,17 +13,23 @@ namespace Infrastructure
     //}
 
     public class AttackTactic : Tactic
-    {       
+    {
         Func<List<Health>> GetEnemiesInSight;
         Func<List<Health>> GetEnemiesInAttackRange;
-        public int Damage;        
+        Func<Vector3, IEnumerator> AttackTarget;
+
+        public int Damage;
 
         NavMeshAgent agent;
 
-        public void init(Func<List<Health>> getEnemiesInSight, Func<List<Health>> getEnemiesInAttackRange)
+        public void init(Func<List<Health>> getEnemiesInSight,
+            Func<List<Health>> getEnemiesInAttackRange,
+            Func<Vector3, IEnumerator> attackTarget)
         {
             GetEnemiesInSight = getEnemiesInSight;
             GetEnemiesInAttackRange = getEnemiesInAttackRange;
+            AttackTarget = attackTarget;
+
             agent = GetComponent<NavMeshAgent>();
         }
 
@@ -35,11 +41,9 @@ namespace Infrastructure
                 if (enemiesInSight[i] != null)
                 {
                     return 1;
-                }                
+                }
             }
             return 0;
-
-            
         }
         public override IEnumerator Execute(int Period)
         {
@@ -47,19 +51,22 @@ namespace Infrastructure
             if (EnemiesInRange.Count > 0)
             {
                 agent.SetDestination(transform.position);
-                var target = EnemiesInRange.Min((x) => x.transform.position.SquareDist2(transform.position));
-                target.TakeDamage(Damage,(x) => x =x);
+
+                var target = EnemiesInRange.Min((x) => Math.Abs((Vector3.Angle(x.transform.position, transform.position))));
+                yield return StartCoroutine(AttackTarget(target.transform.position));
+
+                target.TakeDamage(Damage, (x) => { });
             }
             else
             {
                 var EnemiesInSight = GetEnemiesInSight();
-                if (EnemiesInSight.Count>0)
+                if (EnemiesInSight.Count > 0)
                 {
                     var closest = EnemiesInSight.Min((x) => transform.position.SquareDist2(x.transform.position));
                     agent.SetDestination(closest.transform.position);
-                }          
+                }
             }
-            yield return null;            
+            yield return null;
         }
 
 

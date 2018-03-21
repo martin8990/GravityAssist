@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 114740419106943506}
   - component: {fileID: 114738628641337378}
   - component: {fileID: 114190685537759816}
+  - component: {fileID: 114979466686190348}
   m_Layer: 17
   m_Name: ZombiePrefab
   m_TagString: Untagged
@@ -270,6 +271,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tactics: []
   AttackRange: 10
+--- !u!114 &114979466686190348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1206952401778920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e11d19e7969a364785b344bdb238292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &137117931618215428
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

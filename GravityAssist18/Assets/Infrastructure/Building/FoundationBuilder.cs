@@ -34,7 +34,7 @@ namespace Infrastructure
 
             if (minHeight > height || block.collisionTriggerer.TriggeredObjects.Count > 0)
             {
-                Debug.Log("yo");
+
                block.valid = false;
                 block.materializer.SetInvalidColor();
             }

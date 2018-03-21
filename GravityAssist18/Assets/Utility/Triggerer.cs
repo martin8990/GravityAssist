@@ -57,6 +57,31 @@ public class Triggerer : MonoBehaviour
         }
         return result;
     }
+    int i = 0;
+    public void Update()
+    {
+        if (i < TriggeredObjects.Count)
+        {
+            if (TriggeredObjects[i] == null)
+            {
+                TriggeredObjects.RemoveAt(i);
+            }
+            if (i == TriggeredObjects.Count-1)
+            {
+                i = 0;
+            }
+            else
+            {
+                i++;
+            }
+        }
+        else
+        {
+            i = 0;
+        }
+
+        
+    }
 }
 
 

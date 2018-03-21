@@ -3,13 +3,13 @@ using Utility;
 
 namespace Infrastructure
 {
-    
+    [RequireComponent(typeof(DebugWeapon))]
     [RequireComponent(typeof(AttackTactic))]
     public class FriendlyCombatStrategy : Strategy
     {
         [HideInInspector]
         public Health health;
-
+        DebugWeapon debugWeapon;
         AttackTactic attackTactic;
         Triggerer sight;
         Triggerer inRange;
@@ -36,9 +36,9 @@ namespace Infrastructure
             sight = Triggerer.AddSphereTrigger(transform, "sight", sightRange, enemyMasks);
             inRange = Triggerer.AddSphereTrigger(transform, "attackRange", attackRange, enemyMasks);
             aiUnit = GetComponent<FriendlyAIUnit>();
-            
+            debugWeapon = GetComponent<DebugWeapon>();
             attackTactic = GetComponent<AttackTactic>();
-            attackTactic.init(sight.GetComponentsInTrigger<Health>,inRange.GetComponentsInTrigger<Health>);
+            attackTactic.init(sight.GetComponentsInTrigger<Health>,inRange.GetComponentsInTrigger<Health>,debugWeapon.StartAttack);
 
             tactics.Add(attackTactic);
 
@@ -47,11 +47,8 @@ namespace Infrastructure
             health.OnDeath += () => AIManager.AIUnits.Remove(aiUnit);
             health.OnDeath += () => Destroy(gameObject);
         }
-
-        
-
-
     }
+
 
 }
 
