@@ -39,12 +39,9 @@ GameObject:
   - component: {fileID: 195152388385570184}
   - component: {fileID: 114815151406816604}
   - component: {fileID: 65053466733188452}
-  - component: {fileID: 114366789085696756}
   - component: {fileID: 114902052008909962}
   - component: {fileID: 114740419106943506}
-  - component: {fileID: 114738628641337378}
-  - component: {fileID: 114190685537759816}
-  - component: {fileID: 114979466686190348}
+  - component: {fileID: 114567227216273380}
   m_Layer: 17
   m_Name: ZombiePrefab
   m_TagString: Untagged
@@ -198,7 +195,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 0
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114190685537759816
+--- !u!114 &114567227216273380
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -206,33 +203,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1206952401778920}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dffc2d789af768c47a0fe87e3b43ec6a, type: 3}
+  m_Script: {fileID: 11500000, guid: d2d5950fae9b4404692b0256ed776d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tactics: []
---- !u!114 &114366789085696756
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1206952401778920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3d1b88b0982d794ba834a3f356c0001, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Damage: 5
---- !u!114 &114738628641337378
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1206952401778920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fda0744a15bbb24891eb2594d14dea4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  destReachedMargin: {fileID: 11400000, guid: 9378d5f89e520594db33e5c520d0204c, type: 2}
+  dmg: 10
 --- !u!114 &114740419106943506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -270,18 +245,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tactics: []
-  AttackRange: 10
---- !u!114 &114979466686190348
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1206952401778920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e11d19e7969a364785b344bdb238292, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!137 &137117931618215428
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

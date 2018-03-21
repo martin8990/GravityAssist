@@ -5,11 +5,9 @@ namespace Infrastructure
     public class Nexus : MonoBehaviour
     {
         public static Nexus nexus;
-        public AIManager aIManager;
         private void Awake()
         {
-            nexus = this;
-           
+            nexus = this;           
         }
 
         public int HP = 100;
@@ -18,6 +16,7 @@ namespace Infrastructure
             HP -= dmg;
             if (HP==0)
             {
+                AIManager.OnGameOver();
                 Debug.Log("Game over");
              
 

@@ -44,6 +44,21 @@ public class Triggerer : MonoBehaviour
         return trigger;
 
     }
+    public static Triggerer AddSphereTrigger(Transform parent, string name, float range, int[] masks, int myLayer)
+    {
+        var GO = new GameObject(name);
+        GO.transform.SetParent(parent, false);
+        GO.layer = myLayer;
+        var col = GO.AddComponent<SphereCollider>();
+        col.radius = range;
+        col.isTrigger = true;
+        GO.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        var trigger = GO.AddComponent<Triggerer>();
+        trigger.filterMasks = masks;
+       
+        return trigger;
+
+    }
 
     public List<T> GetComponentsInTrigger<T>() where T : Component
     {
