@@ -22,7 +22,7 @@ namespace Infrastructure
         {
             if (inRange.TriggeredObjects.Count > 0)
             {
-                Debug.Log("EnemyInRange");
+
                 return 0.9f;
             }
             else

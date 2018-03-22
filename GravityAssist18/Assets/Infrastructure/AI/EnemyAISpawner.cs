@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using UnityEngine.AI;
 using UnityEngine;
 using Utility;
 using UnityEngine.Events;
@@ -18,6 +18,12 @@ namespace Infrastructure
         public HeightMap heightMap;
         public int amount;
         List<Vector3> positions = new List<Vector3>();
+        public int waveCount;
+        public int StartZombieHealth;
+        public int DeltaZombieHealth;
+
+        public float StartZombieSpeed;
+        public float DeltaZombieSpeed;
 
         private void OnDrawGizmos()
         {
@@ -43,16 +49,19 @@ namespace Infrastructure
             }
         }
         public void StartWave()
-        {
-              
+        {              
             for (int i = 0; i < amount; i++)
             {
                 curAIUnit = Instantiate(aiPrefab);
                 curAIUnit.transform.SetParent(transform, true);
                 var spawnTFi = positions[Random.Range(0, positions.Count)];
                 curAIUnit.transform.position = spawnTFi;
+                curAIUnit.GetComponent<NavMeshAgent>().speed = StartZombieSpeed + waveCount * DeltaZombieSpeed;
+                curAIUnit.GetComponent<Health>().CurrentHP = StartZombieHealth + waveCount * DeltaZombieHealth;
                 AIManager.AddAI(curAIUnit);
             }
+            waveCount++;
+            
          }
         
 

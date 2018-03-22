@@ -11,10 +11,16 @@ namespace Infrastructure
         Turret turret;
         public LayerMask FriendlyMask = 18;
         float Height = 0;
-        
+        public int price = 50;
+
         public void OnEnable()
         {
-            turret = Instantiate(turretPrefab);
+            if (PlayerBudget.budget >= price)
+            {
+                PlayerBudget.RemoveMoney(price);
+                turret = Instantiate(turretPrefab);
+            }
+
 
         }
         public void Commit()
