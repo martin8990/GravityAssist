@@ -19,6 +19,7 @@ namespace Infrastructure
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
             OnDeath += todoOnDeath;
+            
         }
         public override float CalculateUtility()
         {
@@ -27,6 +28,7 @@ namespace Infrastructure
 
         public override IEnumerator Execute(int Period)
         {
+            yield return null;
             var dest = transform.position;
             if (Nexus.nexus != null)
             {
@@ -34,7 +36,15 @@ namespace Infrastructure
             }
             if (transform.position.SquareDist2(dest) > destReachedMargin)
             {
-                navMeshAgent.SetDestination(dest);
+                if (navMeshAgent.isOnNavMesh)
+                {
+                    navMeshAgent.SetDestination(dest);
+                }
+                else
+                {
+                          Debug.Log("NavmeshFailure");
+                }
+
             }
             else
             {

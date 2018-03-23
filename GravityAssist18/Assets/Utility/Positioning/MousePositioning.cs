@@ -40,6 +40,23 @@ namespace Utility
            // Debug.Log("mis");
             return Vector3.zero;
         }
+        public static T GetTypeUnderMouse<T>(Camera cam, LayerMask layermask) where T : Component
+        {
+
+            RaycastHit hit;
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layermask))
+            {
+                Debug.DrawRay(hit.point + Vector3.down * 10, Vector3.up * 10, Color.red);
+                return hit.collider.gameObject.GetComponent<T>();
+
+                // Do something with the object that was hit by the raycast.
+            }
+            // Debug.Log("mis");
+            return default(T);
+        }
+
 
 
         public static bool VerticalRayCast(Vector3 p,float range,out RaycastHit hit)

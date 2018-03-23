@@ -8,6 +8,8 @@ namespace Infrastructure
 
     public class AIManager : MonoBehaviour
     {
+        public  List<AIUnit> ToAdd = new List<AIUnit>();
+
         public static List<AIUnit> AIUnits = new List<AIUnit>();
         public static List<FriendlyAIUnit> friendlies = new List<FriendlyAIUnit>();
         public int Period = 1000;//ms
@@ -18,6 +20,7 @@ namespace Infrastructure
         }
         private void Start()
         {
+            ToAdd.Iter((x) => AIUnits.Add(x));
             StartCoroutine(TriggerAI());
         }
         public static void AddAI(AIUnit aIUnit)
@@ -30,7 +33,6 @@ namespace Infrastructure
           
                 if (AIUnits.Count > 0)
                 {
-                    yield return new WaitForSeconds(Period / AIUnits.Count / 1000f);
                     if (i <= AIUnits.Count - 1)
                     {
 
@@ -41,7 +43,9 @@ namespace Infrastructure
                     }
                     AIUnits[i].Trigger(Period);
                     i++;
-                    StartCoroutine(TriggerAI());
+                yield return new WaitForSeconds(Period / AIUnits.Count / 1000f);
+
+                StartCoroutine(TriggerAI());
                 }
                 else
                 {
