@@ -17,9 +17,8 @@ namespace Infrastructure
         Func<List<Health>> GetEnemiesInSight;
         Func<List<Health>> GetEnemiesInAttackRange;
         Func<Vector3, IEnumerator> AttackTarget;
-
-        public int Damage;
-
+        public int Damage = 10;
+        
         NavMeshAgent agent;
 
         public void init(Func<List<Health>> getEnemiesInSight,
@@ -47,12 +46,15 @@ namespace Infrastructure
         }
         public override IEnumerator Execute(int Period)
         {
+ 
             var EnemiesInRange = GetEnemiesInAttackRange();
+
             if (EnemiesInRange.Count > 0)
             {
                 agent.SetDestination(transform.position);
 
                 var target = EnemiesInRange.Min((x) => Math.Abs((Vector3.Angle(x.transform.position, transform.position))));
+                Debug.Log("Attacking");
                 yield return StartCoroutine(AttackTarget(target.transform.position));
 
                 target.TakeDamage(Damage, (x) => { });
@@ -60,6 +62,7 @@ namespace Infrastructure
             else
             {
                 var EnemiesInSight = GetEnemiesInSight();
+                Debug.Log(EnemiesInSight.Count);
                 if (EnemiesInSight.Count > 0)
                 {
                     var closest = EnemiesInSight.Min((x) => transform.position.SquareDist2(x.transform.position));

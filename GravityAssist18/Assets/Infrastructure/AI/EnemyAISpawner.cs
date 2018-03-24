@@ -16,7 +16,7 @@ namespace Infrastructure
         AIUnit curAIUnit;
         public float SpawnInterval;
         public int amount;
-        public List<Transform> positions = new List<Transform>();
+        public static List<Vector3> positions = new List<Vector3>();
         public int waveCount;
         public int StartZombieHealth;
         public int DeltaZombieHealth;
@@ -24,18 +24,24 @@ namespace Infrastructure
         public float StartZombieSpeed;
         public float DeltaZombieSpeed;
 
-  
-        public void StartWave()
+        public void StartSpawning()
+        {
+            NavMeshManager.UpdateNavMesh();
+            StartCoroutine(StartWave());
+        }
+
+        IEnumerator StartWave()
         {              
             for (int i = 0; i < amount; i++)
             {
                 curAIUnit = Instantiate(aiPrefab);
                 curAIUnit.transform.SetParent(transform, true);
-                var spawnTFi = positions[Random.Range(0, positions.Count)];
-                curAIUnit.transform.position = spawnTFi.position;        
+                var pos = positions[Random.Range(0, positions.Count)];
+                curAIUnit.transform.position = new Vector3(pos.x,0,pos.z);        
                 curAIUnit.GetComponent<NavMeshAgent>().speed = StartZombieSpeed + waveCount * DeltaZombieSpeed;
                 curAIUnit.GetComponent<Health>().CurrentHP = StartZombieHealth + waveCount * DeltaZombieHealth;
                 AIManager.AddAI(curAIUnit);
+                yield return new WaitForSeconds(SpawnInterval);
             }
             waveCount++;
             

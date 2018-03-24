@@ -5,6 +5,8 @@ namespace Infrastructure
 {
     public class DebugWeapon : Weapon
     {
+        public float Range;
+        
         public override IEnumerator StartAttack(Vector3 target)
         {
             transform.LookAt(target);

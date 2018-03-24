@@ -5,21 +5,28 @@ using Utility;
 using System.Linq;
 namespace Infrastructure
 {
-    [RequireComponent(typeof(NexusTactic))]
     [RequireComponent(typeof(Health))]
+    [RequireComponent(typeof(AttackTactic))]
+    [RequireComponent(typeof(DebugWeapon))]
     public class EnemyCombatStrategy : Strategy
     {
         Health health;
         AIUnit aIUnit;
-        NexusTactic nexusTactic;
+        AttackTactic playerAttack;
+        DebugWeapon debugWeapon;
         private void Awake()
         {
             health = GetComponent<Health>();
             health.OnDeath += () => OnDeath();            
             aIUnit = GetComponent<AIUnit>();
-            nexusTactic = GetComponent<NexusTactic>();
-            nexusTactic.Init(OnDeath);
-            tactics.Add(nexusTactic);
+            debugWeapon = GetComponent<DebugWeapon>();
+            playerAttack = GetComponent<AttackTactic>();
+            Func<List<Health>> inRange = (() => MainPlayerUI.players.Map((x) => x.health).Where((x) => Vector3.Distance(x.transform.position, transform.position) < debugWeapon.Range).ToList());
+            Func<List<Health>> inSight = (() => MainPlayerUI.players.Map((x) => x.health));
+
+
+            playerAttack.init(inSight,inRange,debugWeapon.StartAttack);
+            tactics.Add(playerAttack);
         }
         public override float GetStrategyUtility()
         {

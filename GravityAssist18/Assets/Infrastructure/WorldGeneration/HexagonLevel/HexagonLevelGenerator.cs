@@ -17,8 +17,15 @@ namespace Infrastructure
         public float scaleMod;
         public float MultModY;
         public float offset;
+        public Material mat;
 
-    
+        
+        public void Start()
+        {
+            mat.color = ColorManager.DefaultColor;
+        }
+
+
         [Button]
         public void GenerateMap()
         {

@@ -6,6 +6,11 @@ namespace Infrastructure
     {
         public int MiningCost = 1;
         public abstract void OnPickup();
+
+        public void ChangeColor(Color col)
+        {
+            GetComponent<MeshRenderer>().material.color = col;
+        }
     }
 
 }
