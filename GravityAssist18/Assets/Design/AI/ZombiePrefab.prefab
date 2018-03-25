@@ -36,13 +36,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4484267807333566}
   - component: {fileID: 95347571845299560}
-  - component: {fileID: 195152388385570184}
   - component: {fileID: 114815151406816604}
   - component: {fileID: 65053466733188452}
   - component: {fileID: 114902052008909962}
   - component: {fileID: 114740419106943506}
   - component: {fileID: 114067466886356090}
   - component: {fileID: 114048245669737672}
+  - component: {fileID: 195119354696636440}
   m_Layer: 17
   m_Name: ZombiePrefab
   m_TagString: Untagged
@@ -105,7 +105,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1206952401778920}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.495267, y: 1.7150501e-17, z: 7.7504406}
+  m_LocalPosition: {x: 32.26882, y: 0, z: 54.165928}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4708156757709774}
@@ -208,7 +208,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Range: 2
-  Damage: 0
 --- !u!114 &114067466886356090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -442,7 +441,7 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.058894724, y: -0.11198497, z: 0.19586322}
     m_Extent: {x: 0.50457644, y: 0.92998207, z: 0.6170621}
   m_DirtyAABB: 0
---- !u!195 &195152388385570184
+--- !u!195 &195119354696636440
 NavMeshAgent:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

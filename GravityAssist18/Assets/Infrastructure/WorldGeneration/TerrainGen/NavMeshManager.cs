@@ -11,5 +11,6 @@ public class NavMeshManager : MonoBehaviour
     public static void UpdateNavMesh()
     {
         navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
+        
     }
 }
