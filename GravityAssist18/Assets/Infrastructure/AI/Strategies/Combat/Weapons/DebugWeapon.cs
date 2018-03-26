@@ -5,13 +5,27 @@ namespace Infrastructure
 {
     public class DebugWeapon : Weapon
     {
+        public Animator anim;
         public float Range;
-        
-        public override IEnumerator StartAttack(Vector3 target)
+        public float attackTime;
+        public string attackStateName;
+        bool attacking;
+        Vector3 target;
+        public void Update()
         {
-            transform.LookAt(target);
-            yield return null;
-            
+            if (attacking)
+            {
+                transform.LookAt(target);
+            }
+        }
+
+        public override IEnumerator StartAttack(Vector3 _target)
+        {
+            target = _target;
+            attacking = true;
+            anim.Play(attackStateName);
+            yield return new WaitForSeconds(attackTime);
+            attacking = false;
         }
     }
 

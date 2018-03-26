@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 114740419106943506}
   - component: {fileID: 114067466886356090}
   - component: {fileID: 114048245669737672}
-  - component: {fileID: 195119354696636440}
+  - component: {fileID: 195348671719039428}
   m_Layer: 17
   m_Name: ZombiePrefab
   m_TagString: Untagged
@@ -207,7 +207,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e11d19e7969a364785b344bdb238292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 95347571845299560}
   Range: 2
+  attackTime: 0.2
+  attackStateName: ZombieAttack
 --- !u!114 &114067466886356090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -271,7 +274,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100002, guid: 8ae88192a4aa2d443b7461f415be149e, type: 3}
+  - {fileID: 2100000, guid: 8242feb7ec185854a86941bb46e8d492, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -317,7 +320,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8ae88192a4aa2d443b7461f415be149e, type: 3}
+  - {fileID: 2100000, guid: 9d4aca88fe6bf8d48928c5e3db488c34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -363,7 +366,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8ae88192a4aa2d443b7461f415be149e, type: 3}
+  - {fileID: 2100000, guid: 9d4aca88fe6bf8d48928c5e3db488c34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -409,7 +412,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8ae88192a4aa2d443b7461f415be149e, type: 3}
+  - {fileID: 2100000, guid: 9d4aca88fe6bf8d48928c5e3db488c34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -441,7 +444,7 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.058894724, y: -0.11198497, z: 0.19586322}
     m_Extent: {x: 0.50457644, y: 0.92998207, z: 0.6170621}
   m_DirtyAABB: 0
---- !u!195 &195119354696636440
+--- !u!195 &195348671719039428
 NavMeshAgent:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

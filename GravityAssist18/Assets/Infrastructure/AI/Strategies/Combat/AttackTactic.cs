@@ -46,7 +46,7 @@ namespace Infrastructure
         }
         public override IEnumerator Execute(int Period)
         {
- 
+
             var EnemiesInRange = GetEnemiesInAttackRange();
 
             if (EnemiesInRange.Count > 0)
@@ -54,21 +54,23 @@ namespace Infrastructure
                 agent.SetDestination(transform.position);
 
                 var target = EnemiesInRange.Min((x) => Math.Abs((Vector3.Angle(x.transform.position, transform.position))));
-                Debug.Log("Attacking");
                 yield return StartCoroutine(AttackTarget(target.transform.position));
+                if (GetEnemiesInAttackRange().Contains(target))
+                {
 
-                target.TakeDamage(Damage, (x) => { });
+                    target.TakeDamage(Damage, (x) => { });
+                }
             }
             else
             {
                 var EnemiesInSight = GetEnemiesInSight();
-                Debug.Log(EnemiesInSight.Count);
                 if (EnemiesInSight.Count > 0)
                 {
                     var closest = EnemiesInSight.Min((x) => transform.position.SquareDist2(x.transform.position));
                     agent.SetDestination(closest.transform.position);
                 }
             }
+
             yield return null;
         }
 

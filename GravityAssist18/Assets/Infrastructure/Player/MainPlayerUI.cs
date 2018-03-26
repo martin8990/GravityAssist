@@ -12,10 +12,17 @@ namespace Infrastructure
         public GameObject FPScanvas;
         public GameObject RTSController;
         public GameObject FPSController;
+        public bool startFPS;
 
         private void Start()
         {
             FPSController.SetActive(false);
+            if (startFPS)
+            {
+                GoToFPS();
+
+            }
+
         }
 
         private void Update()
@@ -58,7 +65,7 @@ namespace Infrastructure
 
             FPScanvas.SetActive(true);
             FPSController.SetActive(true);
-            FPSController.transform.position = EnemyAISpawner.positions[0];
+            FPSController.transform.position = HexagonLevelGenerator.SpawnPositions[0];
         }
 
     }

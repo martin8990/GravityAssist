@@ -71,7 +71,7 @@ namespace Infrastructure
         {
             var cost = hex.MiningCost / miningSkill;
             HexesToMine.Remove(hex);
-            EnemyAISpawner.positions.Add(hex.transform.position);
+            //EnemyAISpawner.positions.Add(hex.transform.position);
             Destroy(hex.gameObject);
 
             return cost;

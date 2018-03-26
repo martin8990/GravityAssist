@@ -23,11 +23,12 @@ GameObject:
   - component: {fileID: 136022404685716706}
   - component: {fileID: 23496108234306842}
   - component: {fileID: 195580575233526916}
-  - component: {fileID: 114820800313539440}
-  - component: {fileID: 114782565610849332}
-  - component: {fileID: 114507084869540058}
-  - component: {fileID: 114028327642542976}
   - component: {fileID: 54091928319436942}
+  - component: {fileID: 114108221535292074}
+  - component: {fileID: 114454693998383234}
+  - component: {fileID: 114047589994713330}
+  - component: {fileID: 114694939044893812}
+  - component: {fileID: 114764402448417452}
   m_Layer: 17
   m_Name: SimpleAI
   m_TagString: Untagged
@@ -104,7 +105,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114028327642542976
+--- !u!114 &114047589994713330
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -112,11 +113,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 1620564567013264}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 174ea548dc27b094a9957c562ddddf76, type: 3}
+  m_Script: {fileID: 11500000, guid: 50fa698449a6a8c4f8e6286304ac8fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strategies: []
---- !u!114 &114507084869540058
+  MaxHP: 20
+  CurrentHP: 20
+--- !u!114 &114108221535292074
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1620564567013264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e11d19e7969a364785b344bdb238292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Range: 2
+--- !u!114 &114454693998383234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1620564567013264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d1b88b0982d794ba834a3f356c0001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 5
+--- !u!114 &114694939044893812
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -128,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tactics: []
---- !u!114 &114782565610849332
+--- !u!114 &114764402448417452
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -136,24 +162,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1620564567013264}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2d5950fae9b4404692b0256ed776d9e, type: 3}
+  m_Script: {fileID: 11500000, guid: 174ea548dc27b094a9957c562ddddf76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destReachedMargin: {fileID: 11400000, guid: 9378d5f89e520594db33e5c520d0204c, type: 2}
-  dmg: 0
---- !u!114 &114820800313539440
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1620564567013264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50fa698449a6a8c4f8e6286304ac8fdc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxHP: 100
-  CurrentHP: 100
+  strategies: []
 --- !u!136 &136022404685716706
 CapsuleCollider:
   m_ObjectHideFlags: 1
