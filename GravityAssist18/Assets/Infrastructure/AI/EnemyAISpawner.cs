@@ -52,7 +52,6 @@ namespace Infrastructure
                 curAIUnit = Instantiate(aiPrefab);
 
                 curAIUnit.transform.SetParent(transform, true);
-
                 var pos = HexagonLevelGenerator.SpawnPositions[Random.Range(0, HexagonLevelGenerator.SpawnPositions.Count)];
 
                 curAIUnit.transform.position = new Vector3(pos.x, -1f, pos.z);
@@ -61,6 +60,8 @@ namespace Infrastructure
 
                 curAIUnit.GetComponent<NavMeshAgent>().speed = StartZombieSpeed + waveCount * DeltaZombieSpeed;
                 curAIUnit.GetComponent<Health>().CurrentHP = StartZombieHealth + waveCount * DeltaZombieHealth;
+
+
 
                 AIManager.AddAI(curAIUnit);
                 yield return new WaitForSeconds(SpawnInterval);

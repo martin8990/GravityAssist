@@ -5,6 +5,7 @@ using Utility;
 using System.Linq;
 namespace Infrastructure
 {
+
     [RequireComponent(typeof(Health))]
     [RequireComponent(typeof(AttackTactic))]
     [RequireComponent(typeof(DebugWeapon))]
@@ -30,7 +31,7 @@ namespace Infrastructure
         }
         public override float GetStrategyUtility()
         {
-            return 1;
+            return 0.9f;
         }
         void OnDeath()
         {

@@ -39,7 +39,7 @@ namespace Infrastructure
             {
                 if (enemiesInSight[i] != null)
                 {
-                    return 1;
+                    return 0.9f;
                 }
             }
             return 0;
