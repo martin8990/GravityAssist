@@ -35,7 +35,7 @@ namespace Infrastructure
         }
         void OnDeath()
         {
-            Debug.Log("death");
+
             AIManager.AIUnits.Remove(aIUnit);
             Destroy(gameObject);
         }

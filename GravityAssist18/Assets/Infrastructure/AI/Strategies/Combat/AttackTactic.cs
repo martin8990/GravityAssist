@@ -57,7 +57,6 @@ namespace Infrastructure
                 yield return StartCoroutine(AttackTarget(target.transform.position));
                 if (GetEnemiesInAttackRange().Contains(target))
                 {
-
                     target.TakeDamage(Damage, (x) => { });
                 }
             }

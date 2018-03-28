@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -11,14 +12,21 @@ namespace Infrastructure
     public class AIUnit : MonoBehaviour
     {
         public List<Strategy> strategies = new List<Strategy>();
+        bool busy;
         
-
-        public virtual void Trigger(int period)
+        public virtual IEnumerator Trigger(int period)
         {
-
-            var bestStrategy = strategies.Max((x) => x.GetStrategyUtility());
-        
-            bestStrategy.ExecuteBestTactic(period);
+            if (!busy)
+            {
+                busy = true;
+                var bestStrategy = strategies.Max((x) => x.GetStrategyUtility());
+                yield return StartCoroutine(bestStrategy.ExecuteBestTactic(period));
+                busy = false;
+            }
+            else
+            {
+                yield return null;
+            }
         }        
     }
 

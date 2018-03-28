@@ -61,8 +61,7 @@ namespace Infrastructure
                 curAIUnit.GetComponent<NavMeshAgent>().speed = StartZombieSpeed + waveCount * DeltaZombieSpeed;
                 curAIUnit.GetComponent<Health>().CurrentHP = StartZombieHealth + waveCount * DeltaZombieHealth;
 
-
-
+                
                 AIManager.AddAI(curAIUnit);
                 yield return new WaitForSeconds(SpawnInterval);
             }

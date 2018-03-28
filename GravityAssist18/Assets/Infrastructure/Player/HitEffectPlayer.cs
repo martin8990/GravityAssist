@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 namespace Infrastructure
 {
-    public class HitEffect : MonoBehaviour
+    public class HitEffectPlayer : MonoBehaviour
     {
         public ParticleSystem hitEffect;
         public AudioClip clip;

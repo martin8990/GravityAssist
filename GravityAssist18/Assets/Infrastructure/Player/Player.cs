@@ -1,29 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 namespace Infrastructure
 {
 
+
+
     [RequireComponent(typeof(Health))]
-    [RequireComponent(typeof(MiningModule))]
+    [RequireComponent(typeof(TimedTriggerer))]
     public class Player : MonoBehaviour
     {
-        [HideInInspector]
-        public MiningModule miningModule;
-        public float ActionPoints = 100;
-        public List<Func<float>> playerActions = new List<Func<float>>();
-        [HideInInspector]
+         [HideInInspector]
         public Health health;
-        public List<Tool> tools = new List<Tool>();
+        public List<GameObject> tools = new List<GameObject>();
+        TimedTriggerer healthRegenTriggerer;
         int toolIndex = 0;
-
 
         private void Awake()
         {
+            healthRegenTriggerer = GetComponent<TimedTriggerer>();
             health = GetComponent<Health>();
+
+            healthRegenTriggerer.OnTrigger+=() => health.Heal(1f);
             health.OnDeath+=() => Debug.Log("player down");
-            miningModule = GetComponent<MiningModule>();
+  
+            
            
             if (!MainPlayerUI.players.Contains(this))
             {
@@ -35,25 +36,22 @@ namespace Infrastructure
         {
             if (Input.mouseScrollDelta.y > 0)
             {
-                tools[toolIndex].gameObject.SetActive(false);                    
+                tools[toolIndex].SetActive(false);                    
                 toolIndex++;
                 if (toolIndex > tools.Count-1)
                 {
                     toolIndex = 0;
                 }
-                tools[toolIndex].gameObject.SetActive(true);
+                tools[toolIndex].SetActive(true);
             }
         }
 
+       
 
 
-    }
-    public class PlayerAction
-    {
-        public Action Paction;
-        public Func<float> getCost;
     }
 }
+
 
 
 

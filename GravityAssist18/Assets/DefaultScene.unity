@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028346, g: 0.22571373, b: 0.30692244, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -13334,6 +13334,7 @@ RectTransform:
   - {fileID: 982832214}
   - {fileID: 1766026493}
   - {fileID: 1914231170}
+  - {fileID: 871284095}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19837,8 +19838,13 @@ GameObject:
   m_Component:
   - component: {fileID: 478507408}
   - component: {fileID: 478507411}
+  - component: {fileID: 478507415}
+  - component: {fileID: 478507414}
+  - component: {fileID: 478507412}
   - component: {fileID: 478507410}
   - component: {fileID: 478507409}
+  - component: {fileID: 478507413}
+  - component: {fileID: 478507416}
   m_Layer: 0
   m_Name: Ak-47
   m_TagString: Untagged
@@ -19873,11 +19879,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 478507407}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4acdd710c0f747746ac2c95028ef67b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 60a62503c22431b48b20d2f37ae20b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 478507410}
-  scoreTest: {fileID: 711351842}
+  hitEffectPlayer: {fileID: 1930400599}
 --- !u!114 &478507410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19886,24 +19891,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 478507407}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a62503c22431b48b20d2f37ae20b2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 79c34d01227542742957bf15c011594d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 100
-  interval: 0.1
-  cam: {fileID: 165632680}
-  TargetLayer:
-    serializedVersion: 2
-    m_Bits: 131072
-  hitMarker: {fileID: 982832213}
-  audioSource: {fileID: 478507411}
-  clip: {fileID: 8300000, guid: fa23636a26317374fb4d2ca51968482b, type: 3}
-  useEffect: {fileID: 1255542685}
-  hitEffect: {fileID: 1930400598}
-  DMG: 10
-  grip: {fileID: 17240952}
-  RecoilFrames: 1000
-  recoilPerFrame: 0.05
+  Damage: 30
 --- !u!82 &478507411
 AudioSource:
   m_ObjectHideFlags: 0
@@ -19985,6 +19976,74 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &478507412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 478507407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64454a8cdd9051d49a798aee8362412b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 711351842}
+--- !u!114 &478507413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 478507407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3f0be8f1fa6894d8e9f0927bfe2d17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 100
+  cam: {fileID: 165632680}
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 131072
+  maxRecursion: 8
+--- !u!114 &478507414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 478507407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd3cfb4e0edb6747905bb7e54d26458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 478507411}
+  clip: {fileID: 8300000, guid: fa23636a26317374fb4d2ca51968482b, type: 3}
+  ps: {fileID: 1255542685}
+--- !u!114 &478507415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 478507407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a66ac60a5d386ee47bbadc378c2ecaee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitMarker: {fileID: 982832213}
+  markTime: 0.2
+--- !u!114 &478507416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 478507407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa06732888d0ab84d9bfa06a57567351, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 0.1
 --- !u!1 &486831741
 GameObject:
   m_ObjectHideFlags: 0
@@ -37366,6 +37425,74 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 871282948}
   m_Mesh: {fileID: 4300000, guid: 7e6aff708ee0ba347868e9d05aa9d8be, type: 3}
+--- !u!1 &871284094
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 871284095}
+  - component: {fileID: 871284097}
+  - component: {fileID: 871284096}
+  m_Layer: 5
+  m_Name: HealthIndication
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &871284095
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 871284094}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 309811826}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &871284096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 871284094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 6f132cf60eb852b45a0c1f9030f9b9ae, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &871284097
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 871284094}
 --- !u!1 &871455247
 GameObject:
   m_ObjectHideFlags: 0
@@ -49788,9 +49915,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1160872797}
-  - component: {fileID: 1160872796}
   - component: {fileID: 1160872795}
   - component: {fileID: 1160872798}
+  - component: {fileID: 1160872799}
+  - component: {fileID: 1160872796}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -49809,12 +49937,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4afd7aa1096213c42be01711e6cb9b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miningModule: {fileID: 0}
-  ActionPoints: 100
   health: {fileID: 0}
   tools:
-  - {fileID: 0}
-  - {fileID: 2100729340}
+  - {fileID: 478507407}
 --- !u!114 &1160872796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49823,14 +49948,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1160872794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39388a2ec95e8a540b27761000bbb27d, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b2ac38390feb334abb407c451e9967d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 822772042}
-  HexLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  miningSkill: 20
+  interval: 0.3
 --- !u!4 &1160872797
 Transform:
   m_ObjectHideFlags: 0
@@ -49857,6 +49978,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHP: 100
   CurrentHP: 100
+--- !u!114 &1160872799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1160872794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa1983163917a645b45f2d27e44c5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indicatorImage: {fileID: 871284096}
 --- !u!1 &1162325164
 GameObject:
   m_ObjectHideFlags: 0
@@ -54709,7 +54842,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1563541405
+  randomSeed: -386069178
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -85082,7 +85215,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1821614233
+  randomSeed: 119430686
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -92596,6 +92729,7 @@ GameObject:
   - component: {fileID: 1930400596}
   - component: {fileID: 1930400598}
   - component: {fileID: 1930400597}
+  - component: {fileID: 1930400599}
   m_Layer: 0
   m_Name: HitEffect
   m_TagString: Untagged
@@ -92733,7 +92867,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -59138933
+  randomSeed: 805547633
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -96103,6 +96237,20 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1930400599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1930400595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 749e4de046e0e0645aa43845c566b897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitEffect: {fileID: 1930400598}
+  clip: {fileID: 0}
+  source: {fileID: 0}
 --- !u!1 &1933589128
 GameObject:
   m_ObjectHideFlags: 0
@@ -104400,9 +104548,10 @@ MonoBehaviour:
   turretPrefab: {fileID: 114176410595473270, guid: bb20407f52662f243a3b191c2d716bcf,
     type: 2}
   cam: {fileID: 0}
+  turret: {fileID: 0}
   FriendlyMask:
-    serializedVersion: 2
     m_Bits: 262144
+  Height: 0
   price: 50
 --- !u!1 &2052321115
 GameObject:
@@ -106612,13 +106761,14 @@ MonoBehaviour:
   interval: 0.8
   cam: {fileID: 165632680}
   TargetLayer:
-    serializedVersion: 2
     m_Bits: 1024
   hitMarker: {fileID: 982832213}
   audioSource: {fileID: 2100729342}
   clip: {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
   useEffect: {fileID: 1776716566}
   hitEffect: {fileID: 1983000061}
+  t: 0
+  hashit: 0
   EffectiveNess: 10
 --- !u!4 &2100729341 stripped
 Transform:

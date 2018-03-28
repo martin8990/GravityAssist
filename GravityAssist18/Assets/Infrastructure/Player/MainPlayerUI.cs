@@ -35,7 +35,7 @@ namespace Infrastructure
                     case PlayerUIMode.MENU:
                         break;
                     case PlayerUIMode.MINE:
-                        currentPlayer.miningModule.SelectHexes(currentPlayer);
+                        //currentPlayer.miningModule.SelectHexes(currentPlayer);
                         break;
                     case PlayerUIMode.COMBAT:
                         break;
@@ -46,7 +46,7 @@ namespace Infrastructure
                 }
                 if (Input.GetMouseButtonDown(1))
                 {
-                    currentPlayer.miningModule.ResetCol();
+                    //currentPlayer.miningModule.ResetCol();
                     mode = PlayerUIMode.MENU;
                 }
                

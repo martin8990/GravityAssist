@@ -8,10 +8,10 @@ namespace Infrastructure
 
     public class AIManager : MonoBehaviour
     {
-        public  List<AIUnit> ToAdd = new List<AIUnit>();
+        public List<AIUnit> ToAdd = new List<AIUnit>();
 
         public static List<AIUnit> AIUnits = new List<AIUnit>();
-        public static List<FriendlyAIUnit> friendlies = new List<FriendlyAIUnit>();
+ //       public static List<FriendlyAIUnit> friendlies = new List<FriendlyAIUnit>();
         public int Period = 1000;//ms
         int i = 0;
         public static void OnGameOver()
@@ -30,31 +30,31 @@ namespace Infrastructure
         }
         public IEnumerator TriggerAI()
         {
-          
-                if (AIUnits.Count > 0)
+
+            if (AIUnits.Count > 0)
+            {
+                if (i <= AIUnits.Count - 1)
                 {
-                    if (i <= AIUnits.Count - 1)
-                    {
 
-                    }
-                    else
-                    {
-                        i = 0;
-                    }
-                    AIUnits[i].Trigger(Period);
-                    i++;
-                yield return new WaitForSeconds(Period / AIUnits.Count / 1000f);
-
-                StartCoroutine(TriggerAI());
                 }
                 else
                 {
-                    yield return null;
-                    StartCoroutine(TriggerAI());
-
+                    i = 0;
                 }
+                StartCoroutine(AIUnits[i].Trigger(Period));
+                i++;
+                yield return new WaitForSeconds(Period / AIUnits.Count / 1000f);
 
-          
+                StartCoroutine(TriggerAI());
+            }
+            else
+            {
+                yield return null;
+                StartCoroutine(TriggerAI());
+
+            }
+
+
         }
 
 

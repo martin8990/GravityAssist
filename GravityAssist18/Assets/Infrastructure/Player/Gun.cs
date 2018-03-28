@@ -4,30 +4,37 @@ using UnityEngine.UI;
 
 namespace Infrastructure
 {
-    [RequireComponent(typeof(TimedTriggerer))]
-    [RequireComponent(typeof(CameraRayCaster))]
+    [RequireComponent(typeof(TimedMouseTriggerer))]
+    [RequireComponent(typeof(CameraPenetrativeRayCaster))]
     [RequireComponent(typeof(UseEffectPlayer))]
     [RequireComponent(typeof(HitMarker))]
-
+    [RequireComponent(typeof(DamageDealer))]
+    [RequireComponent(typeof(ScoreKeeper))]
     public class Gun : MonoBehaviour
     {
-        public int DMG = 10;
-        public HitEffect hitEffect;
+        public HitEffectPlayer hitEffectPlayer;
 
-        TimedTriggerer timedTrigger;
-        CameraRecursiveRayCaster rayCaster;
+        TimedMouseTriggerer timedTrigger;
+        CameraPenetrativeRayCaster rayCaster;
         HitMarker hitMarker;
-        UseEffectPlayer useEffect;
+        UseEffectPlayer useEffectPlayer;
         DamageDealer damageDealer;
         ScoreKeeper scoreKeeper;
         private void Awake()
         {
-            timedTrigger.OnTrigger += rayCaster.RaycastRecursively;
-            timedTrigger.OnTrigger += useEffect.PlayUseEffect;
-            rayCaster.OnHitGO += (x) => hitEffect.Hit(x.transform.position);
+            timedTrigger = GetComponent<TimedMouseTriggerer>();
+            rayCaster = GetComponent<CameraPenetrativeRayCaster>();
+            hitMarker = GetComponent<HitMarker>();
+            useEffectPlayer = GetComponent<UseEffectPlayer>();
+            damageDealer = GetComponent<DamageDealer>();
+            scoreKeeper = GetComponent<ScoreKeeper>();
+
+            timedTrigger.OnTrigger += rayCaster.RaycastPenetratively;
+            timedTrigger.OnTrigger += useEffectPlayer.PlayUseEffect;
+            rayCaster.OnHitGO += (x) => hitEffectPlayer.Hit(x.transform.position);
             rayCaster.OnHitGO += (x) => damageDealer.DealDamage(x.GetComponent<Health>());
             rayCaster.OnHitGO += (x) => hitMarker.HitMark();
-            damageDealer.ReceiveScore += scoreKeeper.KeepScore;
+            damageDealer.ReceiveScore += scoreKeeper.KeepScore;            
         }
     }
 

@@ -8,7 +8,7 @@ namespace Infrastructure
         public float CurrentHP = 100;
 
         public event Action OnDeath;
-
+        public event Action<float> OnHealthChange = delegate { };
         public void TakeDamage(int dmg,Action<int> returnScore)
         {
             CurrentHP -= dmg;
@@ -22,14 +22,22 @@ namespace Infrastructure
             {
                 returnScore(dmg);
             }
+            OnHealthChange(CurrentHP);
         }
         public void Heal(float healing)
         {
-            CurrentHP = Mathf.Min(MaxHP,CurrentHP+ healing);            
+            var prevHP = CurrentHP;
+            CurrentHP = Mathf.Min(MaxHP,CurrentHP+ healing);
+            if (CurrentHP>prevHP)
+            {
+                OnHealthChange(CurrentHP);
+            }
         }
 
 
     }
+
+    
 }
 
 

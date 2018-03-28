@@ -2,7 +2,7 @@
 using UnityEngine;
 namespace Infrastructure
 {
-    public class CameraRecursiveRayCaster : MonoBehaviour
+    public class CameraPenetrativeRayCaster : MonoBehaviour
     {
         public float range = 100f;
         public Camera cam;
@@ -12,7 +12,7 @@ namespace Infrastructure
         public event Action<GameObject> OnHitGO = delegate { };
         public event Action<Vector3> OnHitPoint = delegate { };
 
-        public void RaycastRecursively()
+        public void RaycastPenetratively()
         {
             curRecursion = 0;
             var origin = cam.transform.position;

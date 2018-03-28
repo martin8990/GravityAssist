@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
 using Utility;
@@ -9,7 +10,7 @@ namespace Infrastructure
     {
         public List<Tactic> tactics = new List<Tactic>();
         public abstract float GetStrategyUtility();
-        public void ExecuteBestTactic(int period)
+        public IEnumerator ExecuteBestTactic(int period)
         {
            var bestTactic = tactics.Max((x) => x.CalculateUtility());
             if (bestTactic!=null)
@@ -17,6 +18,7 @@ namespace Infrastructure
                 StartCoroutine(bestTactic.Execute(period));
 
             }
+            yield return null;
         }
 
     }
